@@ -7,11 +7,25 @@ use App\Author;
 
 class AuthorController extends Controller
 {
-    public function getList()
+ 
+    public function index()
     {
-    	$authors = Author::getAll();
-    	return view('admin.author.list',compact('authors'));
+    	return view('admin.author.list');
     }
+
+        public function getAll(Request $request)
+    {  
+        $authors = DB::table('author');
+
+        if($request->name != "")
+        {
+            $authors = $authors->where('name','like','%'.$request->name.'%')->get();
+        }
+
+        return Datatables::of($authors)
+        ->make(true);
+    }
+
 
     public function create()
     {
@@ -35,14 +49,14 @@ class AuthorController extends Controller
     	$author->status = 1;
 
    		$author->save();
-   		return redirect(route('admin.author.list'))->with('thongbao','Thêm tác giả thành công');
+   		return response()->json($author);
     }
 
-    public function edit($id)
-    {
-    	$author = Author::find($id);
-    	return view('admin.author.edit', compact('author'));
-    }
+    // public function edit($id)
+    // {
+    // 	$author = Author::find($id);
+    // 	return view('admin.author.edit', compact('author'));
+    // }
 
     public function update(Request $request, $id)
     {
@@ -79,6 +93,20 @@ class AuthorController extends Controller
 
    		return redirect(route('admin.author.list'))->with('thongbao','Sửa tác giả thành công');    	
     }
+
+    public function changeStatus(Request $request)
+    {
+        $category = Author::find($request->id);
+        $status = 0;
+        if($request->checked == "true")
+        {
+            $status = 1;
+        }
+        $category->status = $status;
+        $category->save();
+        return response()->json($category->status);
+    }
+
 
     public function delete(Request $request)
     {

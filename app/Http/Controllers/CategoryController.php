@@ -23,7 +23,7 @@ class CategoryController extends Controller
     {  
         $category = DB::table('category');
 
-        if($request->name != "")
+        if($request->name)
         {
             $category = $category->where('name','like','%'.$request->name.'%')->get();
         }
@@ -102,17 +102,16 @@ class CategoryController extends Controller
         {
             $status = 1;
         }
-
         $category->status = $status;
         $category->save();
         return response()->json($category->status);
     }
 
-    public function show($id)
-    {
-        $category = Category::findOrFail($id);
-        return response()->json($category);
-    }
+    // public function show($id)
+    // {
+    //     $category = Category::findOrFail($id);
+    //     return response()->json($category);
+    // }
 
     public function update(Request $request, $categorySlug)
     {

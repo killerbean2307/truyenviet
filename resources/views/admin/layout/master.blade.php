@@ -21,7 +21,9 @@
   <link href="admin_asset/css/sb-admin.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.bootstrap4.min.css" rel="stylesheet">
-  <!-- Checkbox css -->
+  
+  <script src="admin_asset/vendor/ckeditor/ckeditor.js"></script>
+  
   <link rel="icon" href="favicon.ico" />
 
   @yield('css')
