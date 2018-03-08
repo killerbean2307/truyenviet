@@ -22,9 +22,17 @@ class UserSeeder extends Seeder
         			'name' => $faker->name,
         			'email' => $faker->email,
         			'password' => $faker->password,
-        			'active' => 1
+        			'active' => 1,
+                    'image' => $faker->image($dir = '', $width = 640, $height = 480)
         		]
         	);
+        }
+
+        $users = Users::all();
+        foreach($users as $user)
+        {
+            $user->slug = str_slug($user->name);
+            $user->save();
         }
     }
 }

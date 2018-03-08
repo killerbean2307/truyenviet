@@ -16,10 +16,10 @@
           <i class="fa fa-table"></i> Danh sách thể loại
           <div class="pull-right"><a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteMulti" id="delelte-multi-button"><i class="fa fa-trash fa-fw"></i>Xóa</a></div>
           <div class="pull-right" style="margin-right:5px; "><a class="btn btn-primary text-white" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus fa-fw"></i>Thêm</a></div>
-
         </div>
         <div class="card-body">
-        <div class="panel panel-default">
+        
+<!--         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title" >Custom Filter : </h3>
             </div>
@@ -40,7 +40,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div> -->
           <div class="table-responsive">
             <table class="table table-bordered table-hover" id="data-table" width="100%" cellspacing="0">
               <thead>
@@ -191,7 +191,7 @@ $('#data-table').DataTable({
   processing: true,
   serverSide: true,
   ajax:{
-    "url": '<?php echo route('admin.category.list'); ?>',
+    "url": 'admin/the-loai/danhsach',
     "type": 'POST',
     "data": function(data){
       data.name = $('#filter-name').val(),
@@ -268,7 +268,7 @@ var dataTable = $('#data-table').DataTable();
       var checked = $(this).prop('checked');
       $.ajax({
         type: 'post',
-        url: '<?php echo e(route('admin.category.changeStatus')); ?>',
+        url: 'admin/the-loai/change-status',
         data:{
           '_token': $('input[name=_token]').val(),
           'id': id,
@@ -309,7 +309,7 @@ var dataTable = $('#data-table').DataTable();
       $.ajax({
         type:'post',
         dataType:'json',
-        url:'<?php echo e(route('admin.category.store')); ?>',
+        url:'admin/the-loai/them',
         data:{
           '_token': $('input[name=_token]').val(),
             'name': $('#name_add').val(),
@@ -351,7 +351,7 @@ var dataTable = $('#data-table').DataTable();
           $('#editModal').modal('hide');
           dataTable.ajax.reload(null, false);
         },
-        error: function(data){
+        error: function(data){v
           var errors = $.parseJSON(data.responseText);
             $.each(errors.errors, function(key, value){
                 console.log(value);
@@ -371,7 +371,7 @@ var dataTable = $('#data-table').DataTable();
       var deleteID = $(this).val();
 
       $.ajax({
-        url: '<?php echo e(route('admin.category.delete')); ?>',
+        url: 'admin/the-loai/xoa',
         type: 'DELETE',
         dataType: 'JSON',
         data: {
@@ -399,7 +399,7 @@ var dataTable = $('#data-table').DataTable();
 
       $.ajax({
         type:'DELETE',
-        url:'<?php echo e(route('admin.category.deleteMulti')); ?>',
+        url:'admin/the-loai/xoa-nhieu',
         dataType: 'JSON',
         data:{
           '_token': $('input[name=_token]').val(),

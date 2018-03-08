@@ -10,28 +10,6 @@
         </li>
         <li class="breadcrumb-item active">Tác giả</li>
       </ol>
-        <div class="col-md-12">
-        @if(count($errors) > 0) 
-          @foreach($errors->all() as $err)
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-              {{$err}}
-            </div>
-
-          @endforeach
-        @endif
-        @if(session('thongbao'))
-          <div class="alert alert-success alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-              {{session('thongbao')}}
-          </div>
-        @endif
-
-        </div>
   </div>
       <!-- Example DataTables Card-->
 <form action="{{route('admin.author.deleteMulti')}}" method="POST" id="deleteMultiForm">

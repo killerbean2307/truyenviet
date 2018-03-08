@@ -20,9 +20,18 @@ class AuthorSeeder extends Seeder
         	DB::table('author')->insert(
         		[
         			'name' => $faker->name,
-        			'status' => $faker->numberBetween(0,1)
+        			'status' => $faker->numberBetween(0,1),
+                    'detail' => $faker->realText(),
+                    'image' => image($dir = '', $width = 640, $height = 480)// '13b73edae8443990be1aa8f1a483bc27.jpg' it's a filename without path
         		]
         	);
+        }
+
+        $authors = Author::all();
+        foreach($authors as $author)
+        {
+            $author->slug = str_slug($author->name);
+            $author->save();
         }
     }
 }
