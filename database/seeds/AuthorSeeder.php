@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Author;
+
 
 class AuthorSeeder extends Seeder
 {
@@ -22,7 +24,6 @@ class AuthorSeeder extends Seeder
         			'name' => $faker->name,
         			'status' => $faker->numberBetween(0,1),
                     'detail' => $faker->realText(),
-                    'image' => image($dir = '', $width = 640, $height = 480)// '13b73edae8443990be1aa8f1a483bc27.jpg' it's a filename without path
         		]
         	);
         }

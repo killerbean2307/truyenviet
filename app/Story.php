@@ -5,8 +5,22 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Story extends Model
-{
+{    
+    use Sluggable;
+    use SluggableScopeHelpers;
+        
     protected $table = 'story';
+    
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+                'onUpdate' => true
+            ]
+        ];
+    }
+
 
     public function chapter()
     {

@@ -8,7 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    use Sluggable;
+    use SluggableScopeHelpers;
+    
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+                'onUpdate' => true
+            ]
+        ];
+    }
     /**
      * The attributes that are mass assignable.
      *

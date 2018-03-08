@@ -57,6 +57,10 @@ class AuthorController extends Controller
     // 	$author = Author::find($id);
     // 	return view('admin.author.edit', compact('author'));
     // }
+    public function getStoryView()
+    {
+        
+    }
 
     public function update(Request $request, $id)
     {

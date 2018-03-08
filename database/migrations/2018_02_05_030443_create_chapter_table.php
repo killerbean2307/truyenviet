@@ -19,7 +19,6 @@ class CreateChapterTable extends Migration
             $table->unsignedInteger('story_id');
             $table->foreign('story_id')->references('id')->on('story')->onUpdate('cascade')->onDelete('cascade');
             $table->longText('content');
-            $table->tinyInteger('status');
             $table->integer('ordering');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
