@@ -271,7 +271,7 @@ var dataTable = $('#data-table').DataTable();
         type: 'post',
         url: '{{route('admin.category.changeStatus')}}',
         data:{
-          '_token': '{{csrf_token()}}',
+          '_token': $('input[name=_token]').val(),
           'id': id,
           'checked': checked,
         },

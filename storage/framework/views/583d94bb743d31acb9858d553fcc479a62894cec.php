@@ -270,7 +270,7 @@ var dataTable = $('#data-table').DataTable();
         type: 'post',
         url: '<?php echo e(route('admin.category.changeStatus')); ?>',
         data:{
-          '_token': '<?php echo e(csrf_token()); ?>',
+          '_token': $('input[name=_token]').val(),
           'id': id,
           'checked': checked,
         },
