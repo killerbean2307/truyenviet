@@ -25,20 +25,25 @@ Route::group(['prefix'=>'admin'], function(){
 		return redirect(route('admin.category.index'));
 	});
 	//Tac gia
-    Route::group(['prefix' => 'tac-gia'], function (){
-        Route::get('/', 'AuthorController@getList')->name('admin.author.list');
+    Route::group(['prefix' => 'tac-gia'], function () {
+        Route::get('/', 'AuthorController@index')->name('admin.author.index');
 
-        // Route::get('/tac-gia/them', 'AuthorController@create')->name('admin.author.new');
+        Route::post('/danhsach', 'AuthorController@getAll')->name('admin.author.list');
+
+        Route::get('/{authorSlug}','AuthorController@getStoryView')->name('admin.author.story');
+
+        Route::get('/truyen/{authorSlug}', 'AuthorController@getStoryByCategorySlug')->name('admin.author.storyList');
 
         Route::post('/them', 'AuthorController@store')->name('admin.author.store');
 
-        Route::get('/sua/{id}', 'AuthorController@edit')->name('admin.author.edit');
+        Route::post('/change-status','AuthorController@changeStatus')->name('admin.author.changeStatus');
 
-        Route::put('/sua/{id}', 'AuthorController@update')->name('admin.author.update');
+        Route::put('/sua/{authorSlug}', 'AuthorController@update')->name('admin.author.update');
 
         Route::delete('/xoa', 'AuthorController@delete')->name('admin.author.delete');
 
         Route::delete('/xoa-nhieu', 'AuthorController@deleteMulti')->name('admin.author.deleteMulti');
+
     });
     
 	//Thể loại

@@ -17,5 +17,7 @@ $factory->define(App\Author::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'status' => $faker->numberBetween(0,1),
+        'detail' => $faker->realText(),
+        'image' => image(200, 300)
     ];
 });

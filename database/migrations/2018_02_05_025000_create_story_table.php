@@ -24,6 +24,7 @@ class CreateStoryTable extends Migration
             $table->foreign('author_id')->references('id')->on('author')->onUpdate('cascade')->onDelete('set null');
             $table->tinyInteger('status');
             $table->integer('view')->default(0);
+            $table->integer('like')->default(0);
             $table->unsignedInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

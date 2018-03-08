@@ -191,7 +191,7 @@ $('#data-table').DataTable({
   processing: true,
   serverSide: true,
   ajax:{
-    "url": '<?php echo route('admin.category.list'); ?>',
+    "url": 'admin/the-loai/danhsach',
     "type": 'POST',
     "data": function(data){
       data.name = $('#filter-name').val(),
@@ -268,9 +268,9 @@ var dataTable = $('#data-table').DataTable();
       var checked = $(this).prop('checked');
       $.ajax({
         type: 'post',
-        url: '<?php echo e(route('admin.category.changeStatus')); ?>',
+        url: 'admin/the-loai/change-status',
         data:{
-          '_token': '<?php echo e(csrf_token()); ?>',
+          '_token': $('input[name=_token]').val(),
           'id': id,
           'checked': checked,
         },
@@ -309,7 +309,7 @@ var dataTable = $('#data-table').DataTable();
       $.ajax({
         type:'post',
         dataType:'json',
-        url:'<?php echo e(route('admin.category.store')); ?>',
+        url:'admin/the-loai/them',
         data:{
           '_token': $('input[name=_token]').val(),
             'name': $('#name_add').val(),
@@ -371,7 +371,7 @@ var dataTable = $('#data-table').DataTable();
       var deleteID = $(this).val();
 
       $.ajax({
-        url: '<?php echo e(route('admin.category.delete')); ?>',
+        url: 'admin/the-loai/xoa',
         type: 'DELETE',
         dataType: 'JSON',
         data: {
@@ -399,7 +399,7 @@ var dataTable = $('#data-table').DataTable();
 
       $.ajax({
         type:'DELETE',
-        url:'<?php echo e(route('admin.category.deleteMulti')); ?>',
+        url:'admin/the-loai/xoa-nhieu',
         dataType: 'JSON',
         data:{
           '_token': $('input[name=_token]').val(),

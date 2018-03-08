@@ -21,12 +21,20 @@ class StorySeeder extends Seeder
                 [
                     'name' => $faker->name,
                     'description' => $faker->realText,
+                    'image' => $faker->image($dir = '', $width = 640, $height = 480),
                     'category_id' => $faker->numberBetween(1,10),
                     'author_id' => $faker->numberBetween(1,10),
                     'user_id' => $faker->numberBetween(1,10),
                     'status' => $faker->numberBetween(0,1),
                 ]
             );
+        }
+
+        $stories = Stories::all();
+        foreach($stories as $story)
+        {
+            $story->slug = str_slug($story->name);
+            $story->save();
         }
     }
 }
