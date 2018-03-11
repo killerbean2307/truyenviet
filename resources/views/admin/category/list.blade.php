@@ -1,5 +1,9 @@
 @extends('admin.layout.master')
 
+@section('title')
+  Thể loại | ADMIN TRUYỆN VIỆT
+@endsection
+
 @section('content')
 
 <div class="container-fluid">
@@ -7,7 +11,7 @@
     <div>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="{{route('admin.author.list')}}">Tổng quan</a>
+          <a href="{{route('admin.category.index')}}">Tổng quan</a>
         </li>
         <li class="breadcrumb-item active">Thể Loại</li>
       </ol>
@@ -168,15 +172,15 @@
 
 @section('script')
 <script>
+
 $('#data-table').DataTable({
   processing: true,
   serverSide: true,
   ajax:{
     "url": 'admin/the-loai/danhsach',
     "type": 'POST',
-    "data": function(data){
-      data.name = $('#filter-name').val(),
-      data._token = '{{csrf_token()}}'
+    "data": {
+      '_token': $('input[name=_token]').val(),
     }
   },
   columns:[
@@ -234,15 +238,6 @@ $('#data-table').DataTable({
 var dataTable = $('#data-table').DataTable();
 
   $(document).ready(function(){
-      
-    $('#btn-filter').click(function(){
-      dataTable.ajax.reload();
-    });
-
-    $('#btn-reset').click(function(){
-      $('#form-filter')[0].reset();
-      dataTable.ajax.reload();
-    });
 
     $(document).on('change','.status-checkbox', function(){
       var id = $(this).closest('tr').find('td').eq(1).text();
@@ -317,7 +312,6 @@ var dataTable = $('#data-table').DataTable();
 
     $('#sua').click(function(){
       var editID = $(this).val();
-      $id = editID;
       $.ajax({
         type: 'put',
         url: 'admin/the-loai/sua/'+editID,
@@ -332,7 +326,7 @@ var dataTable = $('#data-table').DataTable();
           $('#editModal').modal('hide');
           dataTable.ajax.reload(null, false);
         },
-        error: function(data){v
+        error: function(data){
           var errors = $.parseJSON(data.responseText);
             $.each(errors.errors, function(key, value){
                 console.log(value);

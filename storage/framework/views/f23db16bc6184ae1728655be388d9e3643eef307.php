@@ -1,3 +1,7 @@
+<?php $__env->startSection('title'); ?>
+  <?php echo e($category->name); ?> | ADMIN TRUYỆN VIỆT
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 	<div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -72,17 +76,20 @@ $('#data-table').DataTable({
         return '<input type="checkbox" class="status-checkbox" name="status"/>';
       }
     }},
-    { data:'author.name', name:'author'},
+    { data:'author.name', name:'author', render: function(data,type,row)
+    {
+      if(data)
+        return data;
+      else 
+        return '';
+    }},
     { data: 'view', name: 'view'},
     { data: 'source', name:'source'},
     { data: 'created_at', name: 'created_at', render: function(data,type,row){
-    	// moment.locale('vi');
-     //  	var m = moment(data);
-     //  	return m.fromNow(true);
     	return moment(data).locale('vi').fromNow(true);
     }},
     { data: 'updated_at', name: 'updated_at', render: function(data,type,row){
-		return moment(data).locale('vi').fromNow(true);
+		  return moment(data).locale('vi').fromNow(true);
     }},	
     { data: 'id',name: 'action', orderable: false, searchable: false, render: function(data,type,row){
     	return '<a title="Xem" style:"display:inline;" class="btn btn-success btn-small show-button text-white" data-toggle="modal" data-target="#showModal" data-id="'+data+'"><i class="fa fa-fw fa-eye"></i></a> <a title="Sửa" style:"display:inline;" class="btn btn-info btn-small edit-button text-white" data-toggle="modal" data-target="#editModal" data-id="'+data+'"><i class="fa fa-fw fa-pencil"></i></a> <a title="Xóa" style:"display:inline;" class="btn btn-danger btn-small delete-button text-white" data-toggle="modal" data-target="#deleteModal" data-id="'+data+'"><i class="fa fa-fw fa-trash"></i></a>';
