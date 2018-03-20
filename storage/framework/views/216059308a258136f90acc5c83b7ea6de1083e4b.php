@@ -25,6 +25,13 @@
           </a>
         </li>
 
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Truyện">
+          <a class="nav-link" href="<?php echo e(route('admin.story.index')); ?>">
+            <i class="fa fa-fw fa-book"></i>
+            <span class="nav-link-text">Danh sách truyện</span>
+          </a>
+        </li>
+
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">

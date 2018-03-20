@@ -67,4 +67,13 @@ Route::group(['prefix'=>'admin'], function(){
         Route::delete('/xoa-nhieu', 'CategoryController@deleteMulti')->name('admin.category.deleteMulti');
 
     });
+
+    //Truyện
+    Route::group(['prefix' => 'truyen'], function() {
+        Route::get('/', 'StoryController@index')->name('admin.story.index');
+
+        Route::get('/danhsach', 'StoryController@getAll')->name('admin.story.list');
+
+        Route::post('them', 'StoryController@store')->name('admin.story.store');
+    });
 });

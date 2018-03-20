@@ -14,7 +14,7 @@ class ThemNguonStory extends Migration
     public function up()
     {
         Schema::table('story', function($table) {
-            $table->string('source',255)->default("Chưa rõ");
+            $table->string('source',255)->nullable()->default("Chưa rõ");
         });
     }
 

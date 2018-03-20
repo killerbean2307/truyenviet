@@ -13,7 +13,7 @@
         <li class="breadcrumb-item">
           <a href="{{route('admin.category.index')}}">Tổng quan</a>
         </li>
-        <li class="breadcrumb-item active">Tác giả</li>
+        <li class="breadcrumb-item active"><a href="{{route('admin.author.index')}}">Tác giả</a></li>
       </ol>
     </div>
       <!-- Example DataTables Card-->
@@ -52,7 +52,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addModalLabel">Thêm thể loại</h5>
+          <h5 class="modal-title" id="addModalLabel">Thêm tác giả</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -68,7 +68,7 @@
             {{ csrf_field() }}
             <div class="form-group">
               <label for="name" class="font-weight-bold">Tên:</label>
-              <input type="text" class="form-control" id="name_add" required="true" placeholder="Nhập tên thể loại...">
+              <input type="text" class="form-control" id="name_add" required="true" placeholder="Nhập tên tác giả...">
             </div>
             
             <div class="form-group">
