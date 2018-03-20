@@ -1,3 +1,7 @@
+<?php $__env->startSection('title'); ?>
+  Thể loại | ADMIN TRUYỆN VIỆT
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 
 <div class="container-fluid">
@@ -5,7 +9,7 @@
     <div>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="<?php echo e(route('admin.author.list')); ?>">Tổng quan</a>
+          <a href="<?php echo e(route('admin.category.index')); ?>">Tổng quan</a>
         </li>
         <li class="breadcrumb-item active">Thể Loại</li>
       </ol>
@@ -18,29 +22,6 @@
           <div class="pull-right" style="margin-right:5px; "><a class="btn btn-primary text-white" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus fa-fw"></i>Thêm</a></div>
         </div>
         <div class="card-body">
-        
-<!--         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title" >Custom Filter : </h3>
-            </div>
-            <div class="panel-body">
-                <form id="form-filter" class="form-horizontal">
-                    <div class="form-group row">
-                        <label for="country" class="col-sm-1 col-form-label font-weight-bold">Tên</label>
-                        <div class="col-sm-5">
-                          <input type="text" id="filter-name" class="form-control" value="" placeholder="Nhập tên...">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="LastName" class="col-sm-2 control-label"></label>
-                        <div class="col-md-12">
-                            <button type="button" id="btn-filter" class="btn btn-primary">Filter</button>
-                            <button type="button" id="btn-reset" class="btn btn-default">Reset</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div> -->
           <div class="table-responsive">
             <table class="table table-bordered table-hover" id="data-table" width="100%" cellspacing="0">
               <thead>
@@ -50,14 +31,17 @@
                   <th>Tên</th>
                   <th>Mô tả</th>
                   <th>Trạng thái</th>
-                  <th>Ngày tạo</th>
-                  <th>Ngày cập nhật</th>
+                  <th>Tạo</th>
+                  <th>Cập nhật</th>
                   <th>Action</th>
                 </tr>
               </thead>
             </table>
           </div>
         </div>
+      <?php if(App\Category::all()->count()): ?>
+        <div class="card-footer small text-muted">Cập nhật vào lúc <?php echo e(App\Category::orderBy('updated_at','desc')->pluck('updated_at')->first()->format('H:i d-m-Y')); ?></div>
+      <?php endif; ?>        
       </div>
 </div>
 <!-- add modal -->
@@ -187,15 +171,15 @@
 
 <?php $__env->startSection('script'); ?>
 <script>
+
 $('#data-table').DataTable({
   processing: true,
   serverSide: true,
   ajax:{
     "url": 'admin/the-loai/danhsach',
     "type": 'POST',
-    "data": function(data){
-      data.name = $('#filter-name').val(),
-      data._token = '<?php echo e(csrf_token()); ?>'
+    "data": {
+      '_token': $('input[name=_token]').val(),
     }
   },
   columns:[
@@ -253,15 +237,6 @@ $('#data-table').DataTable({
 var dataTable = $('#data-table').DataTable();
 
   $(document).ready(function(){
-      
-    $('#btn-filter').click(function(){
-      dataTable.ajax.reload();
-    });
-
-    $('#btn-reset').click(function(){
-      $('#form-filter')[0].reset();
-      dataTable.ajax.reload();
-    });
 
     $(document).on('change','.status-checkbox', function(){
       var id = $(this).closest('tr').find('td').eq(1).text();
@@ -336,7 +311,6 @@ var dataTable = $('#data-table').DataTable();
 
     $('#sua').click(function(){
       var editID = $(this).val();
-      $id = editID;
       $.ajax({
         type: 'put',
         url: 'admin/the-loai/sua/'+editID,
@@ -351,7 +325,7 @@ var dataTable = $('#data-table').DataTable();
           $('#editModal').modal('hide');
           dataTable.ajax.reload(null, false);
         },
-        error: function(data){v
+        error: function(data){
           var errors = $.parseJSON(data.responseText);
             $.each(errors.errors, function(key, value){
                 console.log(value);

@@ -28,11 +28,11 @@ Route::group(['prefix'=>'admin'], function(){
     Route::group(['prefix' => 'tac-gia'], function () {
         Route::get('/', 'AuthorController@index')->name('admin.author.index');
 
-        Route::post('/danhsach', 'AuthorController@getAll')->name('admin.author.list');
+        Route::get('/danhsach', 'AuthorController@getAll')->name('admin.author.list');
 
         Route::get('/{authorSlug}','AuthorController@getStoryView')->name('admin.author.story');
 
-        Route::get('/truyen/{authorSlug}', 'AuthorController@getStoryByCategorySlug')->name('admin.author.storyList');
+        Route::get('/truyen/{authorSlug}', 'AuthorController@getStoryByAuthorSlug')->name('admin.author.storyList');
 
         Route::post('/them', 'AuthorController@store')->name('admin.author.store');
 

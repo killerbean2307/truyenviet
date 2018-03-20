@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
 
 class UserSeeder extends Seeder
 {
@@ -22,13 +23,13 @@ class UserSeeder extends Seeder
         			'name' => $faker->name,
         			'email' => $faker->email,
         			'password' => $faker->password,
+                    'level' => 0,
         			'active' => 1,
-                    'image' => $faker->image($dir = '', $width = 640, $height = 480)
         		]
         	);
         }
 
-        $users = Users::all();
+        $users = User::all();
         foreach($users as $user)
         {
             $user->slug = str_slug($user->name);

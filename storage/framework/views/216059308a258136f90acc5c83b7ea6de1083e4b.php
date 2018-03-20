@@ -6,13 +6,13 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tổng quan">
-          <a class="nav-link" href="<?php echo e(route('admin.author.list')); ?>">
+          <a class="nav-link" href="<?php echo e(route('admin.category.index')); ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tổng quan</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tác giả">
-          <a class="nav-link" href="<?php echo e(route('admin.author.list')); ?>">
+          <a class="nav-link" href="<?php echo e(route('admin.author.index')); ?>">
             <i class="fa fa-fw fa-users"></i>
             <span class="nav-link-text">Tác Giả</span>
           </a>

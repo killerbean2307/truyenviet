@@ -10,6 +10,8 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Author extends Model
 {
+    protected $table = 'author';
+    
     use Sluggable;
     use SluggableScopeHelpers;
     
@@ -22,7 +24,7 @@ class Author extends Model
             ]
         ];
     }
-    protected $table = 'author';
+
 
     public function story()
     {

@@ -9,7 +9,14 @@
   <meta name="author" content="">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>ADMIN Truyện Việt</title>
+  <title>
+    @if(View::hasSection('title'))
+      @yield('title')
+    @else
+      ADMIN TRUYỆN VIỆT
+    @endif
+
+  </title>
   <base href="{{asset('')}}">
   <!-- Bootstrap core CSS-->
   <link href="admin_asset/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
