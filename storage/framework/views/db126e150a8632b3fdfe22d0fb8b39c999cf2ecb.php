@@ -341,8 +341,11 @@ var dataTable = $('#data-table').DataTable();
       form.append('_method',_method);
       form.append('name',name);
       form.append('detail',detail);
-      form.append('image',image);
-
+      if(image)
+      {
+        form.append('image',image);
+      }
+      
       $.ajax({
         type: 'POST',
         url: 'admin/tac-gia/sua/'+editID,

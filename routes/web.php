@@ -74,6 +74,13 @@ Route::group(['prefix'=>'admin'], function(){
 
         Route::get('/danhsach', 'StoryController@getAll')->name('admin.story.list');
 
-        Route::post('them', 'StoryController@store')->name('admin.story.store');
+        Route::post('/them', 'StoryController@store')->name('admin.story.store');
+
+        Route::put('/sua/{storySlug}/{storyId}', 'StoryController@update')->name('admin.story.update');
+
+        Route::delete('/xoa', 'StoryController@delete')->name('admin.story.delete');
+
+        Route::delete('/xoa-nhieu', 'StoryController@deleteMulti')->name('admin.story.deleteMulti');
+
     });
 });

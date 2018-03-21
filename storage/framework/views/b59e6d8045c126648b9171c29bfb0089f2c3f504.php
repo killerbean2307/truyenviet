@@ -64,6 +64,7 @@
     <!-- Custom scripts for this page-->
     <script src="admin_asset/js/sb-admin-datatables.min.js"></script>
     
+    <script src="js/function.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/responsive.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js"></script>
