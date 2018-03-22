@@ -86,6 +86,10 @@
             </div>
             
             <div class="form-group">
+              <img src="" alt="preview" id="preview_add">
+            </div>
+
+            <div class="form-group">
               <label for="category_add" class="font-weight-bold">Thể Loại</label>
               <select class="form-control select2" id="category_add" name="category" required="true">
                 <option></option>
@@ -149,7 +153,7 @@
               <input type="file" class="form-control" id="image_edit">
             </div>
             <div class="form-group">
-              <img src="" alt="Preview">  
+              <img src="" alt="Preview" id="preview_edit">  
             </div>
             <div class="form-group">
               <label for="category_add" class="font-weight-bold">Thể Loại</label>
@@ -266,7 +270,9 @@ $('#data-table').DataTable({
     { data: 'status', name: 'status',render: function(data, type, row){
       if(data==1)
       {
-        return '<input type="checkbox" class="status-checkbox" name="status" checked/>';
+
+// <input type="checkbox" class="status-checkbox" name="status" checked/>
+        return '  <div class="pretty p-default">    <input type="checkbox" />    <div class="state">      <label></label>    </div>  </div>';
       }
       else
       {
@@ -318,21 +324,27 @@ $(document).ready(function(){
 
   var dataTable = $('#data-table').DataTable();
 
+  $('.status-checkbox').prop('indeterminate', true)
+
 	$('#checkAllDelete').click(function (){
       $('.delete-multi-checkbox').prop('checked', this.checked);
     });
 
     $(document).on('click', '.edit-button', function(){
       $('#name_edit').val($(this).closest('tr').find('td').eq(2).text());
+      $('#image_edit').val(''); 
+      $('#preview_edit').attr('src','');
       var des = $(this).closest('tr').find('td').eq(4).text();
       var author = $(this).closest('tr').find('td').eq(7).find('a').data('id');
       var category = $(this).closest('tr').find('td').eq(6).find('a').data('id');
       CKEDITOR.instances.description_edit.setData(des);
       // $('#author_edit').text($(this).closest('tr').find('td').eq(7).text()).trigger('change');
+      var image = $(this).closest('tr').find('td').eq(3).find('img').attr('src');
       $('#author_edit').val(author).trigger('change');
       $('#category_edit').val(category).trigger('change');
       $('#slug_edit').val($(this).closest('tr').find('td').eq(2).text());
       $('#sua').val($(this).data('id'));
+      $('#preview_edit').attr('src',image);
     });
 
   $('.select2').select2({
@@ -355,11 +367,31 @@ $(document).ready(function(){
   // CKEDITOR.replace( 'description_add');
   $(document).on('shown.bs.modal','#addModal', function(){
         $('#form-add')[0].reset();
+        $('#preview_add').attr('src','');
         $('#name_add').focus();
     });
-  
+
+  $(document).on('shown.bs.modal','#editModal', function(){
+        $('#name_edit').focus();
+    });
+
     $(document).on('click', '.delete-button', function(){
       $('#xoa').val($(this).data('id'));      
+    });
+
+    //change status
+    $(document).on('change','.status-checkbox', function(){
+      var id = $(this).closest('tr').find('td').eq(1).text();
+      var checked = $(this).prop('checked');
+      $.ajax({
+        type: 'POST',
+        url: 'admin/truyen/change-status',
+        data:{
+          '_token': $('input[name=_token]').val(),
+          'id': id,
+          'checked': checked,
+        },
+      });
     });
 
     //add
@@ -404,6 +436,14 @@ $(document).ready(function(){
             });
         }
       });
+    });
+
+    $('#image_edit').change(function(){
+      readURL(this, 'preview_edit');
+    });
+
+    $('#image_add').change(function(){
+      readURL(this, 'preview_add');
     });
 
     //Sua

@@ -105,7 +105,7 @@ class AuthorController extends Controller
                 while (file_exists("upload/".$tenhinh)) {
                     $tenhinh = str_random(4)."_".$name;
                 }
-                if($author->image)
+                if($author->image && file_exists($author->image))
                 {
                     unlink("upload/".$author->image);
                 }

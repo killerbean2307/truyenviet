@@ -30,7 +30,8 @@
   <link rel="stylesheet" type="text/css" href="admin_asset/vendor/select2/dist/css/select2.css">
 
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.bootstrap4.min.css" rel="stylesheet">
-  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+
   <script src="admin_asset/vendor/ckeditor/ckeditor.js"></script>
   
   <link rel="icon" href="favicon.ico" />
@@ -71,7 +72,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/vi.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.min.js"></script>
-    <script type="text/javascript" src="admin_asset/vendor/select2/dist/js/select2.js"></script>>
+    <script type="text/javascript" src="admin_asset/vendor/select2/dist/js/select2.js"></script>
   </div>
 
     @yield('script')

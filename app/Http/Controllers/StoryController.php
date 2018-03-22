@@ -104,7 +104,7 @@ class StoryController extends Controller
                 while (file_exists("upload/".$tenhinh)) {
                     $tenhinh = str_random(4)."_".$name.'.'.$extension;
                 }
-                if($story->image)
+                if($story->image && file_exists($story->image))
                 {
                     unlink("upload/".$story->image);
                 }
@@ -136,5 +136,18 @@ class StoryController extends Controller
             $story->delete();
             return response()->json(["success" => "Delete success"]);
         }
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $story = Story::find($request->id);
+        $status = 0;
+        if($request->checked == "true")
+        {
+            $status = 1;
+        }
+        $story->status = $status;
+        $story->save();
+        return response()->json($story->status);    	
     }
 }

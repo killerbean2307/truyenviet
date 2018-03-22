@@ -82,5 +82,7 @@ Route::group(['prefix'=>'admin'], function(){
 
         Route::delete('/xoa-nhieu', 'StoryController@deleteMulti')->name('admin.story.deleteMulti');
 
+        Route::post('/change-status', 'StoryController@changeStatus')->name('admin.truyen.changeStatus');
+
     });
 });
