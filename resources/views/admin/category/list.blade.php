@@ -28,7 +28,15 @@
             <table class="table table-bordered table-hover" id="data-table" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th><input type="checkbox" id="checkAllDelete"/></th>
+                  <th class="text-center">
+                      <div class="pretty p-icon p-jelly">
+                        <input type="checkbox" id="checkAllDelete" />
+                          <div class="state p-info-o">
+                            <i class="icon mdi mdi-check-all"></i>
+                            <label></label>
+                          </div>
+                      </div>
+                  </th>
                   <th>ID</th>
                   <th>Tên</th>
                   <th>Mô tả</th>
@@ -184,8 +192,8 @@ $('#data-table').DataTable({
     }
   },
   columns:[
-    { data:'id', name:'check', orderable: false, searchable: false, render: function(data,type,row){
-      return '<input type="checkbox" name="delete-item[]" class="delete-multi-checkbox" value="'+data+'"/>';
+    { data:'id', name:'check', className:'text-center', orderable: false, searchable: false, render: function(data,type,row){
+      return '<div class="pretty p-icon p-thick p-smooth"> <input type="checkbox" name="delete-item[]" class="delete-multi-checkbox" value="'+data+'"/> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
     }},
     { data: 'id' ,name: 'id'},
     { data: 'name', name: 'name'},
@@ -193,11 +201,11 @@ $('#data-table').DataTable({
     { data: 'status', name: 'status',render: function(data, type, row){
       if(data==1)
       {
-        return '<input type="checkbox" class="status-checkbox" name="status" checked/>';
+        return '<div class="pretty p-icon p-round p-pulse p-smooth"> <input type="checkbox" class="status-checkbox" checked />    <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
       }
       else
       {
-        return '<input type="checkbox" class="status-checkbox" name="status"/>';
+        return '<div class="pretty p-icon p-round p-pulse p-smooth"> <input type="checkbox" class="status-checkbox" />    <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
       }
     }},
     { data: 'created_at', name: 'created_at', render:function(data,type,row){

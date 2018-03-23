@@ -148,6 +148,6 @@ class StoryController extends Controller
         }
         $story->status = $status;
         $story->save();
-        return response()->json($story->status);    	
+        return response()->json(['success' => 'Thay đổi trạng thái thành công']);    	
     }
 }

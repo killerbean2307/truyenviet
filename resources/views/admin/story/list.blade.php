@@ -29,7 +29,15 @@
             <table class="table table-bordered table-hover dt-responsive" id="data-table" width="100%" cellspacing="0">
               <thead class="thead-light">
                 <tr>
-                  <th data-priority="2"><input type="checkbox" id="checkAllDelete"/></th>
+                  <th data-priority="2" class="text-center">
+                      <div class="pretty p-icon p-jelly">
+                        <input type="checkbox" id="checkAllDelete" />
+                          <div class="state p-info-o">
+                            <i class="icon mdi mdi-check-all"></i>
+                            <label></label>
+                          </div>
+                      </div>
+                  </th>
                   <th data-priority="3">ID</th>
                   <th>Tên</th>
                   <th>Ảnh</th>
@@ -125,7 +133,7 @@
 
 <!-- edit modal -->
 <div class="modal fade" id="editModal" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="editModalLabel">Sửa tác giả</h5>
@@ -246,7 +254,7 @@ $('#data-table').DataTable({
   ajax: 'admin/truyen/danhsach',
   columns:[
     { data:'id', name:'check', orderable: false, searchable: false, render: function(data,type,row){
-    	return '<input type="checkbox" name="delete-item[]" class="delete-multi-checkbox" value="'+data+'"/>';
+    	return '<div class="pretty p-icon p-thick p-smooth"> <input type="checkbox" name="delete-item[]" class="delete-multi-checkbox" value="'+data+'"/> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
     }},
     { data:'id' ,name: 'id'},
     { data: 'name', name: 'name'},
@@ -267,16 +275,16 @@ $('#data-table').DataTable({
         // }
         return data;
     }},
-    { data: 'status', name: 'status',render: function(data, type, row){
+    { data: 'status',  className:'text-center', name: 'status',render: function(data, type, row){
       if(data==1)
       {
 
 // <input type="checkbox" class="status-checkbox" name="status" checked/>
-        return '  <div class="pretty p-default">    <input type="checkbox" />    <div class="state">      <label></label>    </div>  </div>';
+        return '<div class="pretty p-icon p-round p-pulse p-smooth"> <input type="checkbox" class="status-checkbox" checked /> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
       }
       else
       {
-        return '<input type="checkbox" class="status-checkbox" name="status"/>';
+        return '<div class="pretty p-icon p-round p-pulse p-smooth"> <input type="checkbox" class="status-checkbox" /> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
       }
     }},
     { data:'category', name:'category', render: function(data, type, row){
@@ -457,7 +465,9 @@ $(document).ready(function(){
       var category = $('#category_edit').val();
       var image = $('#image_edit').prop('files')[0];
       var _method = 'PUT';
+
       var form = new FormData();
+
       form.append('_token',_token);
       form.append('_method',_method);
       form.append('name',name);

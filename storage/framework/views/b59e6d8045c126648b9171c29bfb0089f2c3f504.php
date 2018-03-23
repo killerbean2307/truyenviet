@@ -30,7 +30,11 @@
   <link rel="stylesheet" type="text/css" href="admin_asset/vendor/select2/dist/css/select2.css">
 
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.bootstrap4.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+  <link rel="stylesheet" href="css/pretty-checkbox.css"/>
+  <link rel="stylesheet" href="css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="css/scroll.css">
+  
+
 
   <script src="admin_asset/vendor/ckeditor/ckeditor.js"></script>
   
