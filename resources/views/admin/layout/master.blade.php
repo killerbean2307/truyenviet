@@ -56,8 +56,8 @@
       <i class="fa fa-angle-up"></i>
     </a>  
     <!-- Bootstrap core JavaScript-->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="admin_asset/vendor/jquery/jquery.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
+    <script src="js/jquery.js"></script>
     <script src="admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="admin_asset/vendor/jquery-easing/jquery.easing.min.js"></script>

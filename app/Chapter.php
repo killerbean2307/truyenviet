@@ -12,4 +12,9 @@ class Chapter extends Model
     {
     	return $this->belongsTo('App\Story','story_id','id');
     }
+
+    public function user()
+    {
+    	return $this->belongsTo('App\User', 'user_id', 'id');
+    }
 }

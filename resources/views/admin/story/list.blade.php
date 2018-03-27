@@ -26,7 +26,7 @@
         <div class="card-body">
 
           <div class="table-responsive">
-            <table class="table table-bordered table-hover dt-responsive" id="data-table" width="100%" cellspacing="0">
+            <table class="table table-bordered table-hover" id="data-table" width="100%" cellspacing="0">
               <thead class="thead-light">
                 <tr>
                   <th data-priority="2" class="text-center">
@@ -38,16 +38,16 @@
                           </div>
                       </div>
                   </th>
-                  <th data-priority="3">ID</th>
+                  {{-- <th data-priority="3">ID</th> --}}
                   <th>Tên</th>
                   <th>Ảnh</th>
                   <th>Mô tả</th>
                   <th>Trạng thái</th>
                   <th>Thể loại</th>
                   <th>Tác giả</th>
-                  <th>Lượt xem</th>
-                  <th>Nguồn</th>
-                  <th>Tạo</th>
+                  {{-- <th>Lượt xem</th> --}}
+                  {{-- <th>Nguồn</th> --}}
+                  {{-- <th>Tạo</th> --}}
                   <th>Cập nhật</th>
                   <th data-priority="1">Action</th>
                 </tr>
@@ -56,6 +56,115 @@
           </div>
         </div>
       </div>
+  </div>
+
+
+{{-- detail modal --}}
+<div class="modal fade" id="detailModal" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detailModalLabel"></h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="alert alert-danger alert-dismissible add-error" style="display: none" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          
+          <div class="row">  
+          <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="name_detail" class="font-weight-bold">Tên:</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="name_detail">
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="category_detail" class="font-weight-bold">Thể loại</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="category_detail">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="author_detail" class="font-weight-bold">Tác giả</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="author_detail">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="status_detail" class="font-weight-bold">Trạng thái</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="status_detail">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="description_detail" class="font-weight-bold">Giới thiệu</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="description_detail">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="view_like_detail" class="font-weight-bold">Lượt đọc</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="view_like_detail">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="created_at_detail" class="font-weight-bold">Ngày tạo</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="created_at_detail">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="updated_at_detail" class="font-weight-bold">Ngày cập nhật</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="updated_at_detail">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="user_detail" class="font-weight-bold">Người đăng</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="user_detail">
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <img src="" alt="" width="100%" id="image_detail">
+          </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal"><i class="fa fa-fw fa-ban"></i>Đóng</button>
+        </div>
+      </div>
+    </div>
 </div>
 
 <!-- add modal -->
@@ -132,7 +241,7 @@
 </div>
 
 <!-- edit modal -->
-<div class="modal fade" id="editModal" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+<div class="modal fade" id="editModal" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -256,15 +365,17 @@ $('#data-table').DataTable({
     { data:'id', name:'check', orderable: false, searchable: false, render: function(data,type,row){
     	return '<div class="pretty p-icon p-thick p-smooth"> <input type="checkbox" name="delete-item[]" class="delete-multi-checkbox" value="'+data+'"/> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
     }},
-    { data:'id' ,name: 'id'},
-    { data: 'name', name: 'name'},
+    // { data:'id' ,name: 'id'},
+    { data: 'name', name: 'name', render: function(data,type,row){
+      return '<a data-toggle="modal" data-target="#detailModal" href="" class="detailButton">'+data+'</a>'
+    }},
     { data: 'image', name:'image',render: function(data, type, row){
       if(!data)
         return "Chưa có";
       else 
         return '<img width="100%" src= upload/'+data+'>';
     }},
-    { data:'description',name:'description', render: function(data, type, row){
+    { data:'description',name:'description',render: function(data, type, row){
       if(!data)
         return "Chưa có";
       else
@@ -278,8 +389,6 @@ $('#data-table').DataTable({
     { data: 'status',  className:'text-center', name: 'status',render: function(data, type, row){
       if(data==1)
       {
-
-// <input type="checkbox" class="status-checkbox" name="status" checked/>
         return '<div class="pretty p-icon p-round p-pulse p-smooth"> <input type="checkbox" class="status-checkbox" checked /> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
       }
       else
@@ -296,17 +405,20 @@ $('#data-table').DataTable({
       else 
         return 'Chưa có';
     }},
-    { data: 'view', name: 'view'},
-    { data: 'source', name:'source'},
-    { data: 'created_at', name: 'created_at', render: function(data,type,row){
-    	return moment(data).locale('vi').fromNow(true);
-    }},
+    // { data: 'view', name: 'view'},
+    // { data: 'source', name:'source'},
+    // { data: 'created_at', name: 'created_at', render: function(data,type,row){
+    // 	return moment(data).locale('vi').fromNow(true);
+    // }},
     { data: 'updated_at', name: 'updated_at', render: function(data,type,row){
-		return moment(data).locale('vi').fromNow(true);
+		  return moment(data).locale('vi').fromNow();
     }},	
     { data: 'id',name: 'action', orderable: false, searchable: false, render: function(data,type,row){
-    	return '<a title="Xem" style:"display:inline;" class="btn btn-success btn-small show-button text-white" data-toggle="modal" data-target="#showModal" data-id="'+data+'"><i class="fa fa-fw fa-eye"></i></a> <a title="Sửa" style:"display:inline;" class="btn btn-info btn-small edit-button text-white" data-toggle="modal" data-target="#editModal" data-id="'+data+'"><i class="fa fa-fw fa-pencil"></i></a> <a title="Xóa" style:"display:inline;" class="btn btn-danger btn-small delete-button text-white" data-toggle="modal" data-target="#deleteModal" data-id="'+data+'"><i class="fa fa-fw fa-trash"></i></a>';
+    	return '<a href="admin/truyen/'+data+'/danh-sach-chuong" title="Xem" role="button" style="display:inline;" class="btn btn-outline-success btn-small show-button"><i class="fa fa-fw fa-eye"></i></a> <button title="Sửa" style:"display:inline;" class="btn btn-outline-info btn-small edit-button" data-toggle="modal" data-target="#editModal" data-id="'+data+'"><i class="fa fa-fw fa-pencil"></i></button> <button title="Xóa" style:"display:inline;" class="btn btn-outline-danger btn-small delete-button" data-toggle="modal" data-target="#deleteModal" data-id="'+data+'"><i class="fa fa-fw fa-trash"></i></button>';
     }}
+  ],
+  columnDefs:[
+    {visible:false, targets:[3]}
   ],
   language:{
     "processing":   "Đang xử lý...",
@@ -339,19 +451,30 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.edit-button', function(){
-      $('#name_edit').val($(this).closest('tr').find('td').eq(2).text());
+      $('#name_edit').val($(this).closest('tr').find('td').eq(1).text());
+
       $('#image_edit').val(''); 
+
       $('#preview_edit').attr('src','');
-      var des = $(this).closest('tr').find('td').eq(4).text();
-      var author = $(this).closest('tr').find('td').eq(7).find('a').data('id');
-      var category = $(this).closest('tr').find('td').eq(6).find('a').data('id');
+
+      var des = dataTable.row($(this).parents('tr')).data()['description'];
+
+      var author = $(this).closest('tr').find('td').eq(4).find('a').data('id');
+
+      var category = $(this).closest('tr').find('td').eq(5).find('a').data('id');
+
       CKEDITOR.instances.description_edit.setData(des);
-      // $('#author_edit').text($(this).closest('tr').find('td').eq(7).text()).trigger('change');
-      var image = $(this).closest('tr').find('td').eq(3).find('img').attr('src');
+
+      var image = $(this).closest('tr').find('td').eq(2).find('img').attr('src');
+
       $('#author_edit').val(author).trigger('change');
+
       $('#category_edit').val(category).trigger('change');
-      $('#slug_edit').val($(this).closest('tr').find('td').eq(2).text());
+
+      $('#slug_edit').val($(this).closest('tr').find('td').eq(1).text());
+
       $('#sua').val($(this).data('id'));
+
       $('#preview_edit').attr('src',image);
     });
 
@@ -387,9 +510,38 @@ $(document).ready(function(){
       $('#xoa').val($(this).data('id'));      
     });
 
+  $(document).on('click','.detailButton', function(){
+
+    $('#detailModalLabel').text($(this).text());
+    var id = $(this).closest('tr').find('td').find('.delete-multi-checkbox').val();
+
+    $.ajax({
+      type: 'GET',
+      url: 'admin/truyen/'+id+'/chitiet',
+      async: 'false',
+      success: function(data){
+        $('#name_detail').text(data.name);
+        $('#category_detail').text(data.category.name);
+        $('#author_detail').text(data.author.name);
+        $('#status_detail').html(data.status ? '<span class="badge badge-success">Hoạt động</span>': '<span class="badge badge-danger">Không hoạt động</span>');
+        $('#view_like_detail').html('<span class="text-success">'+data.view+ ' đọc</span> - <span class="text-danger">'+data.like+' thích</span>');
+        $('#description_detail').html(data.description);
+        $('#created_at_detail').text(moment(data.created_at).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
+        $('#updated_at_detail').text(moment(data.updated_at).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
+        $('#user_detail').text(data.user.name);
+
+        $('#image_detail').attr('src','upload/'+data.image);
+
+      },
+      error: function(){
+          
+      }
+    });
+  });-
+
     //change status
     $(document).on('change','.status-checkbox', function(){
-      var id = $(this).closest('tr').find('td').eq(1).text();
+      var id = $(this).closest('tr').find('.edit-button').data('id');
       var checked = $(this).prop('checked');
       $.ajax({
         type: 'POST',
@@ -398,7 +550,7 @@ $(document).ready(function(){
           '_token': $('input[name=_token]').val(),
           'id': id,
           'checked': checked,
-        },
+        }
       });
     });
 

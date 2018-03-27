@@ -18,6 +18,8 @@ class CreateChapterTable extends Migration
             $table->string('name');
             $table->unsignedInteger('story_id');
             $table->foreign('story_id')->references('id')->on('story')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->longText('content');
             $table->integer('ordering');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

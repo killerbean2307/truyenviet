@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Story;
 use App\Author;
+use App\Chapter;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
@@ -35,6 +36,37 @@ class StoryController extends Controller
         }
         return Datatables::of($stories)->make(true);
 
+    }
+
+    public function getChapterView($id)
+    {
+    	$story = Story::find($id);
+    	$lastOrder = $story->chapter()->orderBy('ordering','desc')->pluck('ordering')->first();
+    	return view('admin.chapter.list', compact('story','lastOrder'));
+    }
+
+    public function getChaptersByStoryId($id)
+    {
+    	$story = Story::findOrFail($id);
+    	$chapters = $story->chapter()->orderBy('ordering')->get();
+  		if(!empty($chapters))
+  		{
+    		foreach($chapters as $chapter)
+    		{
+    			$chapter->user->name;
+    		}
+    	}
+    	return Datatables::of($chapters)
+    		->make(true);
+    }
+
+    public function getDetail($id)
+    {
+    	$story = Story::findOrFail($id);
+    	$story->category;
+    	$story->author;
+    	$story->user;
+    	return response()->json($story);
     }
 
     public function store(Request $request)

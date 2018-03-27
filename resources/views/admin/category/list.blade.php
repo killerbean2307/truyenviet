@@ -198,7 +198,7 @@ $('#data-table').DataTable({
     { data: 'id' ,name: 'id'},
     { data: 'name', name: 'name'},
     { data: 'description', name:'description', width: "20%"},
-    { data: 'status', name: 'status',render: function(data, type, row){
+    { data: 'status', name: 'status', className: 'text-center',render: function(data, type, row){
       if(data==1)
       {
         return '<div class="pretty p-icon p-round p-pulse p-smooth"> <input type="checkbox" class="status-checkbox" checked />    <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
