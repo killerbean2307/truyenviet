@@ -78,6 +78,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         Route::get('/{id}/danhsach', 'StoryController@getChaptersByStoryId')->name('admin.story.listChapter');
 
+        Route::get('/{id}/chuong-moi-nhat','StoryController@getLastestChapterOrder')->name('admin.story.lastestChapterOrder');
+
         Route::get('/{id}/chitiet', 'StoryController@getDetail')->name('admin.story.detail');
 
         Route::post('/them', 'StoryController@store')->name('admin.story.store');
@@ -93,8 +95,14 @@ Route::group(['prefix'=>'admin'], function(){
     });
 
     Route::group(['prefix' => 'chuong'], function() {
+        Route::get('/{id}/chi-tiet', 'ChapterController@getDetail');
+
         Route::post('/them', 'ChapterController@store')->name('admin.chapter.store');
 
+        Route::put('/{id}/sua', 'ChapterController@update')->name('admin.chapter.update');
+
         Route::delete('/xoa', 'ChapterController@delete')->name('admin.chapter.delete');
+
+        Route::delete('/xoa-nhieu', 'ChapterController@deleteMulti')->name('admin.chapter.deleteMulti');
     });
 });

@@ -7,6 +7,7 @@ use App\Category;
 use App\Story;
 use App\Author;
 use App\Chapter;
+use App\User;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
@@ -41,15 +42,15 @@ class StoryController extends Controller
     public function getChapterView($id)
     {
     	$story = Story::find($id);
-    	$lastOrder = $story->chapter()->orderBy('ordering','desc')->pluck('ordering')->first();
-    	return view('admin.chapter.list', compact('story','lastOrder'));
+
+    	return view('admin.chapter.list', compact('story'));
     }
 
     public function getChaptersByStoryId($id)
     {
     	$story = Story::findOrFail($id);
     	$chapters = $story->chapter()->orderBy('ordering')->get();
-  		if(!empty($chapters))
+  		if($chapters->isNotEmpty())
   		{
     		foreach($chapters as $chapter)
     		{
@@ -181,5 +182,12 @@ class StoryController extends Controller
         $story->status = $status;
         $story->save();
         return response()->json(['success' => 'Thay đổi trạng thái thành công']);    	
+    }
+
+    public function getLastestChapterOrder($id)
+    {
+        $story = Story::find($id);
+        $lastOrder = $story->chapter()->orderBy('ordering','desc')->pluck('ordering')->first();
+        return $lastOrder;        
     }
 }

@@ -64,7 +64,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="detailModalLabel"></h5>
+          <h5 class="modal-title" id="detailModalLabel">Chi tiết truyện</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -245,7 +245,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel">Sửa tác giả</h5>
+          <h5 class="modal-title" id="editModalLabel">Sửa truyện</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -537,7 +537,7 @@ $(document).ready(function(){
           
       }
     });
-  });-
+  });
 
     //change status
     $(document).on('change','.status-checkbox', function(){
