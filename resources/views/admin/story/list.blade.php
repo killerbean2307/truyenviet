@@ -41,11 +41,13 @@
                   {{-- <th data-priority="3">ID</th> --}}
                   <th>Tên</th>
                   <th>Ảnh</th>
+                  <th>Đánh giá</th>
                   <th>Mô tả</th>
                   <th>Trạng thái</th>
                   <th>Thể loại</th>
                   <th>Tác giả</th>
-                  {{-- <th>Lượt xem</th> --}}
+                  <th>Lượt xem</th>
+                  <th>Lượt like</th>
                   {{-- <th>Nguồn</th> --}}
                   {{-- <th>Tạo</th> --}}
                   <th>Cập nhật</th>
@@ -366,14 +368,15 @@ $('#data-table').DataTable({
     	return '<div class="pretty p-icon p-thick p-smooth"> <input type="checkbox" name="delete-item[]" class="delete-multi-checkbox" value="'+data+'"/> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
     }},
     // { data:'id' ,name: 'id'},
-    { data: 'name', name: 'name', render: function(data,type,row){
-      return '<a data-toggle="modal" data-target="#detailModal" href="" class="detailButton">'+data+'</a>'
+    { data: 'name', width: '20%' , name: 'name',render: function(data,type,row){
+      var content = '<a data-toggle="modal" data-target="#detailModal" href="" class="detailButton"><img style="width: 50px; height: 50px; float: left" src="upload/'+row['image']+'"/>'+data+'</a>';
+      if(!row['image'])
+        content = '<a data-toggle="modal" data-target="#detailModal" href="" class="detailButton">'+data+'</a>';
+      return content;
     }},
-    { data: 'image', name:'image',render: function(data, type, row){
-      if(!data)
-        return "Chưa có";
-      else 
-        return '<img width="100%" src= upload/'+data+'>';
+    { data: 'image', name:'image'},
+    { data: 'view', name:'view', searchable: false, orderable: true,width: '15%',render: function(data, type, row) {
+      return '<span class="text-muted">'+data+ ' <i class="fa fa-eye fa-fw"></i></span> - <span class="text-primary">'+row['like']+' <i class="fa fa-thumbs-up fa-fw"></span>';
     }},
     { data:'description',name:'description',render: function(data, type, row){
       if(!data)
@@ -387,14 +390,21 @@ $('#data-table').DataTable({
         return data;
     }},
     { data: 'status',  className:'text-center', name: 'status',render: function(data, type, row){
-      if(data==1)
-      {
-        return '<div class="pretty p-icon p-round p-pulse p-smooth"> <input type="checkbox" class="status-checkbox" checked /> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
+      var text = "";
+      switch(parseInt(data)){
+        case 0: 
+          text = '<span class="badge badge-danger">Drop</span>';
+          break;
+        case 1:
+          text = '<span class="badge badge-info">Còn tiếp</span>';
+          break;
+        case 2:
+          text = '<span class="badge badge-success">Hoàn thành</span>';
+          break;
+        default:
+          return '<span class="badge badge-info">Còn tiếp</span>';
       }
-      else
-      {
-        return '<div class="pretty p-icon p-round p-pulse p-smooth"> <input type="checkbox" class="status-checkbox" /> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
-      }
+      return text;
     }},
     { data:'category', name:'category', render: function(data, type, row){
       return '<a href="admin/the-loai/'+data.slug+'" data-id="'+data.id+'">'+data.name+'</a>';
@@ -405,7 +415,8 @@ $('#data-table').DataTable({
       else 
         return 'Chưa có';
     }},
-    // { data: 'view', name: 'view'},
+    { data: 'view', name: 'view'},
+    { data: 'like', name: 'like'},  
     // { data: 'source', name:'source'},
     // { data: 'created_at', name: 'created_at', render: function(data,type,row){
     // 	return moment(data).locale('vi').fromNow(true);
@@ -418,7 +429,7 @@ $('#data-table').DataTable({
     }}
   ],
   columnDefs:[
-    {visible:false, targets:[3]}
+    {visible:false, targets:[2,4,8,9]}
   ],
   language:{
     "processing":   "Đang xử lý...",
@@ -443,7 +454,7 @@ $('#data-table').DataTable({
 $(document).ready(function(){
 
   var dataTable = $('#data-table').DataTable();
-
+  // $('[data-toggle="tooltip"]').tooltip(); 
   $('.status-checkbox').prop('indeterminate', true)
 
 	$('#checkAllDelete').click(function (){
@@ -459,9 +470,9 @@ $(document).ready(function(){
 
       var des = dataTable.row($(this).parents('tr')).data()['description'];
 
-      var author = $(this).closest('tr').find('td').eq(4).find('a').data('id');
+      var author = $(this).closest('tr').find('td').eq(5).find('a').data('id');
 
-      var category = $(this).closest('tr').find('td').eq(5).find('a').data('id');
+      var category = $(this).closest('tr').find('td').eq(4).find('a').data('id');
 
       CKEDITOR.instances.description_edit.setData(des);
 
@@ -514,7 +525,7 @@ $(document).ready(function(){
 
     $('#detailModalLabel').text($(this).text());
     var id = $(this).closest('tr').find('td').find('.delete-multi-checkbox').val();
-
+    $('#image_detail').attr('src', "");
     $.ajax({
       type: 'GET',
       url: 'admin/truyen/'+id+'/chitiet',
@@ -523,7 +534,23 @@ $(document).ready(function(){
         $('#name_detail').text(data.name);
         $('#category_detail').text(data.category.name);
         $('#author_detail').text(data.author.name);
-        $('#status_detail').html(data.status ? '<span class="badge badge-success">Hoạt động</span>': '<span class="badge badge-danger">Không hoạt động</span>');
+        $('#status_detail').html(function(){
+          var text = "";
+          switch(parseInt(data.status)){
+            case 0: 
+              text = '<div class="badge badge-danger">Drop</div>';
+              break;
+            case 1:
+              text = '<div class="badge badge-info">Còn tiếp</div>';
+              break;
+            case 2:
+              text = '<div class="badge badge-success">Hoàn thành</div>';
+              break;
+            default:
+              return '<div class="badge badge-info">Còn tiếp</div>';
+          }
+          return text;
+        });
         $('#view_like_detail').html('<span class="text-success">'+data.view+ ' đọc</span> - <span class="text-danger">'+data.like+' thích</span>');
         $('#description_detail').html(data.description);
         $('#created_at_detail').text(moment(data.created_at).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
@@ -538,21 +565,6 @@ $(document).ready(function(){
       }
     });
   });
-
-    //change status
-    $(document).on('change','.status-checkbox', function(){
-      var id = $(this).closest('tr').find('.edit-button').data('id');
-      var checked = $(this).prop('checked');
-      $.ajax({
-        type: 'POST',
-        url: 'admin/truyen/change-status',
-        data:{
-          '_token': $('input[name=_token]').val(),
-          'id': id,
-          'checked': checked,
-        }
-      });
-    });
 
     //add
     $("#them").click(function(){

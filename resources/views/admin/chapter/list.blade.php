@@ -257,17 +257,15 @@ $('#data-table').DataTable({
 	    { data:'id', name:'check', orderable: false, searchable: false, render: function(data,type,row){
 	    	return '<div class="pretty p-icon p-thick p-smooth"> <input type="checkbox" name="delete-item[]" class="delete-multi-checkbox" value="'+data+'"/> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
 	    }},
-      {data: 'id', name: 'id'},
-	    { data: 'ordering', name: 'order'},
+      	{data: 'id', name: 'id', searchable: false, orderable: false},
+	    { data: 'ordering', name: 'ordering', searchable: true},
 	    {data: 'name', className: 'font-weight-bold',name: 'name'},
 	    // { data: 'content', name: 'content'},
-	    { data: 'user', name: 'user', render: function(data, type, row){
-	    	return data.name;
-	    }},
-	    { data: 'created_at', render: function(data, type, row){
+	    { data: 'user.name', name: 'user.name', searchable: true},
+	    { data: 'created_at', searchable: false,  render: function(data, type, row){
 	    	return moment(data).locale('vi').fromNow();
 	    }},
-	    { data: 'updated_at', render: function(data, type, row){
+	    { data: 'updated_at',searchable: false, render: function(data, type, row){
 	    	return moment(data).locale('vi').fromNow();
 	    }},
 	    { data: 'id',name: 'action', orderable: false, searchable: false, render: function(data,type,row){

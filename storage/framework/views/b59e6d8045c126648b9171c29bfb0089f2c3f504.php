@@ -57,8 +57,9 @@
     </a>  
     <!-- Bootstrap core JavaScript-->
     
-    <script src="js/jquery.js"></script>
-    <script src="admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="js/jquery.js"></script>  
+    <script src="admin_asset/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="admin_asset/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
@@ -68,7 +69,6 @@
     <script src="admin_asset/js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="admin_asset/js/sb-admin-datatables.min.js"></script>
-    
     <script src="js/function.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/responsive.bootstrap4.min.js"></script>

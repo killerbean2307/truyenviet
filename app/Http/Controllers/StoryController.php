@@ -26,7 +26,7 @@ class StoryController extends Controller
     public function getAll()
     {
     	// $stories = DB::table('story');
-    	$stories = Story::all();
+    	$stories = Story::orderBy('updated_at', 'desc')->get();
         foreach($stories as $story)
         {
         	$story->category->name;
