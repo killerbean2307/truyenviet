@@ -65,9 +65,10 @@ class AuthorController extends Controller
 
     public function getStoryView($authorSlug)
     {
-        $author = Author::findBySlugOrFail($authorSlug);
-        $story = $author->story();
-        return view('admin.author.detail', compact(['author','story']));
+        $categories = Category::select('id','name')->get();
+        $authors = Author::select('id','name')->get();
+        $storyAuthor = Author::findBySlugOrFail($authorSlug);
+        return view('admin.story.list', compact(['categories','authors','storyAuthor']));
     }
 
     public function getStoryByAuthorSlug($authorSlug)
@@ -75,7 +76,9 @@ class AuthorController extends Controller
         $stories = Author::findBySlugOrFail($authorSlug)->story;
         foreach($stories as $story)
         {
-            $story->category->name;
+            $story->category;
+            if($story->author)
+                $story->author;
         }
         return Datatables::of($stories)->make(true);
     }

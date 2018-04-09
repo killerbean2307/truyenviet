@@ -1,7 +1,13 @@
 @extends('admin.layout.master')
 
 @section('title')
-  Danh sách truyện | ADMIN TRUYỆN VIỆT
+  @if(!empty($storyCategory))
+    Thể loại {{$storyCategory->name}} | ADMIN TRUYỆN VIỆT
+  @elseif(!empty($storyAuthor))
+    Tác giả {{$storyAuthor->name}} | ADMIN TRUYỆN VIỆT
+  @else
+    Danh sách truyện | ADMIN TRUYỆN VIỆT
+  @endif
 @endsection
 
 @section('content')
@@ -257,25 +263,25 @@
             {{ csrf_field() }}
             <input type="hidden" id='slug_edit'>
             <div class="form-group">
-              <label for="name_add" class="font-weight-bold">Tên:</label>
+              <label for="name_edit" class="font-weight-bold">Tên:</label>
               <input type="text" class="form-control" id="name_edit" required="true" placeholder="Nhập tên truyện...">
             </div>
 
             <div class="form-group">
-              <label for="description_add" class="font-weight-bold">Giới thiệu:</label>
+              <label for="description_edit" class="font-weight-bold">Giới thiệu:</label>
               <textarea class="form-control ckeditor" id="description_edit" placeholder="Nhập giới thiệu"></textarea>
             </div>
 
             
             <div class="form-group">
-              <label for="image_add" class="font-weight-bold">Ảnh:</label>
+              <label for="image_edit" class="font-weight-bold">Ảnh:</label>
               <input type="file" class="form-control" id="image_edit">
             </div>
             <div class="form-group">
               <img src="" alt="Preview" id="preview_edit">  
             </div>
             <div class="form-group">
-              <label for="category_add" class="font-weight-bold">Thể Loại</label>
+              <label for="category_edit" class="font-weight-bold">Thể Loại</label>
               <select class="form-control select2" id="category_edit" name="category" required="true">
                 <option></option>
                 @foreach($categories as $category)
@@ -285,7 +291,7 @@
             </div>
 
             <div class="form-group">
-              <label for="author_add" class="font-weight-bold">Tác giả</label>
+              <label for="author_edit" class="font-weight-bold">Tác giả</label>
               <select class="form-control select2" id="author_edit" name="author">
                 <option></option>         
                 @foreach($authors as $author)
@@ -293,9 +299,17 @@
                 @endforeach
               </select>
             </div>
+            
+            <div class="form-group">
+              <label for="status_edit" class="font-weight-bold">Trạng thái</label>&nbsp;
+              <label class="radio-inline"><input type="radio" name="status_edit" class="status_edit" id="drop" value="0"><span class="badge badge-danger">Drop</span></label>
+              <label class="radio-inline"><input type="radio" name="status_edit" class="status_edit" id="continue" value="1"><span class="badge badge-info">Còn tiếp</span></label>
+              <label class="radio-inline"><input type="radio" name="status_edit" class="status_edit" id="full" value="2"><span class="badge badge-success">Hoàn thành</span></label>                            
+              </select>              
+            </div>
 
             <div class="form-group">
-              <label for="source_add" class="font-weight-bold">Nguồn:</label>
+              <label for="source_edit" class="font-weight-bold">Nguồn:</label>
               <input type="text" class="form-control" id="source_edit" placeholder="Nhập nguồn...">
             </div>
       </div>
@@ -357,21 +371,26 @@
 
 @section('script')
 <script>
-
+var url = 'admin/truyen/danhsach';
+@if(!empty($storyCategory))
+  url = 'admin/the-loai/truyen/{{$storyCategory->slug}}';
+@elseif(!empty($storyAuthor))
+  url = 'admin/tac-gia/truyen/{{$storyAuthor->slug}}';
+@endif
 $('#data-table').DataTable({
   processing: true,
   serverSide: true,
   responsive: true,
-  ajax: 'admin/truyen/danhsach',
+  ajax: url,
   columns:[
     { data:'id', name:'check', orderable: false, searchable: false, render: function(data,type,row){
     	return '<div class="pretty p-icon p-thick p-smooth"> <input type="checkbox" name="delete-item[]" class="delete-multi-checkbox" value="'+data+'"/> <div class="state p-primary"> <i class="icon mdi mdi-check"></i> <label></label> </div> </div>';
     }},
     // { data:'id' ,name: 'id'},
     { data: 'name', width: '20%' , name: 'name',render: function(data,type,row){
-      var content = '<a data-toggle="modal" data-target="#detailModal" href="" class="detailButton"><img style="width: 50px; height: 50px; float: left" src="upload/'+row['image']+'"/>'+data+'</a>';
+      var content = '<a href="admin/truyen/'+row['id']+'/danh-sach-chuong"><img style="width: 50px; height: 50px; float: left" src="upload/'+row['image']+'"/>'+data+'</a>';
       if(!row['image'])
-        content = '<a data-toggle="modal" data-target="#detailModal" href="" class="detailButton">'+data+'</a>';
+        content = '<a href="admin/truyen/'+row['id']+'/danh-sach-chuong">'+data+'</a>';
       return content;
     }},
     { data: 'image', name:'image'},
@@ -406,14 +425,14 @@ $('#data-table').DataTable({
       }
       return text;
     }},
-    { data:'category', name:'category', render: function(data, type, row){
+    { data:'category', name:'category', orderable: false, render: function(data, type, row){
       return '<a href="admin/the-loai/'+data.slug+'" data-id="'+data.id+'">'+data.name+'</a>';
     }},
-    { data:'author', name:'author', render: function(data, type, row){
+    { data:'author', name:'author', orderable: false, render: function(data, type, row){
       if(data)
         return '<a href="admin/tac-gia/'+data.slug+'" data-id="'+data.id+'">'+data.name+'</a>';
       else 
-        return 'Chưa có';
+        return 'Chưa rõ';
     }},
     { data: 'view', name: 'view'},
     { data: 'like', name: 'like'},  
@@ -425,11 +444,17 @@ $('#data-table').DataTable({
 		  return moment(data).locale('vi').fromNow();
     }},	
     { data: 'id',name: 'action', orderable: false, searchable: false, render: function(data,type,row){
-    	return '<a href="admin/truyen/'+data+'/danh-sach-chuong" title="Xem" role="button" style="display:inline;" class="btn btn-outline-success btn-small show-button"><i class="fa fa-fw fa-eye"></i></a> <button title="Sửa" style:"display:inline;" class="btn btn-outline-info btn-small edit-button" data-toggle="modal" data-target="#editModal" data-id="'+data+'"><i class="fa fa-fw fa-pencil"></i></button> <button title="Xóa" style:"display:inline;" class="btn btn-outline-danger btn-small delete-button" data-toggle="modal" data-target="#deleteModal" data-id="'+data+'"><i class="fa fa-fw fa-trash"></i></button>';
+    	return '<button title="Xem" data-toggle="modal" data-target="#detailModal" role="button" style="display:inline;" class="btn btn-outline-success btn-small detailButton"><i class="fa fa-fw fa-eye"></i></button> <button title="Sửa" style:"display:inline;" class="btn btn-outline-info btn-small edit-button" data-toggle="modal" data-target="#editModal" data-id="'+data+'"><i class="fa fa-fw fa-pencil"></i></button> <button title="Xóa" style:"display:inline;" class="btn btn-outline-danger btn-small delete-button" data-toggle="modal" data-target="#deleteModal" data-id="'+data+'"><i class="fa fa-fw fa-trash"></i></button>';
     }}
   ],
   columnDefs:[
-    {visible:false, targets:[2,4,8,9]}
+    {visible:false, targets:[2,4,8,9, 
+        @if(!empty($storyCategory))
+          {{6}}
+        @elseif(!empty($storyAuthor))
+          {{7}}
+        @endif
+      ]}
   ],
   language:{
     "processing":   "Đang xử lý...",
@@ -462,31 +487,43 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.edit-button', function(){
-      $('#name_edit').val($(this).closest('tr').find('td').eq(1).text());
 
-      $('#image_edit').val(''); 
-
-      $('#preview_edit').attr('src','');
-
-      var des = dataTable.row($(this).parents('tr')).data()['description'];
-
-      var author = $(this).closest('tr').find('td').eq(5).find('a').data('id');
-
-      var category = $(this).closest('tr').find('td').eq(4).find('a').data('id');
-
-      CKEDITOR.instances.description_edit.setData(des);
-
-      var image = $(this).closest('tr').find('td').eq(2).find('img').attr('src');
-
-      $('#author_edit').val(author).trigger('change');
-
-      $('#category_edit').val(category).trigger('change');
-
-      $('#slug_edit').val($(this).closest('tr').find('td').eq(1).text());
-
+      var id = $(this).data('id');
+      
       $('#sua').val($(this).data('id'));
 
-      $('#preview_edit').attr('src',image);
+      $.ajax({
+        type: 'GET',
+        url: 'admin/truyen/'+id+'/chitiet',
+        async: false,
+        success: function(data){
+          $('#name_edit').val(data.name);
+          $('#category_edit').val(data.category_id).trigger('change');
+          $('#author_edit').val(data.author_id).trigger('change');
+          $('#source_edit').val(data.source);
+          CKEDITOR.instances['description_edit'].setData(data.description);
+          switch(data.status){
+            case 0:
+              $('#drop').prop('checked', true);
+              break;
+
+            case 1: 
+              $('#continue').prop('checked', true);
+              break;
+
+            case 2:
+              $('#full').prop('checked', true);
+              break;
+          }
+          if(data.image)
+            $('#preview_edit').attr('src','upload/'+data.image);
+
+        },
+        errors: function(){
+
+        }
+      });
+
     });
 
   $('.select2').select2({
@@ -533,7 +570,10 @@ $(document).ready(function(){
       success: function(data){
         $('#name_detail').text(data.name);
         $('#category_detail').text(data.category.name);
-        $('#author_detail').text(data.author.name);
+        if(data.author)
+        {
+          $('#author_detail').text(data.author.name);
+        }
         $('#status_detail').html(function(){
           var text = "";
           switch(parseInt(data.status)){
@@ -556,8 +596,8 @@ $(document).ready(function(){
         $('#created_at_detail').text(moment(data.created_at).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
         $('#updated_at_detail').text(moment(data.updated_at).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
         $('#user_detail').text(data.user.name);
-
-        $('#image_detail').attr('src','upload/'+data.image);
+        if(data.image)
+          $('#image_detail').attr('src','upload/'+data.image);
 
       },
       error: function(){
@@ -620,7 +660,6 @@ $(document).ready(function(){
 
     //Sua
     $('#sua').click(function(){
-      var slug = ChangeToSlug($('#slug_edit').val());
       // alert(slug);
       var _token = $('input[name=_token]').val();
       var name = $('#name_edit').val();
@@ -628,6 +667,7 @@ $(document).ready(function(){
       var author = $('#author_edit').val();
       var category = $('#category_edit').val();
       var image = $('#image_edit').prop('files')[0];
+      var status = $('.status_edit:checked').val();
       var _method = 'PUT';
 
       var form = new FormData();
@@ -636,6 +676,7 @@ $(document).ready(function(){
       form.append('_method',_method);
       form.append('name',name);
       form.append('description',description);
+      form.append('status', status);
       if(image)
       {
         form.append('image',image);
@@ -647,7 +688,7 @@ $(document).ready(function(){
 
       $.ajax({
         type: 'POST',
-        url: 'admin/truyen/sua/'+slug+'/'+id,
+        url: 'admin/truyen/sua/'+id,
         contentType: false,       // The content type used when sending data to the server.
         processData: false,
         data: form,

@@ -34,9 +34,10 @@ class CategoryController extends Controller
 
     public function getStoryView($categorySlug)
     {
-        $category = Category::findBySlugOrFail($categorySlug);
-        $story = $category->story;
-        return view('admin.category.detail', compact(['story','category']));
+        $categories = Category::select('id','name')->get();
+        $authors = Author::select('id','name')->get();
+        $storyCategory = Category::findBySlugOrFail($categorySlug);
+        return view('admin.story.list', compact(['categories','authors','storyCategory']));
     }
 
     public function getStoryByCategorySlug($categorySlug)
@@ -46,6 +47,7 @@ class CategoryController extends Controller
         {
             if($story->author)
                 $story->author;
+            $story->category;
         }
         return Datatables::of($stories)->make(true);
     }

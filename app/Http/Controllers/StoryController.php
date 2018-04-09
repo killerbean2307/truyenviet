@@ -108,11 +108,9 @@ class StoryController extends Controller
    		return response()->json($story);    	
     }
 
-    public function update(Request $request, $storySlug ,$storyId)
+    public function update(Request $request, $storyId)
     {
         $story = Story::findOrFail($storyId);
-        if($story->slug == $storySlug)
-        {	
         	$this->validate($request,
         		[
         			'name' => 'required|min:2|max:50|',
@@ -127,7 +125,8 @@ class StoryController extends Controller
             $story->name = $request->name;
             $story->description = $request->description;
         	$story->category_id = $request->category;
-        	$story->author_id = $request->author ;
+        	$story->author_id = $request->author;
+        	$story->status = $request->status;
             if($request->hasFile('image'))
             {
                 $file = $request->file('image');
@@ -146,8 +145,6 @@ class StoryController extends Controller
             }    
             $story->save();
             return response()->json(["success" => "Edit success"]);
-        }
-        else return response()->json(["error" => "Edit fail"]);
     }
 
     public function delete(Request $request)

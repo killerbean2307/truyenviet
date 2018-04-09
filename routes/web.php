@@ -84,7 +84,7 @@ Route::group(['prefix'=>'admin'], function(){
 
         Route::post('/them', 'StoryController@store')->name('admin.story.store');
 
-        Route::put('/sua/{storySlug}/{storyId}', 'StoryController@update')->name('admin.story.update');
+        Route::put('/sua/{storyId}', 'StoryController@update')->name('admin.story.update');
 
         Route::delete('/xoa', 'StoryController@delete')->name('admin.story.delete');
 
