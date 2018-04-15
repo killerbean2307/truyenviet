@@ -23,7 +23,8 @@ class AuthorSeeder extends Seeder
         		[
         			'name' => $faker->name,
         			'status' => $faker->numberBetween(0,1),
-                    'detail' => $faker->realText()
+                    'detail' => $faker->realText(),
+                    'created_by' => 1
         		]
         	);
         }

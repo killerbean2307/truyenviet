@@ -20,7 +20,11 @@ class CreateAuthorTable extends Migration
             $table->text('detail')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->unsignedInteger('created_by')->nullable();
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->unsignedInteger('updated_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

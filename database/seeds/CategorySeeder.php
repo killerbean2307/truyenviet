@@ -22,6 +22,7 @@ class CategorySeeder extends Seeder
         		[
         			'name' => $faker->name,
         			'description' => $faker->realText,
+                    'created_by' => 1
         		]
         	);
         }
