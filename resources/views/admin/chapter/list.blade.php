@@ -147,7 +147,7 @@
             </div>
 
             <div class="form-group">
-              <label for="content_add" class="font-weight-bold">Giới thiệu:</label>
+              <label for="content_add" class="font-weight-bold">Nội dung:</label>
               <textarea class="form-control ckeditor" id="content_add" placeholder="Nhập nội dung"></textarea>
             </div>
       </div>
@@ -335,6 +335,7 @@ $(document).ready(function(){
       url: 'admin/chuong/'+id+'/chi-tiet',
       success: function(data){
         $('#name_edit').val(data.name);
+        $('#editModalLabel').text('Sửa chương '+data.ordering+': '+data.name);
         $('#ordering_edit').val(data.ordering);
         CKEDITOR.instances['content_edit'].setData(data.content);
       }
@@ -352,7 +353,7 @@ $(document).ready(function(){
         $('#name_detail').text(data.name);
         $('#user_detail').text(data.user.name);
         $('#content_detail').html(data.content);
-        $('#ordering_detail').text(data.detail);
+        $('#ordering_detail').text(data.ordering);
         $('#created_at_detail').text(moment(data.created_at).locale('vi').fromNow());
         $('#updated_at_detail').text(moment(data.updated_at).locale('vi').fromNow());
       },

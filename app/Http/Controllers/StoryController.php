@@ -64,10 +64,25 @@ class StoryController extends Controller
     public function getDetail($id)
     {
     	$story = Story::findOrFail($id);
-    	$story->category;
-    	$story->author;
-    	$story->user;
-    	return response()->json($story);
+    	return response()->json([
+            'id' => $story->id,
+            'name' => $story->name,
+            'author' => $story->author,
+            'category' => $story->category,
+            'created_at' => $story->created_at,
+            'description' => $story->description,
+            'image' => $story->image,
+            'slug' => $story->slug,
+            'source' => $story->source,
+            'updated_at' => $story->updated_at,
+            'updated_by' => $story->updated_by,
+            'user' => $story->user,
+            'view' => $story->view,
+            'like' => $story->like,
+            'name' => $story->name,
+            'status' => $story->status,
+            'chapter_count' => $story->chapter->count()
+        ]);
     }
 
     public function store(Request $request)

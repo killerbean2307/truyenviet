@@ -122,6 +122,14 @@
 
             <div class="row">
               <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="chapter_count_detail" class="font-weight-bold">Số chương</label>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="chapter_count_detail">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <label for="description_detail" class="font-weight-bold">Giới thiệu</label>
               </div>
               <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="description_detail">
@@ -497,9 +505,10 @@ $(document).ready(function(){
         url: 'admin/truyen/'+id+'/chitiet',
         async: false,
         success: function(data){
+          $('#editModalLabel').text('Sửa truyện '+data.name);
           $('#name_edit').val(data.name);
-          $('#category_edit').val(data.category_id).trigger('change');
-          $('#author_edit').val(data.author_id).trigger('change');
+          $('#category_edit').val(data.category.id).trigger('change');
+          $('#author_edit').val(data.author.id).trigger('change');
           $('#source_edit').val(data.source);
           CKEDITOR.instances['description_edit'].setData(data.description);
           switch(data.status){
@@ -559,8 +568,6 @@ $(document).ready(function(){
     });
 
   $(document).on('click','.detailButton', function(){
-
-    $('#detailModalLabel').text($(this).text());
     var id = $(this).closest('tr').find('td').find('.delete-multi-checkbox').val();
     $('#image_detail').attr('src', "");
     $.ajax({
@@ -568,6 +575,7 @@ $(document).ready(function(){
       url: 'admin/truyen/'+id+'/chitiet',
       async: 'false',
       success: function(data){
+        $('#detailModalLabel').text('Truyện '+data.name);
         $('#name_detail').text(data.name);
         $('#category_detail').text(data.category.name);
         if(data.author)
@@ -593,9 +601,10 @@ $(document).ready(function(){
         });
         $('#view_like_detail').html('<span class="text-success">'+data.view+ ' đọc</span> - <span class="text-danger">'+data.like+' thích</span>');
         $('#description_detail').html(data.description);
-        $('#created_at_detail').text(moment(data.created_at).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
-        $('#updated_at_detail').text(moment(data.updated_at).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
+        $('#created_at_detail').text(moment(data.created_at.date).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
+        $('#updated_at_detail').text(moment(data.updated_at.date).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
         $('#user_detail').text(data.user.name);
+        $('#chapter_count_detail').text(data.chapter_count);
         if(data.image)
           $('#image_detail').attr('src','upload/'+data.image);
 
