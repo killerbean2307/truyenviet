@@ -17,4 +17,19 @@ class Chapter extends Model
     {
     	return $this->belongsTo('App\User', 'user_id', 'id');
     }
+
+    public static function getNewestChapter($category_id = "", $number)
+    {
+        $chap = Chapter::orderBy('created_at','desc');
+
+        if($category_id != '')
+        {
+            $chap = $chap->whereHas('story', function($query) use ($category_id){
+                $query->where('category_id', $category_id);
+            });
+        }
+        $chap = $chap->limit($number)->get();
+
+        return $chap;
+    }
 }

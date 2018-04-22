@@ -22,7 +22,7 @@ class CreateStoryTable extends Migration
             $table->foreign('category_id')->references('id')->on('category')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('author_id')->nullable();
             $table->foreign('author_id')->references('id')->on('author')->onUpdate('cascade')->onDelete('set null');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status'); //0: drop 1: con tiep 2: hoan thanh
             $table->integer('view')->default(0);
             $table->integer('like')->default(0);
             $table->unsignedInteger('user_id')->nullable();

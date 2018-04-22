@@ -10,15 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+// test
+Route::get('/', 'HomeController@getIndex');
 
 Route::get('test', function(){
 	return view('admin.layout.master');
 });
 
+Route::get('index.html', 'HomeController@getIndex');
+
+Route::get('truyenmoi/{category_id}', 'StoryController@getNewestStory');
+
+// end test
+
+//admin
 Route::group(['prefix'=>'admin'], function(){
 
 	Route::get('/', function(){
