@@ -452,7 +452,7 @@ $('#data-table').DataTable({
 		  return moment(data).locale('vi').fromNow();
     }},	
     { data: 'id',name: 'action', orderable: false, searchable: false, render: function(data,type,row){
-    	return '<button title="Xem" data-toggle="modal" data-target="#detailModal" role="button" style="display:inline;" class="btn btn-outline-success btn-small detailButton"><i class="fa fa-fw fa-eye"></i></button> <button title="Sửa" style:"display:inline;" class="btn btn-outline-info btn-small edit-button" data-toggle="modal" data-target="#editModal" data-id="'+data+'"><i class="fa fa-fw fa-pencil"></i></button> <button title="Xóa" style:"display:inline;" class="btn btn-outline-danger btn-small delete-button" data-toggle="modal" data-target="#deleteModal" data-id="'+data+'"><i class="fa fa-fw fa-trash"></i></button>';
+    	return '<button title="Xem" data-toggle="modal" data-target="#detailModal" role="button" style="display:inline;" class="btn btn-outline-success btn-sm detailButton"><i class="fa fa-fw fa-eye"></i></button> <button title="Sửa" style:"display:inline;" class="btn btn-outline-info btn-sm edit-button" data-toggle="modal" data-target="#editModal" data-id="'+data+'"><i class="fa fa-fw fa-pencil"></i></button> <button title="Xóa" style:"display:inline;" class="btn btn-outline-danger btn-sm delete-button" data-toggle="modal" data-target="#deleteModal" data-id="'+data+'"><i class="fa fa-fw fa-trash"></i></button>';
     }}
   ],
   columnDefs:[

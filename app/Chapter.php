@@ -18,7 +18,7 @@ class Chapter extends Model
     	return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-    public static function getNewestChapter($category_id = "", $number)
+    public static function getNewestChapter($category_id = "")
     {
         $chap = Chapter::orderBy('created_at','desc');
 
@@ -28,7 +28,7 @@ class Chapter extends Model
                 $query->where('category_id', $category_id);
             });
         }
-        $chap = $chap->limit($number)->get();
+        $chap = $chap->get();
 
         return $chap;
     }

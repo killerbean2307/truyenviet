@@ -44,4 +44,19 @@ class Story extends Model
     {
         return $this->belongsTo('App\User', 'user_id');
     }
+
+    public static function getFullStory($category_id = null)
+    {
+        $story = Story::where('status', 2);
+
+        if($category_id != null){
+            $story->where('category_id', $category_id);
+        }
+
+        // $story->with(['chapter' => function($query){
+        //     $query->orderBy('created_at','desc');
+        // } ]);
+        $story->orderBy('view','desc');
+        return $story->get();
+    }
 }

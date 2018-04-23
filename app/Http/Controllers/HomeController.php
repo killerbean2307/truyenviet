@@ -23,7 +23,8 @@ class HomeController extends Controller
 	
     public function getIndex()
     {	
-    	$newestChapters = Chapter::getNewestChapter(null, 10);
-    	return view('index', compact('newestChapters'));
-    }
+		$newestChapters = Chapter::getNewestChapter()->take(10);
+		$fullStories = Story::getFullStory()->take(10);
+    	return view('index', compact('newestChapters','fullStories'));
+	}
 }

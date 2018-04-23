@@ -218,7 +218,7 @@ $('#data-table').DataTable({
       var url = window.location.href;
       url = url+"/"+data;
 
-      return '<a title="Xem" href="'+url+'" style:"display:inline;" class="btn btn-outline-success btn-small show-button""><i class="fa fa-fw fa-eye"></i></a> <button title="Sửa" style:"display:inline;" class="btn btn-outline-info btn-small edit-button" data-toggle="modal" data-target="#editModal" data-id="'+data+'"><i class="fa fa-fw fa-pencil"></i></button> <button title="Xóa" style:"display:inline;" class="btn btn-outline-danger btn-small delete-button" data-toggle="modal" data-target="#deleteModal" data-id="'+data+'"><i class="fa fa-fw fa-trash"></i></button>';}}
+      return '<a title="Xem" href="'+url+'" style:"display:inline;" class="btn btn-outline-success btn-sm show-button""><i class="fa fa-fw fa-eye"></i></a> <button title="Sửa" style:"display:inline;" class="btn btn-outline-info btn-sm edit-button" data-toggle="modal" data-target="#editModal" data-id="'+data+'"><i class="fa fa-fw fa-pencil"></i></button> <button title="Xóa" style:"display:inline;" class="btn btn-outline-danger btn-sm delete-button" data-toggle="modal" data-target="#deleteModal" data-id="'+data+'"><i class="fa fa-fw fa-trash"></i></button>';}}
 
   ],
   language:{

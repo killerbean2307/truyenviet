@@ -1,4 +1,4 @@
-<footer class="mt-4 text-white footer">
+<footer class="mt-4 text-white footer wow slideInUp">
 	<div class="row mx-2 pt-3">
 		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ">
 			<h3>Giới thiệu</h3>

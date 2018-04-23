@@ -1,6 +1,6 @@
 
 {{-- navbar --}}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #2C3E50!important;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark wow slideInDown" style="background-color: #2C3E50!important;">
 	<div class="container">
 		<a class="navbar-brand" href="#">TRUYỆN VIỆT</a>
   		
@@ -22,7 +22,7 @@
 				        			@foreach ($chunk as $category)
 										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 dropdown-item-custom">
 										
-												<a href="#" target="_blank">{{ $category->name }}</a>
+												<a href="#">{{ $category->name }}</a>
 											
 										</div>
 				        			@endforeach

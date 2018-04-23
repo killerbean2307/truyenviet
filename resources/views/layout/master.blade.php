@@ -6,18 +6,15 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<base href="{{asset('')}}">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<link rel="icon" href="favicon.ico" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   	<style>
 
 	  	body{
-	  		background-color: #F2F3F7 ;
+	  		background-color: #DEDEDE ;
 	  		font-family: 'Open Sans', sans-serif;
 	  	}
 	  	.navbar{
@@ -38,6 +35,7 @@
 			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 			margin: 0;
 			border: 1px #f0f0f5;
+			z-index: 99999999999999999!important;
 		}
 		
 		.dropdown-item-custom{
@@ -72,9 +70,9 @@
 			color: white!important;
 		}
 
-		.nav-item:hover{
+		/* .nav-item:hover{
 			background-color: #CCCCCC;
-		}
+		} */
 
 		footer{
 			background-color: #2C3E50;
@@ -94,11 +92,6 @@
 	        display: inline-block;
 	        font-size: 1rem;
 		}
-			
-/*		.list-content a{
-			text-decoration: none;
-			color: black;
-		}*/
 	</style>
 
 @yield('css')
@@ -123,7 +116,13 @@
 </body>
 
 @include('layout.footer')
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script>
+	new WOW().init();
+</script>
 <script>
 	$(document).ready(function(){
       	$(".dropdown").hover(function () {

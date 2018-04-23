@@ -19,8 +19,8 @@ Route::get('test', function(){
 
 Route::get('index.html', 'HomeController@getIndex');
 
-Route::get('truyenmoi/{category_id}', 'StoryController@getNewestStory');
-
+// Route::get('truyenmoi/{category_id}', 'StoryController@getNewestStory');
+// Route::get('truyenhoanthanh','HomeController@getFullStory');
 // end test
 
 //admin
