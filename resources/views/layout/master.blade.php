@@ -5,18 +5,45 @@
   	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<base href="{{asset('')}}">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Fira+Sans|Noto+Serif|Roboto|Roboto+Slab" rel="stylesheet">
 	<link rel="icon" href="favicon.ico" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
   	<style>
-
 	  	body{
-	  		background-color: #DEDEDE ;
-	  		font-family: 'Open Sans', sans-serif;
+	  		background-color: #F2F3F7 ;
+	  		font-family: 'Roboto Slab', sans-serif;
 	  	}
+
+	  	.breadcrumb{
+		    display: -webkit-box;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -ms-flex-wrap: wrap;
+		    flex-wrap: wrap;
+		    padding: .75rem 1rem;
+		    margin-bottom: 1rem;
+		    list-style: none;
+		    background-color: white;
+		    border-radius: .25rem;
+		    box-shadow: 0px 0px 10px 0px rgba(245, 166, 35, 0.2)
+	  	}
+		
+		ol.breadcrumb{
+			-webkit-margin-before: 1em;
+    		-webkit-margin-after: 1em;
+    		-webkit-margin-start: 0px;
+    		-webkit-margin-end: 0px;
+    		-webkit-padding-start: 40px;
+		}
+		
+		.breadcrumb a{
+			text-decoration: none;
+			color: #8B572A;
+			font-weight: bold;
+		}
+
 	  	.navbar{
 	  		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	  		/*position: static!important;*/
@@ -82,16 +109,80 @@
 		}
 
 		.title-list{
-			border-bottom: 2px solid #1ABC9C;
+			border-bottom: 2px solid #F5A623;
 		}
 
 		.title-list>a>span{
-			background-color: #1ABC9C;
+			background-color: #F5A623;
 	        color: aliceblue;
 	        padding: 8px 20px;
 	        display: inline-block;
 	        font-size: 1rem;
+	        font-weight: bold;
 		}
+
+		.hot-icon:before{
+    		content: "HOT";
+    		color: #e74c3c;
+    		border: 1px solid #e74c3c;			
+		}
+
+		.full-icon:before{
+			content: "FULL";
+    		color: #4CAF50;
+    		border: 1px solid #4CAF50;
+		}
+		
+		.new-icon:before{
+			content: "NEW";
+    		color: #2980b9;
+    		border: 1px solid #2980b9;
+		}
+
+		.full-icon:before, .hot-icon:before, .new-icon:before{
+			width: 20px;
+    		font-size: 11px;
+    		font-weight: 500;
+    		padding: 0 3px;
+    		letter-spacing: -1px;
+    		margin-left: 5px;
+		}
+
+		.list-content{
+			background-color: white;
+			box-shadow: 0px 0px 10px 0px rgba(245, 166, 35, 0.2);
+		}
+
+		.list-content>.row{
+			border-top: 0.5px dashed #e5e5e5;
+			margin: 0;
+		}
+
+		.list-content>:first-child{
+			padding-top: 1em;
+			margin-top: 1em;
+			border: none;
+		}
+
+		.content a{
+			text-decoration: none;
+			color: black;
+		}
+
+		.content a:hover{
+			color: #F5A623;
+		}
+
+		/*pagination*/
+		.page-item.active .page-link{
+			background-color: #F5A623!important;
+			border-color: #F5A623!important;
+		}
+
+		.font-size-85-em{
+			font-size: 0.85em;
+		}
+		
 	</style>
 
 @yield('css')

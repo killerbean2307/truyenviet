@@ -59,4 +59,9 @@ class Story extends Model
         $story->orderBy('view','desc');
         return $story->get();
     }
+
+    public function isFull()
+    {
+        return $this->status == 2 ? true : false;
+    }
 }

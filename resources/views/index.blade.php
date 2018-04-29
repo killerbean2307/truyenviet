@@ -2,19 +2,9 @@
 
 @section('css')
 <style>
-
-	.content a{
-		text-decoration: none;
-		color: black;
-	}
-
-	.content a:hover{
-		color: turquoise;
-	}
-
 	.newchap-list-story-name a{
-		color: 	#008080;
-		font-weight: bold;
+		color: 	#8B572A;
+		font-weight: 900;
 	}
 	
 	/* .newchap-list-story-name .badge{
@@ -22,19 +12,16 @@
 		text-overflow: ellipsis;
 	} */
 
-	.list-content{
-		background-color: white;
+	.full-story-item-name{
+		color: #8B572A!important;
 	}
 
-	.list-content>.row{
-		border-top: 0.5px dashed #F0FFFF;
-		margin: 0;
+	.full-story-item-name:hover{
+		color: #F5A623!important;
 	}
 
-	.list-content>:first-child{
-		padding-top: 1em;
-		margin-top: 1em;
-		border: none;
+	.full-story-item-image{
+		border: 1px solid #d8d8d8;
 	}
 
 </style>
@@ -47,7 +34,7 @@
 		{{-- content --}}
 		
 		{{-- Truyen hot --}}
-		<div class="container wow fadeIn" style="margin-bottom:5rem">
+		<div class="container-fluid wow fadeIn" style="margin-bottom:2rem">
 			<div class="list">
 				<h3 class="title-list float-left">
 					<a href="#">
@@ -78,27 +65,28 @@
 						<span class="text-uppercase">Truyện mới cập nhật &nbsp;<i class="fas fa-newspaper"></i></span>
 					</a>
 				</h3>
-				<div class="list-content">
+				{{-- <div class="list-title py-2">Truyện mới cập nhật</div> --}}
+				<div class="list-content" id="list-new">
 					@foreach($newestChapters as $newChap)
 						<div class="row">
-							<div class="col-8 col-sm-6 col-md-6 col-lg-6 newchap-list-story-name">
-								<i class="fas fa-book"></i>
-								<a href="#">
+							<div class="col-8 col-sm-6 col-md-6 col-lg-6 newchap-list-story-name pt-2">
+								<i class="fas fa-book" style="padding-right: 0.85em; color: #8b572a;"></i>
+								<a href="{{route('story', $newChap->story->slug)}}">
 									{{$newChap->story->name}}
 								</a>
 								@if(\Carbon\Carbon::create($newChap->story->createdAt) > \Carbon\Carbon::now()->subWeek())
-									<span class="badge badge-primary">Mới</span>
+									<span class="new-icon"></span>
 								@endif
 
 								@if($newChap->story->status == 2)
-									<span class="badge badge-success">Full</span>
+									<span class="full-icon"></span>
 								@endif
 							</div>
 							<div class="d-none d-sm-block col-sm-3 col-md-3 col-lg-3 newchap-list-category-name">
-								<a href="#">{{$newChap->story->category->name}}</a>
+								<a href="{{route('category.story', $newChap->story->category->slug)}}">{{$newChap->story->category->name}}</a>
 							</div>
 							<div class="col-4 col-sm-3 col-md-3 col-lg-3 newchap-list-ordering">
-								<a href="#" class="">Chương {{$newChap->ordering}}</a>
+								<a href="{{route('chapter', array($newChap->story->slug, $newChap->ordering))}}" class="" style="color: #F5A623">Chương {{$newChap->ordering}}</a>
 								<p class="text-muted small">{{ $newChap->created_at->diffForHumans()}}</p>
 							</div>
 						</div>
@@ -124,23 +112,23 @@
 					<div class="row">
 						@foreach($fullStories as $fullStory)
 							<div class="col-12 col-sm-12 col-md-6 col-lg-6">
-								<div class="row">
+								<div class="row py-1">
 									<div class="col-4 col-sm-4 col-md-4 col-lg-4">
 										@if($fullStory->image)
-											<a href="#">
-												<img src="upload/{{$fullStory->image}}" class="rounded" alt="" width="100%" height="auto">
+											<a href="{{route('story', $fullStory->slug)}}">
+												<img src="upload/{{$fullStory->image}}" class="rounded full-story-item-image" alt="" width="100%" height="auto">
 											</a>
 										@else
-											<a href="#">
-												<img src="no_image_vertical.png" alt="" width="100%" height="auto" class="rounded">
+											<a href="{{route('story', $fullStory->slug)}}">
+												<img src="no_image_vertical.png" alt="" width="100%" height="auto" class="rounded full-story-item-image">
 											</a>
 										@endif
 									</div>
 									<div class="col-8 col-sm-8 col-md-8 col-lg-8">
-										<a href="#" class="font-weight-bold" style="color:#008080 hover:turquoise">{{$fullStory->name}}</a>
+										<a href="{{route('story', $fullStory->slug)}}" class="font-weight-bold full-story-item-name">{{$fullStory->name}}</a>
 										<div class="small">
 											<div>
-												Thể loại: <a href="#">{{$fullStory->category->name}}</a>
+												Thể loại: <a href="{{route('category.story', $fullStory->category->slug)}}">{{$fullStory->category->name}}</a>
 											</div>
 											<div>
 												<a href="#">{{$fullStory->author->name}}</a>
@@ -153,6 +141,9 @@
 								</div>
 							</div>
 						@endforeach
+						<div class="mt-3 pb-2 pl-4">
+							<a href="#">Xem tất tả <i class="fa fa-chevron-right"></i></a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -163,9 +154,7 @@
 		{{-- end content --}}
 
 		{{-- side bar --}}
-		<div class="col-lg-4 col-md-4 col-sm-12 col-12" style="margin-left: -4px">
-			<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fdoctruyen123%2F&tabs=timeline&width=340&height=250&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=194208891305427" width="340" height="250" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
-		</div>
+		@include('layout.sidebar')
 		{{-- end side bar --}}
 	</div>
 

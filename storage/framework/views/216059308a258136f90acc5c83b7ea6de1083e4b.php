@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tổng quan">
-          <a class="nav-link" href="<?php echo e(route('admin.category.index')); ?>">
+          <a class="nav-link" href="<?php echo e(route('admin.dashboard')); ?>">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Tổng quan</span>
           </a>

@@ -15,4 +15,7 @@
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem esse molestias, ratione architecto similique quasi velit enim ipsa, saepe corporis reprehenderit soluta totam, libero necessitatibus ab inventore, at nobis doloribus.</p>
 		</div>		
 	</div>
+	<div class="text-center">
+		&copy; 2018 TruyenViet.Com. All Rights Reserved.
+	</div>
 </footer>

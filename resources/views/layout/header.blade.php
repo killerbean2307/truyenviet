@@ -2,7 +2,7 @@
 {{-- navbar --}}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark wow slideInDown" style="background-color: #2C3E50!important;">
 	<div class="container">
-		<a class="navbar-brand" href="#">TRUYỆN VIỆT</a>
+		<a class="navbar-brand" href="{{route('index')}}">TRUYỆN VIỆT</a>
   		
   		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNav" aria-controls="myNav" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
@@ -22,7 +22,7 @@
 				        			@foreach ($chunk as $category)
 										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 dropdown-item-custom">
 										
-												<a href="#">{{ $category->name }}</a>
+												<a href="{{route('category.story',$category->slug)}}">{{ $category->name }}</a>
 											
 										</div>
 				        			@endforeach

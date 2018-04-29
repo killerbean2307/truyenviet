@@ -33,11 +33,7 @@
   <link rel="stylesheet" href="css/pretty-checkbox.css"/>
   <link rel="stylesheet" href="css/materialdesignicons.min.css">
   <link rel="stylesheet" href="css/scroll.css">
-  
-
-
-  <script src="admin_asset/vendor/ckeditor/ckeditor.js"></script>
-  
+    
   <link rel="icon" href="favicon.ico" />
 
   <?php echo $__env->yieldContent('css'); ?>
@@ -77,6 +73,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="admin_asset/vendor/select2/dist/js/select2.js"></script>
+    <script src="admin_asset/vendor/ckeditor/ckeditor.js"></script>
   </div>
 
     <?php echo $__env->yieldContent('script'); ?>

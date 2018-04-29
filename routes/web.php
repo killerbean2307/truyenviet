@@ -11,24 +11,22 @@
 |
 */
 // test
-Route::get('/', 'HomeController@getIndex');
+Route::get('/', 'HomeController@getIndex')->name('index');
 
-Route::get('test', function(){
-	return view('admin.layout.master');
+Route::group(['prefix' => '/the-loai'], function(){
+    Route::get('/{categorySlug}', 'HomeController@getCategoryStory')->name('category.story');
 });
 
-Route::get('index.html', 'HomeController@getIndex');
+Route::group(['prefix' => '/truyen'], function(){
+    Route::get('/{storySlug}', 'HomeController@getStoryView')->name('story');
 
-// Route::get('truyenmoi/{category_id}', 'StoryController@getNewestStory');
-// Route::get('truyenhoanthanh','HomeController@getFullStory');
-// end test
+    Route::get('/{storySlug}/chuong-{ordering}', 'HomeController@getChapterView')->name('chapter')->where('ordering','[0-9]+');
+});
 
 //admin
 Route::group(['prefix'=>'admin'], function(){
 
-	Route::get('/', function(){
-		return redirect(route('admin.category.index'));
-	});
+	Route::get('/', 'HomeController@getDashboard')->name('admin.dashboard');
 	//Tac gia
     Route::group(['prefix' => 'tac-gia'], function () {
         Route::get('/', 'AuthorController@index')->name('admin.author.index');
