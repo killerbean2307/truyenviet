@@ -14,7 +14,7 @@ class CreateViewCount extends Migration
     public function up()
     {
         Schema::create('view_count', function (Blueprint $table) {
-            $table->unsignedInteger('story_id');
+            $table->unsignedInteger('story_id')->unique();
             $table->foreign('story_id')->references('id')->on('story')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('day_view')->default(0);
             $table->integer('week_view')->default(0);

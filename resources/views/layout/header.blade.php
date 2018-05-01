@@ -12,7 +12,7 @@
 	  	<div class="collapse navbar-collapse" id="myNav">
 	    	<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 				<li class="nav-item dropdown">
-			        <a class="nav-link dropdown-toggle" href="#" id="category_dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			        <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="category_dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			          Thể loại
 			        </a>
 			        <div class="dropdown-menu" aria-labelledby="category_dropdown" id="category_dropdown_menu">
@@ -35,12 +35,13 @@
 			        </div>
 			    </li>
 			   	<li class="nav-item dropdown">
-			        <a class="nav-link dropdown-toggle" href="#" id="collection_dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			        <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="collection_dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			          Danh mục
 			        </a>
 			        <div class="dropdown-menu" aria-labelledby="collection_dropdown">
-			          <a class="dropdown-item" href="#">Action</a>
-			          <a class="dropdown-item" href="#">Another action</a>
+			          <a class="dropdown-item" href="#">Truyện Hot</a>
+					  <a class="dropdown-item" href="#">Truyện Hoàn Thành</a>
+					  <a href="#" class="dropdown-item">Truyện mới</a>
 			        </div>
 			    </li>
 	    	</ul>

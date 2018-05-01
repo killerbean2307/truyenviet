@@ -8,6 +8,7 @@ use App\Story;
 use App\Author;
 use App\Chapter;
 use App\User;
+use App\ViewCount;
 use Charts;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
@@ -26,7 +27,9 @@ class HomeController extends Controller
     {	
 		$newestChapters = Chapter::getNewestChapter()->take(10);
 		$fullStories = Story::getFullStory()->take(10);
-    	return view('index', compact('newestChapters','fullStories'));
+		$hotStories = Story::getHotStory()->take(10);
+		// return response()->json($hotStories);
+    	return view('index', compact('newestChapters','fullStories','hotStories'));
 	}
 
 	public function getCategoryStory($categorySlug)

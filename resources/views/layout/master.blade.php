@@ -7,13 +7,14 @@
   	<base href="{{asset('')}}">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Fira+Sans|Noto+Serif|Roboto|Roboto+Slab" rel="stylesheet">
-	<link rel="icon" href="favicon.ico" />
+	<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
   	<style>
 	  	body{
 	  		background-color: #F2F3F7 ;
-	  		font-family: 'Roboto Slab', sans-serif;
+			font-family: 'Merriweather Sans', sans-serif;
 	  	}
 
 	  	.breadcrumb{
@@ -163,7 +164,6 @@
 			margin-top: 1em;
 			border: none;
 		}
-
 		.content a{
 			text-decoration: none;
 			color: black;
@@ -182,28 +182,24 @@
 		.font-size-85-em{
 			font-size: 0.85em;
 		}
-		
 	</style>
 
 @yield('css')
 
 </head>
 <body>
+@include('layout.header')
 
-{{-- <div id="fb-root"></div>
+@yield('content')
+<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.12&appId=194208891305427';
+  js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.12&appId=194208891305427&autoLogAppEvents=1';
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script> --}}
-<!-- <h1>Sticky nav</h1> -->
-
-@include('layout.header')
-
-@yield('content')
-
+}(document, 'script', 'facebook-jssdk'));
+</script>
 </body>
 
 @include('layout.footer')
@@ -211,6 +207,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
 <script>
 	new WOW().init();
 </script>

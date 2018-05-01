@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(StorySeeder::class);
         $this->call(ChapterSeeder::class);
+        $this->call(ViewCountSeeder::class);
     }
 }

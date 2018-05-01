@@ -24,8 +24,11 @@ class ChapterController extends Controller
     		'content.required' => 'Không được phép để trống nội dung',
     		'name.max' => 'Tên truyện tối đa 191 ký tự',
     		'ordering.numeric' => 'Thứ tự bắt buộc phải là số'
-    	]);
-
+        ]);
+        $story = Story::find($request->story_id);
+        if($story->isFull()){
+            return response()->json(["message" => "Story is end", "errors" => ["content" => "Truyện đã full. Không thể thêm chương mới"]],422);
+        }
     	$chapter = new Chapter();
     	$chapter->name = $request->name;
     	$chapter->content = $request->content;

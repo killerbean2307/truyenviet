@@ -40,6 +40,11 @@ class Story extends Model
     	return $this->belongsTo('App\Category','category_id');
     }
 
+    public function viewCount()
+    {
+        return $this->hasOne('App\ViewCount', 'story_id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
@@ -63,5 +68,13 @@ class Story extends Model
     public function isFull()
     {
         return $this->status == 2 ? true : false;
+    }
+
+    public static function getHotStory($category_id = null)
+    {
+        $story = Story::leftJoin('view_count', 'story.id', 'view_count.story_id')
+                    ->orderBy('view_count.week_view','desc')
+                    ->get();
+        return $story;
     }
 }

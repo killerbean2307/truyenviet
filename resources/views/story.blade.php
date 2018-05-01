@@ -85,9 +85,9 @@
 				</div>
 			</div>
 
-			<div class=" my-border py-3 my-3 px-4">
-				<h6 class="font-weight-bold pb-3">Danh sách chương mới nhất</h6>
-				<div>
+			<div class="row my-border py-3 my-3 px-4">
+				<h6 class="font-weight-bold pb-3 col-12">Danh sách chương mới nhất</h6>
+				<div class="col-12">
 					@foreach($topLastedChapter as $lchap)
 						<div class="font-size-85-em py-1">
 							<i class="fas fa-certificate"></i> 
@@ -100,9 +100,9 @@
 				</div>
 			</div>
 
-			<div class=" my-border py-3 my-4 px-4" id="chapter-list">
-				<h6 class="font-weight-bold pb-3">Danh sách chương</h6>
-				<div>
+			<div class="row my-border py-3 my-4 px-4" id="chapter-list">
+				<h6 class="font-weight-bold pb-3 col-12">Danh sách chương</h6>
+				<div class="col-12">
 					@foreach($chapters as $chap)
 						<div class="font-size-85-em py-1">
 							<i class="fas fa-certificate"></i> 

@@ -36,22 +36,43 @@
 		{{-- Truyen hot --}}
 		<div class="container-fluid wow fadeIn" style="margin-bottom:2rem">
 			<div class="list">
-				<h3 class="title-list float-left">
+				<h3 class="title-list">
 					<a href="#">
 						<span class="text-uppercase">
 							Truyện hot <i class="fas fa-fire"></i>
 						</span>
 					</a>
+					<select name="category-select" id="category-select" class="float-right rounded d-none d-md-block mt-1" style="font-size:16px;">
+						<option value="0">Tất cả</option>
+						@foreach($categories as $category)
+							<option value="{{$category->id}}">{{$category->name}}</option>
+						@endforeach
+					</select>
 				</h3>
-				<select name="category-select" id="category-select" class="float-right rounded d-none d-md-block">
-					<option value="0">Tất cả</option>
-					@foreach($categories as $category)
-						<option value="{{$category->id}}">{{$category->name}}</option>
-					@endforeach
-				</select>
 
-				<div class="list-content" style="height: 10cm; background-color:steelblue">
-
+				<div class="list-content">
+					<div class="row">
+						<div class="owl-carousel owl-theme">
+							@foreach($hotStories->chunk(2) as $hotStory)
+								<div class="item mx-3">
+									@foreach($hotStory as $hot)
+										<div class="item my-3">										
+											<a href="{{route('story', $hot->slug)}}">
+												@if($hot->image)
+													<img src="upload/{{$hot->image}}" alt="{{$hot->name}}" width="100%" height="auto" class="rounded full-story-item-image">
+												@else
+													<img src="no_image_vertical.png" alt="{{$hot->name}}" width="100%" height="auto" class="rounded full-story-item-image">
+												@endif
+											</a>
+											<div class="caption text-center">
+												<a href="{{route('story', $hot->slug)}}">{{$hot->name}}</a>
+											</div>	
+										</div>
+									@endforeach
+								</div>
+							@endforeach
+						</div>
+					</div>    
 				</div>
 			</div>
 		</div>
@@ -172,4 +193,45 @@
 	    async defer></script> --}}
 </div>
 
+@endsection
+
+@section('script')
+<script>
+$('.owl-carousel').owlCarousel({
+    loop:true,
+	items: 20,
+    margin:10,
+	nav: true,
+	animateIn: 'fadeIn',
+	animateOut: 'fadeOut',
+	// navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],	
+	autoplay:true,
+    autoplayTimeout:5000,
+    autoplayHoverPause:true,
+	responsiveClass:true,
+    responsive:{
+        0:{
+            items:2,
+			nav:true
+
+        },
+        600:{
+            items:3,
+			nav:true
+
+        },
+        1000:{
+            items:5,
+
+        }
+    }
+});
+// $( ".owl-prev").html('<i class="fa fa-angle-left"></i>');
+// $( ".owl-next").html('<i class="fa fa-angle-right"></i>');
+// $('.owl-carousel').find('.owl-nav').removeClass('disabled');
+// $('.owl-carousel').find('.owl-nav').addClass('text-center');
+// $('.owl-carousel').on('changed.owl.carousel', function(event) {
+// 	$(this).find('.owl-nav').removeClass('disabled');
+// });
+</script>
 @endsection
