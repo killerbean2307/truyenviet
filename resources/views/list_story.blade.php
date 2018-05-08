@@ -4,7 +4,13 @@
 	.item-image{
 		border: 1px solid #d8d8d8;
 	}
-
+	
+	.pagination{
+	    padding-left: 0;
+	    margin: 20px 0;
+	    border-radius: 4px;
+	    justify-content: center;
+	}
 /*	.title-list>a:hover{
 		cursor: text;
 	}*/
@@ -18,13 +24,22 @@
 	    <li class="breadcrumb-item">
 	      <a href="">Trang chủ</a>
 	    </li>
-	    <li class="breadcrumb-item active"><a href="
-			@if($is_category)
-				{{route('category.story', $slug)}}
-			@else
-				{{""}}
-			@endif
-	    	">{{$title}}</a></li>
+	    <li class="breadcrumb-item active">
+	    	<a href="
+				@switch($list)
+					@case(1)
+						{{route('category.story', $slug)}}
+						@break
+					@case(2)
+						{{route('author.story', $slug)}}
+						@break
+					@default
+						{{$slug}}
+				@endswitch
+	    	">
+	    	{{$title}}
+	    	</a>
+		</li>
 	  </ol>
 	</div>
 
@@ -32,7 +47,7 @@
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 mr-1 py-3 content wow fadeIn">
 			<div class="list">
 				<h3 class="title-list">
-					<a href="javascript:void(0)"{{--  style="cursor: text;" --}}>
+					<a onclick="return false;" {{--  style="cursor: text;" --}}>
 						<span class="text-uppercase">
 							@if(isset($title))
 								{{$title}}
@@ -45,7 +60,7 @@
 						@foreach($listStories as $story)
 							<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 								<div class="row py-1">
-									<div class="col-4 col-sm-4 col-md-4 col-lg-4">
+									<div class="col-4 col-sm-4 col-md-4 col-lg-4 pr-0">
 										@if($story->image)
 											<a href="{{route('story',$story->slug)}}">
 												<img src="upload/{{$story->image}}" class="rounded item-image" alt="" width="100%" height="auto">
@@ -63,7 +78,7 @@
 												Thể loại: <a href="{{route('category.story',$story->category->slug)}}">{{$story->category->name}}</a>
 											</div>
 											<div>
-												<a href="#">{{$story->author->name}}</a>
+												<a href="{{route('author.story', $story->author->slug)}}">{{$story->author->name}}</a>
 											</div>
 											<div>
 												Số chương: {{$story->chapter->count()}}
@@ -71,13 +86,18 @@
 													{{"(Full)"}}
 												@endif
 											</div>
+											<div>
+												Lượt đọc: {{$story->view}}
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						@endforeach
 					</div>
-					{{$listStories->links("pagination::bootstrap-4")}}
+					<div class="w-100 py-3">
+						{{$listStories->links("pagination::bootstrap-4")}}
+					</div>
 				</div>
 			</div>
 		</div>

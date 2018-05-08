@@ -768,7 +768,7 @@ $(document).ready(function(){
           $('#deleteMulti').modal('hide');
         }
       });
-   }); 
+   });
 
 });
 </script>

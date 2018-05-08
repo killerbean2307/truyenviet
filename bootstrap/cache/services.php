@@ -39,6 +39,7 @@
     35 => 'App\\Providers\\RouteServiceProvider',
     36 => 'Yajra\\Datatables\\DatatablesServiceProvider',
     37 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
+    38 => 'Grimthorr\\LaravelToast\\ServiceProvider',
   ),
   'eager' => 
   array (
@@ -67,6 +68,7 @@
     22 => 'App\\Providers\\RouteServiceProvider',
     23 => 'Yajra\\Datatables\\DatatablesServiceProvider',
     24 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
+    25 => 'Grimthorr\\LaravelToast\\ServiceProvider',
   ),
   'deferred' => 
   array (

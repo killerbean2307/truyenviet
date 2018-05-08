@@ -19,6 +19,8 @@ class CreateViewCount extends Migration
             $table->integer('day_view')->default(0);
             $table->integer('week_view')->default(0);
             $table->integer('month_view')->default(0);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });        
     }
 

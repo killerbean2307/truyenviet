@@ -8,11 +8,13 @@ use App\Story;
 use App\Author;
 use App\Chapter;
 use App\User;
+use App\ViewCount;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\Auth;
 
 class StoryController extends Controller
 {
@@ -42,7 +44,10 @@ class StoryController extends Controller
     public function getChapterView($id)
     {
     	$story = Story::find($id);
-
+        // $notification = array(
+        //     'message' => 'I am a successful message!', 
+        //     'alert-type' => 'success'
+        // );
     	return view('admin.chapter.list', compact('story'));
     }
 
@@ -118,8 +123,12 @@ class StoryController extends Controller
     	$story->status = 1;
         $story->created_at = Carbon::now();
         $story->updated_at = Carbon::now();
-
+        $story->user_id = Auth::id;
    		$story->save();
+
+        $viewCountStory = new ViewCount;
+        $viewCountStory->story_id = $story->id;
+        $viewCountStory->save();
    		return response()->json($story);    	
     }
 
@@ -157,7 +166,8 @@ class StoryController extends Controller
                 }
                 $file->move("upload/",$tenhinh);
                 $story->image = $tenhinh;
-            }    
+            }
+            $story->update_by = Auth::id();    
             $story->save();
             return response()->json(["success" => "Edit success"]);
     }
@@ -192,6 +202,7 @@ class StoryController extends Controller
             $status = 1;
         }
         $story->status = $status;
+        $story->updated_by = Auth::id();
         $story->save();
         return response()->json(['success' => 'Thay đổi trạng thái thành công']);    	
     }

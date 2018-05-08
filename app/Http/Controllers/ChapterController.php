@@ -17,18 +17,28 @@ class ChapterController extends Controller
     {
     	$this->validate($request,[
     		'name' => 'max:191',
-    		'ordering' => 'numeric',
+    		'ordering' => 'required|numeric|min:1',
     		'content' => 'required'
     	],
     	[
+            'ordering.required' => 'Thứ tự không được để trống',
     		'content.required' => 'Không được phép để trống nội dung',
     		'name.max' => 'Tên truyện tối đa 191 ký tự',
-    		'ordering.numeric' => 'Thứ tự bắt buộc phải là số'
+    		'ordering.numeric' => 'Thứ tự bắt buộc phải là số',
+            'ordering.min' => 'Thứ tự phải bắt đầu từ 1'
         ]);
+
         $story = Story::find($request->story_id);
         if($story->isFull()){
             return response()->json(["message" => "Story is end", "errors" => ["content" => "Truyện đã full. Không thể thêm chương mới"]],422);
         }
+
+        $order = $story->chapter->pluck('ordering');
+
+        if($order->contains($request->ordering)){
+            return response()->json(["message" => "Ordering is duplicate", "errors" => ["content" => "Chương ".$request->ordering." đã có. Hãy thêm chương khác"]],422);
+        }
+
     	$chapter = new Chapter();
     	$chapter->name = $request->name;
     	$chapter->content = $request->content;

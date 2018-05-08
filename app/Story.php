@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\ViewCount;
+use App\Chapter;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
@@ -27,7 +29,7 @@ class Story extends Model
 
     public function chapter()
     {
-    	return $this->hasMany('App\Chapter','story_id','id');
+    	return $this->hasMany('App\Chapter');
     }
 
     public function author()
@@ -42,7 +44,7 @@ class Story extends Model
 
     public function viewCount()
     {
-        return $this->hasOne('App\ViewCount', 'story_id');
+        return $this->hasOne('App\ViewCount', 'story_id', 'id');
     }
 
     public function user()
@@ -52,7 +54,7 @@ class Story extends Model
 
     public static function getFullStory($category_id = null)
     {
-        $story = Story::where('status', 2);
+        $story = Story::has('chapter')->where('status', 2);
 
         if($category_id != null){
             $story->where('category_id', $category_id);
@@ -65,16 +67,48 @@ class Story extends Model
         return $story->get();
     }
 
+    public static function getNewStory($category_id = null)
+    {
+        $story = Story::has('chapter')->where('created_at', '>', Carbon::now()->subWeek(2));
+
+        if($category_id != null){
+            $story->where('category_id', $category_id);
+        }
+
+        $story->orderBy('updated_at','desc');
+
+        return $story->get();
+    }
+
     public function isFull()
     {
         return $this->status == 2 ? true : false;
     }
 
+    public function isHot()
+    {
+        $view = $this->viewCount->week_view;
+        if($view >= 2000)
+            return true;
+        return false;
+    }
+
     public static function getHotStory($category_id = null)
     {
-        $story = Story::leftJoin('view_count', 'story.id', 'view_count.story_id')
-                    ->orderBy('view_count.week_view','desc')
-                    ->get();
-        return $story;
+        $story = Story::leftJoin('view_count', 'story.id', 'view_count.story_id')->has('chapter')
+                    ->orderBy('view_count.week_view','desc');
+        if($category_id)
+            $story->where('category_id', $category_id);
+        return $story->get();
+    }
+
+    public function getLastChapter()
+    {
+        return $lastChapter = $this->chapter->sortBy('ordering')->last();
+    }
+
+    public function getFirstChapter()
+    {
+        return $firstChapter = $this->chapter->sortBy('ordering')->first();
     }
 }

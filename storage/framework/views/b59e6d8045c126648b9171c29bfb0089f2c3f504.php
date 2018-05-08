@@ -33,8 +33,11 @@
   <link rel="stylesheet" href="css/pretty-checkbox.css"/>
   <link rel="stylesheet" href="css/materialdesignicons.min.css">
   <link rel="stylesheet" href="css/scroll.css">
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     
   <link rel="icon" href="favicon.ico" />
+
 
   <?php echo $__env->yieldContent('css'); ?>
 </head>
@@ -44,6 +47,13 @@
     <?php echo $__env->make('admin.layout.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="content-wrapper">
     <!-- /.container-fluid-->
+    <?php if(Session::has('thongbao')): ?>
+      <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?php echo e(Session::get('thongbao')); ?>
+
+      </div>
+    <?php endif; ?>
     <?php echo $__env->yieldContent('content'); ?>
     <!-- /.content-wrapper-->
     <?php echo $__env->make('admin.layout.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
@@ -54,11 +64,13 @@
     <!-- Bootstrap core JavaScript-->
     
 
-    <script src="js/jquery.js"></script>  
+    <script src="admin_asset/vendor/jquery/jquery.js"></script>  
+
     <script src="admin_asset/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="admin_asset/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
+    <?php echo $__env->make('toast::messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <script src="admin_asset/vendor/datatables/jquery.dataTables.js"></script>
     <script src="admin_asset/vendor/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->

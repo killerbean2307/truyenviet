@@ -12,6 +12,9 @@ class EncryptCookies extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'font-family',
+        'font-size',
+        'line-height',
+        'background-color'
     ];
 }

@@ -33,8 +33,11 @@
   <link rel="stylesheet" href="css/pretty-checkbox.css"/>
   <link rel="stylesheet" href="css/materialdesignicons.min.css">
   <link rel="stylesheet" href="css/scroll.css">
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   {{-- <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.1.99/css/materialdesignicons.min.css"> --}}  
   <link rel="icon" href="favicon.ico" />
+
 
   @yield('css')
 </head>
@@ -44,6 +47,12 @@
     @include('admin.layout.header')
     <div class="content-wrapper">
     <!-- /.container-fluid-->
+    @if(Session::has('thongbao'))
+      <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{Session::get('thongbao')}}
+      </div>
+    @endif
     @yield('content')
     <!-- /.content-wrapper-->
     @include('admin.layout.footer')
@@ -54,11 +63,13 @@
     <!-- Bootstrap core JavaScript-->
     {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
 
-    <script src="js/jquery.js"></script>  
+    <script src="admin_asset/vendor/jquery/jquery.js"></script>  
+
     <script src="admin_asset/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="admin_asset/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
+    @include('toast::messages')
     <script src="admin_asset/vendor/datatables/jquery.dataTables.js"></script>
     <script src="admin_asset/vendor/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->
@@ -74,7 +85,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="admin_asset/vendor/select2/dist/js/select2.js"></script>
     <script src="admin_asset/vendor/ckeditor/ckeditor.js"></script>
-  </div>
+{{--     <script>
+      $(document).ajaxComplete(function(event,xhr,setting){
+        if(xhr.status == 403)
+          alert(jQuery.parseJSON(xhr.responseText).error);
+      });
+    </script>
+ --}}  </div>
 
     @yield('script')
 

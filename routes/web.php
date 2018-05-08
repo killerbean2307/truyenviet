@@ -12,19 +12,32 @@
 */
 // test
 Route::get('/', 'HomeController@getIndex')->name('index');
-
+Route::get('test', 'HomeController@test');
+Route::get('truyen-hoan-thanh', 'HomeController@getFullStoryList')->name('full-story');
+Route::get('truyen-moi', 'HomeController@getLastUpdatedStory')->name('new-story');
+Route::get('truyen-hot', 'HomeController@getHotStoryList')->name('hot-story');
+Route::post('/doc-chuong', 'HomeController@goToChapter')->name('doc-chuong');
 Route::group(['prefix' => '/the-loai'], function(){
     Route::get('/{categorySlug}', 'HomeController@getCategoryStory')->name('category.story');
+});
+
+Route::group(['prefix' => '/tac-gia'], function(){
+    Route::get('/{authorSlug}', 'HomeController@getStoryViewByAuthor')->name('author.story');
 });
 
 Route::group(['prefix' => '/truyen'], function(){
     Route::get('/{storySlug}', 'HomeController@getStoryView')->name('story');
 
-    Route::get('/{storySlug}/chuong-{ordering}', 'HomeController@getChapterView')->name('chapter')->where('ordering','[0-9]+');
+    Route::get('/{storySlug}/chuong-{ordering}', 'HomeController@getChapterView')->name('chapter')->where('ordering','[0-9]+')->middleware('viewFilter');
 });
 
+
+Route::get('login', 'HomeController@getLogin')->name('login');
+Route::post('login', 'HomeController@postLogin')->name('post.login');
+Route::get('logout','HomeController@getLogout')->name('logout');
+Route::get('refreshSession', 'HomeController@refreshSession')->name('refreshSession');
 //admin
-Route::group(['prefix'=>'admin'], function(){
+Route::group(['prefix'=>'admin','middleware' => 'auth'], function(){
 
 	Route::get('/', 'HomeController@getDashboard')->name('admin.dashboard');
 	//Tac gia
@@ -39,13 +52,13 @@ Route::group(['prefix'=>'admin'], function(){
 
         Route::post('/them', 'AuthorController@store')->name('admin.author.store');
 
-        Route::post('/change-status','AuthorController@changeStatus')->name('admin.author.changeStatus');
+        Route::post('/change-status','AuthorController@changeStatus')->name('admin.author.changeStatus')->middleware('admin');
 
-        Route::put('/sua/{authorSlug}', 'AuthorController@update')->name('admin.author.update');
+        Route::put('/sua/{authorSlug}', 'AuthorController@update')->name('admin.author.update')->middleware('admin');
 
-        Route::delete('/xoa', 'AuthorController@delete')->name('admin.author.delete');
+        Route::delete('/xoa', 'AuthorController@delete')->name('admin.author.delete')->middleware('admin');
 
-        Route::delete('/xoa-nhieu', 'AuthorController@deleteMulti')->name('admin.author.deleteMulti');
+        Route::delete('/xoa-nhieu', 'AuthorController@deleteMulti')->name('admin.author.deleteMulti')->middleware('admin');
 
     });
     
@@ -59,15 +72,15 @@ Route::group(['prefix'=>'admin'], function(){
 
         Route::get('/truyen/{categorySlug}', 'CategoryController@getStoryByCategorySlug')->name('admin.category.storyList');
 
-        Route::post('/them', 'CategoryController@store')->name('admin.category.store');
+        Route::post('/them', 'CategoryController@store')->name('admin.category.store')->middleware('admin');
 
-        Route::post('/change-status','CategoryController@changeStatus')->name('admin.category.changeStatus');
+        Route::post('/change-status','CategoryController@changeStatus')->name('admin.category.changeStatus')->middleware('admin');
 
-        Route::put('/sua/{categorySlug}', 'CategoryController@update')->name('admin.category.update');
+        Route::put('/sua/{categorySlug}', 'CategoryController@update')->name('admin.category.update')->middleware('admin');
 
-        Route::delete('/xoa', 'CategoryController@delete')->name('admin.category.delete');
+        Route::delete('/xoa', 'CategoryController@delete')->name('admin.category.delete')->middleware('admin');
 
-        Route::delete('/xoa-nhieu', 'CategoryController@deleteMulti')->name('admin.category.deleteMulti');
+        Route::delete('/xoa-nhieu', 'CategoryController@deleteMulti')->name('admin.category.deleteMulti')->middleware('admin');
 
     });
 

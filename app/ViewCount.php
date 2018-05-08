@@ -14,6 +14,6 @@ class ViewCount extends Model
 
     public function story()
     {
-        return $this->belongsTo('App\Story','id','story_id');
+        return $this->belongsTo('App\Story','story_id');
     }
 }

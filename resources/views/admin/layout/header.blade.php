@@ -130,9 +130,17 @@
             </div>
           </form>
         </li>
+        @if(Auth::check())
+          <li class="nav-item">
+            <a class="nav-link">
+              <i class="fa fa-fw fa-user"></i>
+              {{Auth::user()->name}}
+            </a>
+          </li>
+        @endif
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            <i class="fa fa-fw fa-sign-out"></i>Đăng Xuất</a>
         </li>
       </ul>
     </div>
@@ -142,15 +150,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Xác nhận đăng xuất?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
         </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-body">Chọn Đăng Xuất nếu bạn đã chắc chắn.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+          <a class="btn btn-primary" href="{{route('logout')}}">Đăng xuất</a>
         </div>
       </div>
     </div>

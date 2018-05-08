@@ -24,6 +24,43 @@
 		border: 1px solid #d8d8d8;
 	}
 
+	.caption{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	
+	.full{
+		width: 60px;
+		height: 60px;
+		background: url('full.png') no-repeat center center / 100%;;
+		position: absolute;
+		z-index: 100;
+		top: 0;
+		left: 0;
+	}
+
+	.slide-image{
+		position: relative;
+		transition:all 0.1s ease-in-out;
+		overflow: hidden;
+	}
+	
+	.slide-image a{
+		overflow: hidden;
+	}
+
+	.slide-image img{
+		max-width: 100%;	
+	}
+
+	.slide-image:hover a{
+		color: #F5A623;
+	}	
+
+	.slide-image:hover img{
+		border: 2px solid #F5A623;
+	}
 </style>
 @endsection
 
@@ -37,7 +74,7 @@
 		<div class="container-fluid wow fadeIn" style="margin-bottom:2rem">
 			<div class="list">
 				<h3 class="title-list">
-					<a href="#">
+					<a href="{{route('hot-story')}}">
 						<span class="text-uppercase">
 							Truyện hot <i class="fas fa-fire"></i>
 						</span>
@@ -56,14 +93,21 @@
 							@foreach($hotStories->chunk(2) as $hotStory)
 								<div class="item mx-3">
 									@foreach($hotStory as $hot)
-										<div class="item my-3">										
+										<div class="item my-3 slide-image">										
 											<a href="{{route('story', $hot->slug)}}">
 												@if($hot->image)
 													<img src="upload/{{$hot->image}}" alt="{{$hot->name}}" width="100%" height="auto" class="rounded full-story-item-image">
+													
 												@else
 													<img src="no_image_vertical.png" alt="{{$hot->name}}" width="100%" height="auto" class="rounded full-story-item-image">
+													
 												@endif
 											</a>
+
+											@if($hot->isFull())
+												<span class="full"></span>
+											@endif
+
 											<div class="caption text-center">
 												<a href="{{route('story', $hot->slug)}}">{{$hot->name}}</a>
 											</div>	
@@ -82,7 +126,7 @@
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 mr-1 py-3 content wow fadeIn">
 			<div class="list">
 				<h3 class="title-list">
-					<a href="#">
+					<a href="{{route('new-story')}}">
 						<span class="text-uppercase">Truyện mới cập nhật &nbsp;<i class="fas fa-newspaper"></i></span>
 					</a>
 				</h3>
@@ -99,8 +143,12 @@
 									<span class="new-icon"></span>
 								@endif
 
-								@if($newChap->story->status == 2)
+								@if($newChap->story->isFull())
 									<span class="full-icon"></span>
+								@endif
+
+								@if($newChap->story->isHot())
+									<span class="hot-icon"></span>
 								@endif
 							</div>
 							<div class="d-none d-sm-block col-sm-3 col-md-3 col-lg-3 newchap-list-category-name">
@@ -113,7 +161,7 @@
 						</div>
 					@endforeach
 					<div class="mt-3 pb-2 pl-4">
-						<a href="#">Xem tất tả <i class="fa fa-chevron-right"></i></a>
+						<a href="{{route('new-story')}}">Xem tất tả <i class="fa fa-chevron-right"></i></a>
 					</div>
 				</div>
 			</div>
@@ -125,7 +173,7 @@
 			{{-- truyen hoan thanh --}}
 			<div class="list wow fadeIn">
 				<h3 class="title-list">
-					<a href="">
+					<a href="{{route('full-story')}}">
 						<span class="text-uppercase">Truyện hoàn thành &nbsp;<i class="fas fa-check"></i></span>
 					</a>
 				</h3>
@@ -163,7 +211,7 @@
 							</div>
 						@endforeach
 						<div class="mt-3 pb-2 pl-4">
-							<a href="#">Xem tất tả <i class="fa fa-chevron-right"></i></a>
+							<a href="{{route('full-story')}}">Xem tất tả <i class="fa fa-chevron-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -178,19 +226,6 @@
 		@include('layout.sidebar')
 		{{-- end side bar --}}
 	</div>
-
-		{{-- <div id="map" style="width:100%;height:500px;"></div>
-	    <script>
-	      var map;
-	      function initMap() {
-	        map = new google.maps.Map(document.getElementById('map'), {
-	          center: {lat: 21.0168864, lng: 105.7855574},
-	          zoom: 16
-	        });
-	      }
-	    </script>
-	    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0TxN30zoyR0LNRwS8BgFyuGaRGWim7e0&callback=initMap"
-	    async defer></script> --}}
 </div>
 
 @endsection
@@ -199,12 +234,11 @@
 <script>
 $('.owl-carousel').owlCarousel({
     loop:true,
-	items: 20,
     margin:10,
-	nav: true,
+	nav: false,
 	animateIn: 'fadeIn',
 	animateOut: 'fadeOut',
-	// navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],	
+	navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],	
 	autoplay:true,
     autoplayTimeout:5000,
     autoplayHoverPause:true,
@@ -222,6 +256,7 @@ $('.owl-carousel').owlCarousel({
         },
         1000:{
             items:5,
+            nav:true
 
         }
     }
