@@ -102,11 +102,11 @@ Route::group(['prefix'=>'admin','middleware' => 'auth'], function(){
 
         Route::put('/sua/{storyId}', 'StoryController@update')->name('admin.story.update');
 
-        Route::delete('/xoa', 'StoryController@delete')->name('admin.story.delete');
+        Route::delete('/xoa', 'StoryController@delete')->name('admin.story.delete')->middleware('admin');
 
-        Route::delete('/xoa-nhieu', 'StoryController@deleteMulti')->name('admin.story.deleteMulti');
+        Route::delete('/xoa-nhieu', 'StoryController@deleteMulti')->name('admin.story.deleteMulti')->middleware('admin');
 
-        Route::post('/change-status', 'StoryController@changeStatus')->name('admin.truyen.changeStatus');
+        Route::post('/change-status', 'StoryController@changeStatus')->name('admin.truyen.changeStatus')->middleware('admin');
 
     });
 

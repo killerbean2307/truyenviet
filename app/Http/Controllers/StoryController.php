@@ -96,6 +96,7 @@ class StoryController extends Controller
     		[
     			'name' => 'required|min:2|max:50|',
                 'image' => 'mimes:jpeg,jpg,png,gif',
+                'category' => 'required',
     		],
     		[
     			'name.required' => 'Không được để trống tên',
@@ -103,6 +104,7 @@ class StoryController extends Controller
     			'name.max' => 'Tên giới hạn 2-50 ký tự',
     			'name.unique' => 'Tên đã trùng',
                 'image.mimes' => 'Chỉ được upload file ảnh',
+                'category.required' => 'Không được để trống thể loại',
     		]);
     	$story = new Story;
     	$story->name = $request->name;
@@ -123,7 +125,7 @@ class StoryController extends Controller
     	$story->status = 1;
         $story->created_at = Carbon::now();
         $story->updated_at = Carbon::now();
-        $story->user_id = Auth::id;
+        $story->user_id = Auth::id();
    		$story->save();
 
         $viewCountStory = new ViewCount;
@@ -135,16 +137,22 @@ class StoryController extends Controller
     public function update(Request $request, $storyId)
     {
         $story = Story::findOrFail($storyId);
+        if($story->user_id != Auth::id() and Auth::user()->level<2)
+        {
+            return response()->json(['error' => 'Truyện không do bạn phụ trách. Không được phép sửa', 'code' => 403], 403);
+        }
         	$this->validate($request,
         		[
         			'name' => 'required|min:2|max:50|',
                     'image' => 'mimes:jpeg,jpg,png,gif',
+                    'category' => 'required'
         		],
         		[
         			'name.required' => 'Không được để trống tên',
         			'name.min' => 'Tên giới hạn 2-50 ký tự',
         			'name.max' => 'Tên giới hạn 2-50 ký tự',
                     'image.mimes' => 'Chỉ được upload file ảnh',
+                    'category.required' => 'Không được để trống thể loại' 
         		]);
             $story->name = $request->name;
             $story->description = $request->description;
@@ -167,7 +175,7 @@ class StoryController extends Controller
                 $file->move("upload/",$tenhinh);
                 $story->image = $tenhinh;
             }
-            $story->update_by = Auth::id();    
+            $story->updated_by = Auth::id();    
             $story->save();
             return response()->json(["success" => "Edit success"]);
     }

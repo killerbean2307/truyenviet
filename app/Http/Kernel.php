@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'viewFilter' => \App\Http\Middleware\ViewFilter::class,
         'admin' => \App\Http\Middleware\AdminMiddleWare::class,
-        'collaborator' => \App\Http\Middleware\Collaborator::class,
+        'collaborator' => \App\Http\Middleware\CollaboratorMiddleWare::class,
+        'storyOfUser' => \App\Http\Middleware\StoryOfUser::class,
     ];
 }

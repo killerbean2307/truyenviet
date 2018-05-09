@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CollaboratorMiddleware
+class StoryOfUser
 {
     /**
      * Handle an incoming request.
@@ -15,14 +15,10 @@ class CollaboratorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check())
-        {
-            $user = Auth::user();
-            if($user->level <= 1 )
-                return $next($request);
-        }
-
-        abort(403);
-        return redirect()->back();
+        if(Auth::id() == $request->user_id)
+            return $next($request);
+        else 
+            abort(403);
+            return response()->json(['error' => 'Truyện không do bạn phụ trách. Không đủ quyền hạn', 'code' => 403], 403);
     }
 }

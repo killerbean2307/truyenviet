@@ -85,13 +85,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="admin_asset/vendor/select2/dist/js/select2.js"></script>
     <script src="admin_asset/vendor/ckeditor/ckeditor.js"></script>
-{{--     <script>
+    <script>
       $(document).ajaxComplete(function(event,xhr,setting){
         if(xhr.status == 403)
           alert(jQuery.parseJSON(xhr.responseText).error);
       });
     </script>
- --}}  </div>
+  </div>
 
     @yield('script')
 

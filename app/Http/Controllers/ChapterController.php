@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\Story;
 use App\Chapter;
+use Illuminate\Support\Facades\Auth;
 
 class ChapterController extends Controller
 {
@@ -29,6 +30,10 @@ class ChapterController extends Controller
         ]);
 
         $story = Story::find($request->story_id);
+
+        if($story->user_id != Auth::id())
+            return response()->json(['error' => 'Truyện không do bạn phụ trách. Không đủ quyền hạn', 'code' => 403], 403);
+
         if($story->isFull()){
             return response()->json(["message" => "Story is end", "errors" => ["content" => "Truyện đã full. Không thể thêm chương mới"]],422);
         }
@@ -44,7 +49,7 @@ class ChapterController extends Controller
     	$chapter->content = $request->content;
     	$chapter->ordering = $request->ordering;
     	$chapter->story_id = $request->story_id;
-    	$chapter->user_id =1;
+    	$chapter->user_id = Auth::id();
     	$chapter->save();
     	return response()->json($chapter);
     }
@@ -63,10 +68,13 @@ class ChapterController extends Controller
         ]);
 
         $chapter = Chapter::find($id);
+        if($chapter->story->user_id != Auth::id() and Auth::user()->level < 2)
+            return response()->json(['error' => 'Truyện không do bạn phụ trách. Không đủ quyền hạn', 'code' => 403], 403);
+
         $chapter->name = $request->name;
         $chapter->content = $request->content;
         $chapter->ordering = $request->ordering;
-        $chapter->user_id =1;
+        $chapter->updated_by = Auth::id();
         $chapter->save();
 
         return response()->json($chapter);
@@ -74,6 +82,11 @@ class ChapterController extends Controller
 
     public function delete(Request $request)
     {
+        if(Auth::id() != Chapter::find($request->id)->story->user_id and Auth::user()->level < 2)
+        {
+            return response()->json(['error' => 'Truyện không do bạn phụ trách. Không đủ quyền hạn', 'code' => 403], 403);
+        }
+
         if(Chapter::destroy($request->id))
         	return response()->json(['success' => 'Xóa thành công']);
     }
@@ -81,6 +94,8 @@ class ChapterController extends Controller
     public function deleteMulti(Request $request)
     {
         $id = $request->id;
+        if(Chapter::find($id[0])->story->user_id and Auth::user()->level < 2)
+            return response()->json(['error' => 'Truyện không do bạn phụ trách. Không đủ quyền hạn', 'code' => 403], 403);
         if(Chapter::destroy($id))
             return response()->json(['success' => 'Xóa thành công']);
     }

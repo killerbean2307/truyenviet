@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CollaboratorMiddleware
+class DeleteChapter
 {
     /**
      * Handle an incoming request.
@@ -15,14 +15,6 @@ class CollaboratorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check())
-        {
-            $user = Auth::user();
-            if($user->level <= 1 )
-                return $next($request);
-        }
-
-        abort(403);
-        return redirect()->back();
+        return $next($request);
     }
 }

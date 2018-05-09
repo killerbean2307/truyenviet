@@ -71,7 +71,7 @@ class CategoryController extends Controller
         $category->status = 1;
         $category->created_at = Carbon::now();
         $category->updated_at = Carbon::now();
-
+        $category->created_by = Auth::id();
         $category->save();
     	return response()->json($category);
     }
@@ -91,6 +91,7 @@ class CategoryController extends Controller
             $status = 1;
         }
         $category->status = $status;
+        $category->updated_by = Auth::id();
         $category->save();
         return response()->json($category->status);
     }
@@ -119,6 +120,7 @@ class CategoryController extends Controller
             );
             $category->name = $request->name;
             $category->description = $request->description;
+            $category->updated_by = Auth::id();
             $category->save();
             return response()->json(["success" => "Edit success"]);
         }

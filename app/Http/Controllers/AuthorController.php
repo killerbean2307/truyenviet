@@ -59,7 +59,7 @@ class AuthorController extends Controller
     	$author->status = 1;
         $author->created_at = Carbon::now();
         $author->updated_at = Carbon::now();
-
+        $author->created_by = Auth::id();
    		$author->save();
    		return response()->json($author);
     }
@@ -115,7 +115,8 @@ class AuthorController extends Controller
                 }
                 $file->move("upload/",$tenhinh);
                 $author->image = $tenhinh;
-            }    
+            }   
+            $author->updated_by = Auth::id(); 
             $author->save();
             return response()->json(["success" => "Edit success"]);
     }
@@ -129,6 +130,7 @@ class AuthorController extends Controller
             $status = 1;
         }
         $author->status = $status;
+        $author->updated_by = Auth::id();
         $author->save();
         return response()->json($author->status);
     }
