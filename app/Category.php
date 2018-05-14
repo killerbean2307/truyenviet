@@ -13,8 +13,8 @@ class Category extends Model
     protected $table = 'category';
 
     use Sluggable;
-    use SluggableScopeHelpers;
-    
+    use SluggableScopeHelpers;  
+
     public function sluggable()
     {
         return [
@@ -24,7 +24,6 @@ class Category extends Model
             ]
         ];
     }
-
 
     public function story()
     {

@@ -132,6 +132,7 @@
 					{{$chapters->links("pagination::bootstrap-4")}}
 				</div>
 			</div>
+			<div class="fb-comments" data-href="{{URL::current()}}" data-numposts="5" data-width="100%"></div>
 		</div>
 
 		<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 wow fadeIn">

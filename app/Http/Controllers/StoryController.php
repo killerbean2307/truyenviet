@@ -94,7 +94,7 @@ class StoryController extends Controller
     {
     	$this->validate($request,
     		[
-    			'name' => 'required|min:2|max:50|',
+    			'name' => 'required|min:2|max:50|unique:Story,name',
                 'image' => 'mimes:jpeg,jpg,png,gif',
                 'category' => 'required',
     		],
@@ -137,13 +137,13 @@ class StoryController extends Controller
     public function update(Request $request, $storyId)
     {
         $story = Story::findOrFail($storyId);
-        if($story->user_id != Auth::id() and Auth::user()->level<2)
+        if($story->user_id != Auth::id() and Auth::user()->level < 2)
         {
             return response()->json(['error' => 'Truyện không do bạn phụ trách. Không được phép sửa', 'code' => 403], 403);
         }
         	$this->validate($request,
         		[
-        			'name' => 'required|min:2|max:50|',
+        			'name' => 'required|min:2|max:50|unique:Story,name,'.$story->id,
                     'image' => 'mimes:jpeg,jpg,png,gif',
                     'category' => 'required'
         		],
@@ -151,6 +151,7 @@ class StoryController extends Controller
         			'name.required' => 'Không được để trống tên',
         			'name.min' => 'Tên giới hạn 2-50 ký tự',
         			'name.max' => 'Tên giới hạn 2-50 ký tự',
+                    'name.unique' => 'Tên đã trùng',
                     'image.mimes' => 'Chỉ được upload file ảnh',
                     'category.required' => 'Không được để trống thể loại' 
         		]);
@@ -218,7 +219,7 @@ class StoryController extends Controller
     public function getLastestChapterOrder($id)
     {
         $story = Story::find($id);
-        $lastOrder = $story->chapter()->orderBy('ordering','desc')->pluck('ordering')->first();
+        $lastOrder = $story->chapter()->orderBy('ordering','desc')->pluck('ordering')->first() ? $story->chapter()->orderBy('ordering','desc')->pluck('ordering')->first() : 0;
         return $lastOrder;        
     }
 }

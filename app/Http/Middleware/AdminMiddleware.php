@@ -24,6 +24,7 @@ class AdminMiddleware
         }
         else
             abort(403);
+            // return redirect()->back();
             return response()->json(['error' => 'Bạn không có quyền sử dụng chức năng này', 'code' => 403], 403);
     }
 }

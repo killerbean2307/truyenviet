@@ -14,20 +14,14 @@ class UserSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        $limit = 10;
-
-        for($i = 0; $i<$limit; $i++)
-        {
         	DB::table('users')->insert(
         		[
-        			'name' => $faker->name,
-        			'email' => $faker->email,
-        			'password' => $faker->password,
-                    'level' => 0,
+        			'name' => 'viet',
+        			'email' => 'killerbean2307',
+        			'password' => '$2y$10$PAw7zBwGq0RsflI1LpZ5OOnZObr3LrI0TFeaEwwOH8FjCZVKe.P/m',
+                    'level' => 2,
         			'active' => 1,
-        		]
-        	);
-        }
+        		]);
 
         $users = User::all();
         foreach($users as $user)

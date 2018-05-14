@@ -28,9 +28,10 @@
 @include('layout.header')
 
 @yield('content')
-</body>  
 
 @include('layout.footer')
+</body>  
+
 <script src="admin_asset/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="admin_asset/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -39,7 +40,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="js/main.js"></script>
 <script>
-	// new WOW().init();
+	new WOW().init();
 </script>
 
 

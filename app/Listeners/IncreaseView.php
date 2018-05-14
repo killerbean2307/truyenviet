@@ -7,7 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Session\Store;
 
-class IncreaseView
+class IncreaseView implements ShouldQueue
 {
     private $session;
     /**

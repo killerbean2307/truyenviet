@@ -178,6 +178,7 @@ return [
         Yajra\Datatables\DatatablesServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Grimthorr\LaravelToast\ServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
     ],
 
     /*

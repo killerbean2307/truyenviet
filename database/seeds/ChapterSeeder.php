@@ -23,7 +23,7 @@ class ChapterSeeder extends Seeder
         		[
         			'name' => $faker->name,
         			'story_id' => $faker->numberBetween(1,100),
-                    'user_id' => $faker->numberBetween(1,10),
+                    'user_id' => 1,
                     'content' => $faker->realText(500),
                     'ordering' => $faker->numberBetween(1,10)
         		]

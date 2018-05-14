@@ -45,24 +45,24 @@ $(document).ready(function(){
 
 		$(this).addClass('background-active');
 
-		$.cookie('background-color', $(this).css('background-color'), { expires: 10000 });
-		$.cookie('content-color', $(this).data('content-color'), { expires: 10000 });
-		$.cookie('font-color', $(this).data('font-color'), { expires: 10000 });
+		$.cookie('background-color', $(this).css('background-color'), { expires: 10000 , path:'/'});
+		$.cookie('content-color', $(this).data('content-color'), { expires: 10000,  path:'/' });
+		$.cookie('font-color', $(this).data('font-color'), { expires: 10000, path:'/'});
 	});
 
 	$(document).on('change','.font-family', function(){
 		$('.content').css('font-family', $(this).val());
-		$.cookie('font-family', $(this).val(), { expires: 10000 });		
+		$.cookie('font-family', $(this).val(), { expires: 10000,  path:'/' });		
 	});
 
 	$(document).on('change','.font-size', function(){
 		$('.content').css('font-size', $(this).val()+"px");
-		$.cookie('font-size', $(this).val(), { expires: 10000 });		
+		$.cookie('font-size', $(this).val(), { expires: 10000, path:'/' });		
 	});
 
 	$(document).on('change','.line-height', function(){
 		$('.content').css('line-height', $(this).val());
-		$.cookie('line-height', $(this).val(), { expires: 10000 });		
+		$.cookie('line-height', $(this).val(), { expires: 10000, path:'/'});		
 	});
 
 	$('[data-toggle="popover"]').popover({

@@ -12,13 +12,17 @@ use App\ViewCount;
 use Charts;
 use App\Events\ChapterView;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Cookie;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests;
+use Illuminate\Http\Response;
 
 class HomeController extends Controller
 {
@@ -37,7 +41,10 @@ class HomeController extends Controller
 		$chapterCount = Chapter::count();
 		$authorCount = Author::count();
 		$totalStoryView = Story::sum('view');
-		view()->share(['categories' => $categories, 'chart' => $chart, 'storyCount' => $storyCount, 'chapterCount' => $chapterCount, 'authorCount' => $authorCount, 'totalStoryView' => $totalStoryView]);
+		$topDayViewStories = Story::getTopViewDayStory();
+		$topWeekViewStories = Story::getTopViewWeekStory();
+		$topMonthViewStories = Story::getTopViewMonthStory();
+		view()->share(['categories' => $categories, 'chart' => $chart, 'storyCount' => $storyCount, 'chapterCount' => $chapterCount, 'authorCount' => $authorCount, 'totalStoryView' => $totalStoryView, 'topDayViewStories' => $topDayViewStories, 'topWeekViewStories' => $topWeekViewStories, 'topMonthViewStories' => $topMonthViewStories]);
 	}
 	
 	public function refreshSession()
@@ -52,6 +59,9 @@ class HomeController extends Controller
 		$newestChapters = Chapter::getNewestChapter()->take(10);
 		$fullStories = Story::getFullStory()->take(10);
 		$hotStories = Story::getHotStory()->take(10);
+		$topDayViewStories = Story::getTopViewDayStory();
+		$topWeekViewStories = Story::getTopViewWeekStory();
+		$topMonthViewStories = Story::getTopViewMonthStory();
 		// return response()->json($hotStories);
     	return view('index', compact('newestChapters','fullStories','hotStories'));
 	}
@@ -137,7 +147,7 @@ class HomeController extends Controller
 	public function getStoryView($storySlug)
 	{
 		$story = Story::findBySlugOrFail($storySlug);
-		$relateStories = Story::inRandomOrder()->where('category_id', $story->category_id)->where('id',"<>",$story->id)->take(5)->get()->sortByDesc('view');
+		$relateStories = Story::has('chapter')->inRandomOrder()->where('category_id', $story->category_id)->where('id',"<>",$story->id)->take(5)->get()->sortByDesc('view');
 		$topLastedChapter = $story->chapter()->orderBy('ordering','desc')->limit(5)->get();
 		$chapters = $story->chapter()->orderBy('ordering','asc')->paginate(50);
 		return view('story', compact('story','topLastedChapter','chapters','relateStories'));
@@ -169,11 +179,6 @@ class HomeController extends Controller
 		return view('admin.dashboard');
 	}
 
-	public function test()
-	{
-		return view('test');
-	}
-
 	public function paginate($items, $perPage = 15, $page = null)
 	{
 		$page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
@@ -202,17 +207,25 @@ class HomeController extends Controller
                 'name.required'=> 'Bạn chưa nhập tài khoản',
                 'password.required'=>'Bạn chưa nhập password'
             ]);
-        $remember = $request->remember == 2 ? true : false;
+        $remember = $request->remember ? true: false;
+        $user = User::where('name',$username)->first();
+        if($user)
+        {
+        	if($user->active != 1)
+        	{
+				return redirect()->back()->withInput()->with('thongbao', 'Tài khoản đang bị khóa. Vui lòng sử dụng tài khoản khác');
 
-        // print_r($remember);
-        // die();
-
-		if(Auth::attempt(['name' => $username, 'password' => $password], $remember))
+        	}
+    	}
+		if(Auth::attempt(['name' => $username, 'password' => $password, 'active' => 1], $remember))
 		{
-            Auth::login(Auth::user());
             return redirect()->route('admin.dashboard');
 		}
 
+		// else if(User::where('name', $username)->first()->active != 1)
+		// {
+		// 	return redirect()->back()->withInput()->with('thongbao', 'Tài khoản đang bị khóa. Vui lòng sử dụng tài khoản khác');
+		// }
 		else return redirect()->back()->withInput()->with('thongbao','Tài khoản hoặc mật khẩu không chính xác');
 	}
 
@@ -220,5 +233,28 @@ class HomeController extends Controller
 	{
 		Auth::logout();
 		return redirect()->route('login');
+	}
+
+	public function getSearch(Request $request)
+	{
+	    if($request->has('keyword')){
+	    	$keyword = $request->keyword;
+    		$result = Story::search($request->keyword)->paginate(6)->appends(request()->query());;
+    		// $category = Category::search($request->keyword)->get();
+    		// $result = $story->merge($category);
+    		// $result = Story::paginate(6);
+    		// $result = Story::where('name','like','%'.$keyword.'%')->orWhere('description', 'like','%'.$keyword.'%' )->paginate(6);
+    	}else{
+    		$result = Story::paginate(6);
+    	}
+		return view('testsearch', compact('result'));
+	}
+
+	public function getReadingStory()
+	{
+		$readingStory = json_decode(Cookie::get('readingStory'));
+		$readingStory = collect($readingStory)->sortByDesc('time');
+		$readingStory = $this->paginate($readingStory, 10);
+		return view('reading', compact('readingStory'));
 	}
 }

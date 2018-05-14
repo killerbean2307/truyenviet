@@ -297,7 +297,7 @@ var dataTable = $('#data-table').DataTable();
         data:{
           '_token': $('input[name=_token]').val(),
             'name': $('#name_add').val(),
-            'description': $('#description_add').val(),
+            'description': $('#description_add').val()
         },
         success: function(){
           dataTable.ajax.reload(null, false);
@@ -394,7 +394,6 @@ var dataTable = $('#data-table').DataTable();
         }
       });
    }); 
-
   });
 
 </script>

@@ -1,10 +1,25 @@
 	  	body{
 	  		background-color: #F2F3F7 ;
 			font-family: 'Merriweather Sans', sans-serif;
+			height: 100%;
 	  	}
 		
 		.my-color-1{
 			color: #8B572A!important;
+		}
+		
+		.my-color-2{
+			color: #F5A623!important;
+		}
+
+		.my-link{
+			text-decoration: none;
+			color: #8B572A!important;
+		}
+
+		.my-link:hover{
+			text-decoration: none;
+			color: #F5A623!important;
 		}
 
 	  	.breadcrumb{
@@ -88,7 +103,7 @@
 			text-shadow: 5px 5px 5px #98B9BF;
 		}
 		
-		.nav-link{
+		#myNav .nav-link{
 			color: white!important;
 		}
 
@@ -180,3 +195,35 @@
 		.font-size-85-em{
 			font-size: 0.85em;
 		}
+
+		.top-item{
+			border-bottom: 1px solid #ECF0F1;
+		}
+
+		.top-story{
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+			border-top: 2px solid #F5A623;
+			border-radius: 0;
+		}
+		
+		.top-view-rank img{
+    		border: 1px solid #d8d8d8;
+		}
+	
+		.top-story>a:first-child{
+			color: #8B572A;
+		}
+		.top-story>a:first-child:hover{
+			color: #F5A623;
+		}
+
+		.reading-story{
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;			
+		}
+

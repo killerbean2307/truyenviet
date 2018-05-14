@@ -31,6 +31,13 @@
             <span class="nav-link-text">Danh sách truyện</span>
           </a>
         </li>
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="User">
+          <a class="nav-link" href="<?php echo e(route('admin.user.index')); ?>">
+            <i class="fa fa-fw fa-user"></i>
+            <span class="nav-link-text">Danh sách tài khoản</span>
+          </a>
+        </li>
 
       </ul>
       <ul class="navbar-nav sidenav-toggler">

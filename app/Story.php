@@ -8,14 +8,17 @@ use App\ViewCount;
 use App\Chapter;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Laravel\Scout\Searchable;
 
 class Story extends Model
 {    
     use Sluggable;
     use SluggableScopeHelpers;
-        
+    use Searchable;
+
     protected $table = 'story';
-    
+
+
     public function sluggable()
     {
         return [
@@ -26,6 +29,21 @@ class Story extends Model
         ];
     }
 
+   public function searchableAs()
+   {
+      return 'story_index';
+   }
+
+   public function toSearchableArray()
+   {
+      $array = $this->toArray();
+
+      $array['category'] = $this->category->name;
+
+      $array['author'] = $this->author->name;
+
+      return $array;
+   }
 
     public function chapter()
     {
@@ -110,5 +128,26 @@ class Story extends Model
     public function getFirstChapter()
     {
         return $firstChapter = $this->chapter->sortBy('ordering')->first();
+    }
+
+    public static function getTopViewDayStory()
+    {
+        $story = Story::leftJoin('view_count', 'story.id', 'view_count.story_id')->has('chapter')
+                    ->orderBy('view_count.day_view','desc')->take(10);
+        return $story->get();
+    }
+
+    public static function getTopViewWeekStory()
+    {
+        $story = Story::leftJoin('view_count', 'story.id', 'view_count.story_id')->has('chapter')
+                    ->orderBy('view_count.week_view','desc')->take(10);
+        return $story->get();
+    }
+
+    public static function getTopViewMonthStory()
+    {
+        $story = Story::leftJoin('view_count', 'story.id', 'view_count.story_id')->has('chapter')
+                    ->orderBy('view_count.month_view','desc')->take(10);
+        return $story->get();
     }
 }

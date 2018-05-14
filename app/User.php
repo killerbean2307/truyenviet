@@ -10,7 +10,7 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class User extends Authenticatable
 {
-    protected $table = 'users';
+    public $table = 'users';
     use Notifiable;
     use Sluggable;
     use SluggableScopeHelpers;
@@ -30,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','slug'
+        'name', 'email', 'password', 'level', 'active', 'slug'
     ];
 
     /**
@@ -41,4 +41,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function story()
+    {
+        return $this->hasMany('App\Story','user_id');
+    }
+
+    public function chapter()
+    {
+        return $this->hasMany('App\Chapter', 'user_id');
+    }
 }

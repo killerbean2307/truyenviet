@@ -12,11 +12,13 @@
 */
 // test
 Route::get('/', 'HomeController@getIndex')->name('index');
-Route::get('test', 'HomeController@test');
+Route::get('test-search', 'HomeController@getSearch')->name('getSearch');
 Route::get('truyen-hoan-thanh', 'HomeController@getFullStoryList')->name('full-story');
 Route::get('truyen-moi', 'HomeController@getLastUpdatedStory')->name('new-story');
 Route::get('truyen-hot', 'HomeController@getHotStoryList')->name('hot-story');
+Route::get('truyen-dang-doc', 'HomeController@getReadingStory')->name('reading');
 Route::post('/doc-chuong', 'HomeController@goToChapter')->name('doc-chuong');
+// Route::get('search', 'HomeController@search')->name('test.search');
 Route::group(['prefix' => '/the-loai'], function(){
     Route::get('/{categorySlug}', 'HomeController@getCategoryStory')->name('category.story');
 });
@@ -107,6 +109,25 @@ Route::group(['prefix'=>'admin','middleware' => 'auth'], function(){
         Route::delete('/xoa-nhieu', 'StoryController@deleteMulti')->name('admin.story.deleteMulti')->middleware('admin');
 
         Route::post('/change-status', 'StoryController@changeStatus')->name('admin.truyen.changeStatus')->middleware('admin');
+
+    });
+
+    Route::group(['prefix' => 'user'], function() {
+        Route::get('/', 'UserController@index')->name('admin.user.index');
+
+        Route::get('/danhsach', 'UserController@getAll')->name('admin.user.list');
+
+        Route::get('/{userId}', 'UserController@getDetail')->name('admin.user.detail');
+
+        Route::post('/them', 'UserController@store')->name('admin.user.store')->middleware('admin');
+
+        Route::put('/sua/{userId}', 'UserController@update')->name('admin.user.update')->middleware('admin');
+
+        Route::delete('/xoa', 'UserController@delete')->name('admin.user.delete')->middleware('admin');
+
+        Route::delete('/xoa-nhieu', 'UserController@deleteMulti')->name('admin.user.delete')->middleware('admin');
+
+        Route::post('/change-status', 'UserController@changeStatus')->name('admin.user.changeStatus')->middleware('admin');
 
     });
 

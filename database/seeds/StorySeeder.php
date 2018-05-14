@@ -24,7 +24,7 @@ class StorySeeder extends Seeder
                     'description' => $faker->realText,
                     'category_id' => $faker->numberBetween(1,10),
                     'author_id' => $faker->numberBetween(1,10),
-                    'user_id' => $faker->numberBetween(1,10),
+                    'user_id' => 1,
                     'status' => $faker->numberBetween(0,2),
                 ]
             );

@@ -173,6 +173,11 @@
         </div>
         <form class="form-horizontal" role="form" id="form-edit" enctype="multipart/form-data">
         <div class="modal-body">
+          <div class="alert alert-danger alert-dismissible edit-error" style="display: none" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
             {{ csrf_field() }}
             <div class="form-group">
               <label for="name_edit" class="font-weight-bold">Tên:</label>
@@ -185,7 +190,7 @@
             </div>
 
             <div class="form-group">
-              <label for="content_edit" class="font-weight-bold">Giới thiệu:</label>
+              <label for="content_edit" class="font-weight-bold">Nội dung:</label>
               <textarea class="form-control ckeditor" id="content_edit" placeholder="Nhập nội dung"></textarea>
             </div>
         </div>

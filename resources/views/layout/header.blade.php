@@ -41,7 +41,7 @@
 			        <div class="dropdown-menu" aria-labelledby="collection_dropdown">
 			          <a class="dropdown-item" href="{{route('hot-story')}}">Truyện Hot</a>
 					  <a class="dropdown-item" href="{{route('full-story')}}">Truyện Hoàn Thành</a>
-					  <a href="{{'new-story'}}" class="dropdown-item">Truyện mới</a>
+					  <a href="{{route('new-story')}}" class="dropdown-item">Truyện mới</a>
 			        </div>
 			    </li>
 
