@@ -29,21 +29,25 @@ class Story extends Model
         ];
     }
 
-   public function searchableAs()
-   {
+    public function searchableAs()
+    {
       return 'story_index';
-   }
+    }
 
-   public function toSearchableArray()
-   {
-      $array = $this->toArray();
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
 
-      $array['category'] = $this->category->name;
+        $array['category'] = $this->category->name;
 
-      $array['author'] = $this->author->name;
+        $array['author'] = $this->author->name;
 
-      return $array;
-   }
+        return $array;
+    }
+
+    public function shouldBeSearchable(){
+        return $this->hasChapter();
+    }
 
     public function chapter()
     {
@@ -83,6 +87,11 @@ class Story extends Model
         // } ]);
         $story->orderBy('view','desc');
         return $story->get();
+    }
+
+    public function hasChapter()
+    {
+        return $this->chapter()->count() > 0 ? true : false;
     }
 
     public static function getNewStory($category_id = null)

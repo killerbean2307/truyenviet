@@ -212,6 +212,7 @@
 		
 		.top-view-rank img{
     		border: 1px solid #d8d8d8;
+    		width: 100%;
 		}
 	
 		.top-story>a:first-child{
@@ -226,4 +227,8 @@
 			overflow: hidden;
 			text-overflow: ellipsis;			
 		}
-
+		
+		.full-story-item-image{
+			width: 100%;
+			height: 134px;
+		}

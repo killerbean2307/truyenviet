@@ -47,23 +47,28 @@
 	    <li class="breadcrumb-item active"><a href="{{route('story', $story->slug)}}">{{$story->name}}</a></li>
 	  </ol>
 	</div>
-
 	<div class="row">
 		<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 wow fadeIn">
 			<div class="row my-border py-3" style="margin:0;">
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 					@if($story->image)
-						<img src="upload/{{$story->image}}" alt="" width="100%" height="auto" class="story-image rounded">
+						<img src="upload/{{$story->image}}" alt="" width="100%" height="100%" class="story-image rounded">
 					@else
-						<img src="no_image_vertical.png" alt="" width="100%" height="auto" class="story-image rounded">
+						<img src="no_image_vertical.png" alt="" width="100%" height="100%" class="story-image rounded">
 					@endif
 				</div>
-				<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 px-3">
-					<h3 class="font-weight-bold story-name">{{$story->name}}</h3>		
+				<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 px-3 pl-sm-4 mt-sm-2">
+					<h3 class="font-weight-bold story-name">{{$story->name}}</h3>							
 					<div class="story-author font-weight-bold py-1">
-						<a href="#">{{$story->author->name}}</a>
+						<i class="far fa-user"></i>
+						@if($story->author->exists())
+							<a href="{{route('author.story', $story->author->slug)}}">{{$story->author->name}}</a>
+						@else
+							<a href="#">Chưa rõ</a>
+						@endif
 					</div>
 					<div class="story-category font-weight-bold py-1">
+						<i class="fas fa-tags"></i>
 						<a href="{{route('category.story', $story->category->slug)}}">{{$story->category->name}}</a>
 					</div>
 					<div>
@@ -86,18 +91,42 @@
 					<div>
 						<label for="" class="font-weight-bold">Lượt đọc: </label>
 						<span class="text-info">
-							{{$story->view}} <i class="fas fa-eye"></i> - {{$story->like}} <i class="far fa-thumbs-up"></i>
+							{{$story->view}} <i class="fas fa-eye"></i> - <span id="like">{{$story->like}}</span> <i class="far fa-thumbs-up"></i>
 						</span>
 					</div>
 					<div>
 						<label for="" class="font-weight-bold">Nguồn:</label> {{$story->source}}
 					</div>
+			    	<br>
 					<a class="btn btn-outline-info mt-1" href="" id="chapter-list-button"><i class="fas fa-bars"></i> Danh sách chương</a>
 					<a class="btn btn-outline-success mt-1" href="{{route('chapter', array($story->slug, $story->getFirstChapter()->ordering))}}"><i class="fas fa-book"></i> Đọc truyện</a>
+					<div class="mt-3">
+					<div class="pretty p-icon p-toggle p-plain p-tada p-bigger my-2">
+				        <input type="checkbox" class="like-button" 
+				        	@php
+				       			if(Cookie::has('likedStory'))
+				        			$cookie = json_decode(Cookie::get('likedStory'),true);
+				        		else $cookie = array();
+				        	@endphp
+							@if(in_array($story->id, $cookie))
+								checked
+							@endif
+				        />
+				        <div class="state p-off">
+				            <i class="icon far fa-thumbs-up "></i>
+				            <label>Like</label>
+				        </div>
+				        <div class="state p-on p-info-o">
+				            <i class="icon fas fa-thumbs-up"></i>
+				            <label>Liked</label>
+			        	</div>
+			    	</div>	
+			    	</div>				
 				</div>
 				<div class="mt-3 px-3">
 					<div class="font-weight-bold pb-2">Nội dung truyện {{$story->name}}</div>
 					<div class="small">{!!$story->description!!}</div>
+
 				</div>
 			</div>
 
@@ -153,11 +182,11 @@
 									<div class="col-4 col-sm-4 col-md-4 col-lg-4">
 										@if($relateStory->image)
 											<a href="{{route('story', $relateStory->slug)}}">
-												<img src="upload/{{$relateStory->image}}" class="rounded relate-image" alt="" width="100%" height="auto">
+												<img src="upload/{{$relateStory->image}}" class="rounded relate-image" alt="" width="100%" height="128px">
 											</a>
 										@else
 											<a href="{{route('story', $relateStory->slug)}}">
-												<img src="no_image_vertical.png" alt="" width="100%" height="auto" class="rounded relate-image">
+												<img src="no_image_vertical.png" alt="" width="100%" height="128px" class="rounded relate-image">
 											</a>
 										@endif										
 									</div>
@@ -194,6 +223,22 @@
 	$('#chapter-list-button').click(function(event){
 		event.preventDefault();
         $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
+	});
+
+	$('.like-button').change(function(){
+		var box = $(this);
+		$.ajax({
+			url: '{{route('like')}}',
+			method: "get",
+			data: {
+				check: box.prop('checked'),
+				story_id: {{$story->id}}
+			},
+			success: function(data){
+				console.log(data);
+				$('#like').text(data);
+			}
+		});
 	});
 </script>
 @endsection

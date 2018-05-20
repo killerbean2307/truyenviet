@@ -59,7 +59,8 @@ class StoryController extends Controller
   		{
     		foreach($chapters as $chapter)
     		{
-    			$chapter->user->name;
+                if($chapter->user()->exists())
+    			     $chapter->user->name;
     		}
     	}
     	return Datatables::of($chapters)

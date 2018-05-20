@@ -29,15 +29,15 @@
 		</h3>
 		<div class="list-content" style="font-size: 14px">
 			<div class="container">
-				<ul class="nav nav-tabs nav-justified">
+				<ul class="nav nav-tabs nav-justified mb-3">
 				  <li class="nav-item">
 				    <a class="nav-link active" data-toggle="tab" href="#topDay">Ngày</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" data-toggle="tab" href="#topWeek">Tháng</a>
+				    <a class="nav-link" data-toggle="tab" href="#topWeek">Tuần</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" data-toggle="tab" href="#topMonth">Năm</a>
+				    <a class="nav-link" data-toggle="tab" href="#topMonth">Tháng</a>
 				  </li>
 				</ul>
 

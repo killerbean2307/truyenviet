@@ -12,13 +12,23 @@
 */
 // test
 Route::get('/', 'HomeController@getIndex')->name('index');
+
 Route::get('test-search', 'HomeController@getSearch')->name('getSearch');
+
 Route::get('truyen-hoan-thanh', 'HomeController@getFullStoryList')->name('full-story');
+
 Route::get('truyen-moi', 'HomeController@getLastUpdatedStory')->name('new-story');
+
 Route::get('truyen-hot', 'HomeController@getHotStoryList')->name('hot-story');
+
+Route::get('truyen-doc-nhieu', 'HomeController@getMostViewStory')->name('most-view-story');
+
 Route::get('truyen-dang-doc', 'HomeController@getReadingStory')->name('reading');
-Route::post('/doc-chuong', 'HomeController@goToChapter')->name('doc-chuong');
-// Route::get('search', 'HomeController@search')->name('test.search');
+
+Route::post('doc-chuong', 'HomeController@goToChapter')->name('doc-chuong');
+
+Route::get('tim-kiem', 'HomeController@search')->name('search');
+
 Route::group(['prefix' => '/the-loai'], function(){
     Route::get('/{categorySlug}', 'HomeController@getCategoryStory')->name('category.story');
 });
@@ -28,6 +38,8 @@ Route::group(['prefix' => '/tac-gia'], function(){
 });
 
 Route::group(['prefix' => '/truyen'], function(){
+    Route::get('/like', 'HomeController@like')->name('like');
+
     Route::get('/{storySlug}', 'HomeController@getStoryView')->name('story');
 
     Route::get('/{storySlug}/chuong-{ordering}', 'HomeController@getChapterView')->name('chapter')->where('ordering','[0-9]+')->middleware('viewFilter');

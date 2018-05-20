@@ -85,41 +85,25 @@
               
               <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                  <label for="category_detail" class="font-weight-bold">Thể loại</label>
+                  <label for="email_detail" class="font-weight-bold">Email:</label>
                 </div>
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="category_detail">
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="email_detail">
                 </div>
-              </div>
+              </div>              
 
               <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                  <label for="author_detail" class="font-weight-bold">Tác giả</label>
+                  <label for="role_detail" class="font-weight-bold">Vai trò:</label>
                 </div>
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="author_detail">
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="role_detail">
                 </div>
               </div>
-
+              
               <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                   <label for="status_detail" class="font-weight-bold">Trạng thái</label>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="status_detail">
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                  <label for="chapter_count_detail" class="font-weight-bold">Số chương</label>
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="chapter_count_detail">
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                  <label for="description_detail" class="font-weight-bold">Giới thiệu</label>
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="description_detail">
                 </div>
               </div>
 
@@ -440,41 +424,43 @@ $(document).ready(function(){
     $('#image_detail').attr('src', "");
     $.ajax({
       type: 'GET',
-      url: 'admin/truyen/'+id+'/chitiet',
+      url: 'admin/user/'+id,
       async: 'false',
       success: function(data){
         $('#detailModalLabel').text('Truyện '+data.name);
         $('#name_detail').text(data.name);
-        $('#category_detail').text(data.category.name);
-        if(data.author)
-        {
-          $('#author_detail').text(data.author.name);
-        }
-        $('#status_detail').html(function(){
-          var text = "";
-          switch(parseInt(data.status)){
-            case 0: 
-              text = '<div class="badge badge-danger">Drop</div>';
-              break;
+        $('#email_detail').text(data.email);
+        $('#role_detail').html(function(){
+          let text = "";
+          switch(parseInt(data.level)){
             case 1:
-              text = '<div class="badge badge-info">Còn tiếp</div>';
+              text = "<span class='badge badge-info'>CTV</span>";
               break;
             case 2:
-              text = '<div class="badge badge-success">Hoàn thành</div>';
+              text = "<span class='badge badge-danger'>Admin</span>";
               break;
             default:
-              return '<div class="badge badge-info">Còn tiếp</div>';
+              text = "<span class='badge badge-info'>CTV</span>";
           }
           return text;
         });
-        $('#view_like_detail').html('<span class="text-success">'+data.view+ ' đọc</span> - <span class="text-danger">'+data.like+' thích</span>');
-        $('#description_detail').html(data.description);
+
+        $('#status_detail').html(function(){
+          let text = "";
+          switch(parseInt(data.active)){
+            case 0: 
+              text = '<span class="text-danger"><i class="fa fa-fw fa-lock"></i> Khóa</span>';
+              break;
+            case 1:
+              text = '<span class="text-success"><i class="fa fa-fw fa-user"></i> Hoạt động</span>';
+              break;
+            default:
+              return '<i class="fas fa-lock"></i> Khóa';
+          }
+          return text;
+        });
         $('#created_at_detail').text(moment(data.created_at.date).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
         $('#updated_at_detail').text(moment(data.updated_at.date).locale('vi').format('DD/MM/YYYY, hh:mm:ss A'));
-        $('#user_detail').text(data.user.name);
-        $('#chapter_count_detail').text(data.chapter_count);
-        if(data.image)
-          $('#image_detail').attr('src','upload/'+data.image);
 
       },
       error: function(){
@@ -488,7 +474,7 @@ $(document).ready(function(){
       e.preventDefault();
       var button = $(this);
       var check = $(this).prop('checked') == true ? 1 : 0;
-      alert(check);
+      // alert(check);
       const id = $(this).closest('tr').find('td').eq(0).find('input[type=checkbox]').val();
       // alert(id);
       $.ajax({

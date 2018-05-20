@@ -47,11 +47,12 @@
 	}
 	
 	.slide-image a{
-		overflow: hidden;
+		/*overflow: hidden;*/
 	}
 
 	.slide-image img{
-		max-width: 100%;	
+		max-width: 100%;
+		height: 269px;
 	}
 
 	.slide-image:hover a{
@@ -71,18 +72,18 @@
 		{{-- content --}}
 		
 		{{-- Truyen hot --}}
-		<div class="container-fluid wow fadeIn" style="margin-bottom:2rem">
+		<div class="container-fluid" style="margin-bottom:2rem">
 			<div class="list">
-				<h3 class="title-list">
+				<h3 class="title-list d-flex align-items-center">
 					<a href="{{route('hot-story')}}">
 						<span class="text-uppercase">
 							Truyện hot <i class="fas fa-fire"></i>
 						</span>
 					</a>
-					<select name="category-select" id="category-select" class="float-right rounded d-none d-md-block mt-1" style="font-size:16px;">
-						<option value="0">Tất cả</option>
+					<select name="category-select" id="category-select" class="ml-auto rounded d-none d-md-block mt-1" style="font-size:16px;">
+						<option value="0"> --Thể loại-- </option>
 						@foreach($categories as $category)
-							<option value="{{$category->id}}">{{$category->name}}</option>
+							<option value="{{$category->slug}}">{{$category->name}}</option>
 						@endforeach
 					</select>
 				</h3>
@@ -96,10 +97,10 @@
 										<div class="item my-3 slide-image">										
 											<a href="{{route('story', $hot->slug)}}">
 												@if($hot->image)
-													<img src="upload/{{$hot->image}}" alt="{{$hot->name}}" width="100%" height="auto" class="rounded full-story-item-image">
+													<img src="upload/{{$hot->image}}" alt="{{$hot->name}}" width="100%" class="rounded full-story-item-image">
 													
 												@else
-													<img src="no_image_vertical.png" alt="{{$hot->name}}" width="100%" height="auto" class="rounded full-story-item-image">
+													<img src="no_image_vertical.png" alt="{{$hot->name}}" width="100%" class="rounded full-story-item-image">
 													
 												@endif
 											</a>
@@ -123,7 +124,7 @@
 		{{-- end truyen hot --}}
 
 		{{-- truyen moi cap nhat --}}
-		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 mr-1 py-3 content wow fadeIn">
+		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 mr-1 py-3 content">
 			<div class="list">
 				<h3 class="title-list">
 					<a href="{{route('new-story')}}">
@@ -185,11 +186,11 @@
 									<div class="col-4 col-sm-4 col-md-4 col-lg-4">
 										@if($fullStory->image)
 											<a href="{{route('story', $fullStory->slug)}}">
-												<img src="upload/{{$fullStory->image}}" class="rounded full-story-item-image" alt="" width="100%" height="auto">
+												<img src="upload/{{$fullStory->image}}" class="rounded full-story-item-image" alt="">
 											</a>
 										@else
 											<a href="{{route('story', $fullStory->slug)}}">
-												<img src="no_image_vertical.png" alt="" width="100%" height="auto" class="rounded full-story-item-image">
+												<img src="no_image_vertical.png" alt="" class="rounded full-story-item-image">
 											</a>
 										@endif
 									</div>
@@ -261,6 +262,7 @@ $('.owl-carousel').owlCarousel({
         }
     }
 });
+
 // $( ".owl-prev").html('<i class="fa fa-angle-left"></i>');
 // $( ".owl-next").html('<i class="fa fa-angle-right"></i>');
 // $('.owl-carousel').find('.owl-nav').removeClass('disabled');
@@ -268,5 +270,16 @@ $('.owl-carousel').owlCarousel({
 // $('.owl-carousel').on('changed.owl.carousel', function(event) {
 // 	$(this).find('.owl-nav').removeClass('disabled');
 // });
+</script>
+<script>
+	$(document).ready(function(){
+		$('#category-select').change(function(){
+			if($(this).val() != 0)
+			{	
+				const cur = $(location).prop('href');
+				$(location).prop('href', cur+'the-loai/'+$(this).val()); 
+			}
+		});
+	});
 </script>
 @endsection

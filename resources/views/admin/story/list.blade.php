@@ -219,7 +219,7 @@
             </div>
             
             <div class="form-group">
-              <img src="" alt="preview" id="preview_add">
+              <img src="" alt="preview" id="preview_add" style="max-height: 600px; max-width: 300px" >
             </div>
 
             <div class="form-group">
@@ -286,7 +286,7 @@
               <input type="file" class="form-control" id="image_edit">
             </div>
             <div class="form-group">
-              <img src="" alt="Preview" id="preview_edit">  
+              <img src="" alt="Preview" id="preview_edit" style="max-height: 600px; max-width: 300px">  
             </div>
             <div class="form-group">
               <label for="category_edit" class="font-weight-bold">Thể Loại</label>
@@ -562,6 +562,11 @@ $(document).ready(function(){
   $(document).on('shown.bs.modal','#editModal', function(){
         $('#name_edit').focus();
     });
+
+  $(document).on('hide.bs.modal', '#editModal', function(){
+    $('#preview_edit').attr('src','');
+    $('#image_edit').val("");
+  });
 
     $(document).on('click', '.delete-button', function(){
       $('#xoa').val($(this).data('id'));      

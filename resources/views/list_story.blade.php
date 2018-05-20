@@ -3,6 +3,8 @@
 <style>
 	.item-image{
 		border: 1px solid #d8d8d8;
+		width: 100%;
+		height: 156px;
 	}
 	
 	.pagination{
@@ -51,6 +53,9 @@
 						<span class="text-uppercase">
 							@if(isset($title))
 								{{$title}}
+								@if(isset($result))
+									({{$result}} kết quả)
+								@endif
 							@endif
 						</span>
 					</a>
@@ -63,11 +68,11 @@
 									<div class="col-4 col-sm-4 col-md-4 col-lg-4 pr-0">
 										@if($story->image)
 											<a href="{{route('story',$story->slug)}}">
-												<img src="upload/{{$story->image}}" class="rounded item-image" alt="" width="100%" height="auto">
+												<img src="upload/{{$story->image}}" class="rounded item-image" alt="">
 											</a>
 										@else
 											<a href="{{route('story',$story->slug)}}">
-												<img src="no_image_vertical.png" alt="" width="100%" height="auto" class="rounded item-image">
+												<img src="no_image_vertical.png" alt="" class="rounded item-image">
 												</a>
 											@endif
 									</div>

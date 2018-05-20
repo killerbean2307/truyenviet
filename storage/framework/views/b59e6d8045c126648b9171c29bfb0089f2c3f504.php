@@ -91,6 +91,8 @@
         if(xhr.status == 403)
           alert(jQuery.parseJSON(xhr.responseText).error);
       });
+
+      $('[data-toggle="tooltip"]').tooltip();
     </script>
   </div>
 

@@ -30,7 +30,7 @@ class HomeController extends Controller
 	{
 		$categories = Category::orderBy('name', 'asc')->get();
 		$chap = Chapter::whereYear('created_at', date('Y'))->get();
-		$chart = Charts::database($chap,'bar','morris')
+		$uploadChapterchart = Charts::database($chap,'bar','morris')
 					->title(false)
 					->elementLabel('Chương mới')
 					->dimensions(1000, 500)
@@ -44,7 +44,7 @@ class HomeController extends Controller
 		$topDayViewStories = Story::getTopViewDayStory();
 		$topWeekViewStories = Story::getTopViewWeekStory();
 		$topMonthViewStories = Story::getTopViewMonthStory();
-		view()->share(['categories' => $categories, 'chart' => $chart, 'storyCount' => $storyCount, 'chapterCount' => $chapterCount, 'authorCount' => $authorCount, 'totalStoryView' => $totalStoryView, 'topDayViewStories' => $topDayViewStories, 'topWeekViewStories' => $topWeekViewStories, 'topMonthViewStories' => $topMonthViewStories]);
+		view()->share(['categories' => $categories, 'uploadChapterchart' => $uploadChapterchart, 'storyCount' => $storyCount, 'chapterCount' => $chapterCount, 'authorCount' => $authorCount, 'totalStoryView' => $totalStoryView, 'topDayViewStories' => $topDayViewStories, 'topWeekViewStories' => $topWeekViewStories, 'topMonthViewStories' => $topMonthViewStories]);
 	}
 	
 	public function refreshSession()
@@ -133,6 +133,16 @@ class HomeController extends Controller
 		return view('list_story', compact('listStories','title','slug','list'));
 	}	
 
+	public function getMostViewStory()
+	{
+		$listStories = Story::has('chapter')->orderBy('view','desc')->orderBy('created_at', 'desc')->paginate(10);
+		$title = "Truyện đọc nhiều";
+		$slug = "truyen-doc-nhieu";
+		$list = 0;
+
+		return view('list_story', compact('listStories','title','slug','list'));
+	}
+
 	public function getStoryViewByAuthor($authorSlug)
 	{
 		$author = Author::findBySlugOrFail($authorSlug);
@@ -176,6 +186,7 @@ class HomeController extends Controller
 
 	public function getDashboard()
 	{
+
 		return view('admin.dashboard');
 	}
 
@@ -239,11 +250,7 @@ class HomeController extends Controller
 	{
 	    if($request->has('keyword')){
 	    	$keyword = $request->keyword;
-    		$result = Story::search($request->keyword)->paginate(6)->appends(request()->query());;
-    		// $category = Category::search($request->keyword)->get();
-    		// $result = $story->merge($category);
-    		// $result = Story::paginate(6);
-    		// $result = Story::where('name','like','%'.$keyword.'%')->orWhere('description', 'like','%'.$keyword.'%' )->paginate(6);
+    		$result = Story::search($request->keyword)->paginate(6)->appends(request()->query());
     	}else{
     		$result = Story::paginate(6);
     	}
@@ -256,5 +263,43 @@ class HomeController extends Controller
 		$readingStory = collect($readingStory)->sortByDesc('time');
 		$readingStory = $this->paginate($readingStory, 10);
 		return view('reading', compact('readingStory'));
+	}
+
+	public function search(Request $request)
+	{
+	    if($request->has('keyword')){
+	    	$keyword = $request->keyword;
+    		$listStories = Story::search($request->keyword)->paginate(10)->appends(request()->query());
+    	}else{
+    		$listStories = null;
+    	}
+    	$slug = "javascript:void(0)";
+    	$list = 3;
+    	$title = 'Tìm kiếm từ khóa "'.$keyword.'"';
+    	$result = $listStories->total();
+		return view('list_story', compact('listStories','title','slug','list','result'));
+	}
+
+	public function like(Request $request)
+	{
+		$story_id = $request->story_id;
+		$check = $request->check;
+		$story = Story::find($story_id);
+		if(Cookie::has('likedStory'))
+			$cookie = json_decode(Cookie::get('likedStory'),true);
+		else $cookie = array();
+
+		if(in_array($story_id, $cookie))
+		{
+			$cookie = array_diff($cookie, array($story_id));
+			$story->decrement('like');
+		}
+		else{
+			$story->increment('like');
+			$cookie[] = $story_id;
+		}
+
+		// Cookie
+		return response()->json($story->like)->withCookie(cookie()->forever('likedStory', json_encode($cookie)));
 	}
 }

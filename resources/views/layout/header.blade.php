@@ -41,7 +41,9 @@
 			        <div class="dropdown-menu" aria-labelledby="collection_dropdown">
 			          <a class="dropdown-item" href="{{route('hot-story')}}">Truyện Hot</a>
 					  <a class="dropdown-item" href="{{route('full-story')}}">Truyện Hoàn Thành</a>
-					  <a href="{{route('new-story')}}" class="dropdown-item">Truyện mới</a>
+					  <a href="{{route('new-story')}}" class="dropdown-item">Truyện Mới</a>
+					  <a href="{{route('most-view-story')}}" class="dropdown-item">Truyện Đọc Nhiều</a>
+
 			        </div>
 			    </li>
 
@@ -118,11 +120,11 @@
 					@endphp				    	
 			    </li>
 	    	</ul>
-	    	<form class="form-inline my-2 my-lg-0">
+	    	<form class="form-inline my-2 my-lg-0" method="GET" action="{{route('search')}}">
 				<div class="input-group">
-		      		<input class="form-control border border-right-0" id="search-box" type="search" placeholder="Search" aria-label="Search">
+		      		<input class="form-control border border-right-0" id="search-box" name="keyword" type="search" placeholder="Tìm nhanh..." aria-label="Search">
 		            	<span class="input-group-append">
-		                	<button class="btn btn-outline border-left-0 border bg-light" type="button" id="search">
+		                	<button class="btn btn-outline border-left-0 border bg-light" type="submit" id="search">
 		                    	<i class="fa fa-search"></i>
 		                	</button>
 		            	</span>

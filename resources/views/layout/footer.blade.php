@@ -26,6 +26,6 @@
 		</div>		
 	</div>
 	<div class="text-center">
-		&copy; 2018 TruyenViet.Com. All Rights Reserved.
+		&copy; {{Carbon\Carbon::now()->year}} TruyenViet.Xyz. All Rights Reserved.
 	</div>
 </footer>

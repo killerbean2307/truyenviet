@@ -266,7 +266,12 @@ $('#data-table').DataTable({
 	    { data: 'ordering', name: 'ordering', searchable: true},
 	    {data: 'name', className: 'font-weight-bold',name: 'name'},
 	    // { data: 'content', name: 'content'},
-	    { data: 'user.name', name: 'user.name', searchable: true},
+	    { data: 'user.name', name: 'user.name', searchable: true, render: function(data,type,row){
+        if(data)
+          return data;
+        else 
+          return "";
+      }},
 	    { data: 'created_at', searchable: false,  render: function(data, type, row){
 	    	return moment(data).locale('vi').fromNow();
 	    }},
