@@ -508,7 +508,9 @@ $(document).ready(function(){
           $('#editModalLabel').text('Sửa truyện '+data.name);
           $('#name_edit').val(data.name);
           $('#category_edit').val(data.category.id).trigger('change');
-          $('#author_edit').val(data.author.id).trigger('change');
+          if(data.author){
+            $('#author_edit').val(data.author.id).trigger('change');
+          }
           $('#source_edit').val(data.source);
           CKEDITOR.instances['description_edit'].setData(data.description);
           switch(data.status){
@@ -526,7 +528,6 @@ $(document).ready(function(){
           }
           if(data.image)
             $('#preview_edit').attr('src','upload/'+data.image);
-
         },
         errors: function(){
 
@@ -646,7 +647,6 @@ $(document).ready(function(){
         data: form,
         success: function(){
           dataTable.ajax.reload(null, false);
-          dataTable.page('last').draw('page');
           $('#addModal').modal('hide');
         },
         error: function(data){

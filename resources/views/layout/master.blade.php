@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="css/pretty-checkbox.css"/>
   	<link rel="stylesheet" href="css/owl.theme.default.min.css">
   	<link rel="stylesheet" href="css/main.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" /> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.css" />
     <link rel="shortcut icon" href="logo.png">
 @yield('css')
 
@@ -31,6 +34,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 <script src="js/owl.carousel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="js/main.js"></script>
 <script>
 	new WOW().init();
@@ -45,4 +49,19 @@
   js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.0&appId=194208891305427&autoLogAppEvents=1';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
+<script>
+  $(document).ready(function(){
+    $('#search-box').autocomplete({
+      source: '{{route('autocomplete')}}',
+      minLength: 1,
+      select: function(event, ui){
+        // alert(ui.item.slug);
+        $('#search-box').val(ui.item.value);
+        let href = '{{route('story', ':slug')}}';
+        href = href.replace(':slug', ui.item.slug);
+        $(location).prop('href',href);
+      }
+    });
+  });
+</script>
 </html>

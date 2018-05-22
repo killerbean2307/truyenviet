@@ -302,4 +302,15 @@ class HomeController extends Controller
 		// Cookie
 		return response()->json($story->like)->withCookie(cookie()->forever('likedStory', json_encode($cookie)));
 	}
+
+	public function autoComplete(Request $request)
+	{
+		$term = $request->term;
+		$data = Story::search($term)->take(5)->get();
+		$result = array();
+		foreach ($data as $d) {
+			$result[] = ['id' => $d->id, 'value' => $d->name, 'slug' => $d->slug];
+		}
+		return response()->json($result);
+	}
 }

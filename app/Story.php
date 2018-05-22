@@ -40,13 +40,12 @@ class Story extends Model
 
         $array['category'] = $this->category->name;
 
-        $array['author'] = $this->author->name;
+        if($this->author)
+        {
+            $array['author'] = $this->author->name;
+        }
 
         return $array;
-    }
-
-    public function shouldBeSearchable(){
-        return $this->hasChapter();
     }
 
     public function chapter()

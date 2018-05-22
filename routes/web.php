@@ -13,7 +13,7 @@
 // test
 Route::get('/', 'HomeController@getIndex')->name('index');
 
-Route::get('test-search', 'HomeController@getSearch')->name('getSearch');
+Route::get('autocomplete', 'HomeController@autoComplete')->name('autocomplete');
 
 Route::get('truyen-hoan-thanh', 'HomeController@getFullStoryList')->name('full-story');
 

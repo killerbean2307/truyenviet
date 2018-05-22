@@ -42,6 +42,7 @@
     38 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
     39 => 'Grimthorr\\LaravelToast\\ServiceProvider',
     40 => 'Laravel\\Scout\\ScoutServiceProvider',
+    41 => 'Intervention\\Image\\ImageServiceProvider',
   ),
   'eager' => 
   array (
@@ -73,6 +74,7 @@
     25 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
     26 => 'Grimthorr\\LaravelToast\\ServiceProvider',
     27 => 'Laravel\\Scout\\ScoutServiceProvider',
+    28 => 'Intervention\\Image\\ImageServiceProvider',
   ),
   'deferred' => 
   array (

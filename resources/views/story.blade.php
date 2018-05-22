@@ -51,7 +51,7 @@
 		<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 wow fadeIn">
 			<div class="row my-border py-3" style="margin:0;">
 				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-					@if($story->image)
+					@if($story->image and file_exists(public_path('upload/').$story->image))
 						<img src="upload/{{$story->image}}" alt="" width="100%" height="100%" class="story-image rounded">
 					@else
 						<img src="no_image_vertical.png" alt="" width="100%" height="100%" class="story-image rounded">
@@ -99,7 +99,13 @@
 					</div>
 			    	<br>
 					<a class="btn btn-outline-info mt-1" href="" id="chapter-list-button"><i class="fas fa-bars"></i> Danh sách chương</a>
-					<a class="btn btn-outline-success mt-1" href="{{route('chapter', array($story->slug, $story->getFirstChapter()->ordering))}}"><i class="fas fa-book"></i> Đọc truyện</a>
+					<a class="btn btn-outline-success mt-1" href="
+					@if(count($story->chapter))
+						{{route('chapter', array($story->slug, $story->getFirstChapter()->ordering))}}
+					@else
+						javacript:void(0)
+					@endif
+					"><i class="fas fa-book"></i> Đọc truyện</a>
 					<div class="mt-3">
 					<div class="pretty p-icon p-toggle p-plain p-tada p-bigger my-2">
 				        <input type="checkbox" class="like-button" 
@@ -180,7 +186,7 @@
 							<div class="col-12 pt-1">
 								<div class="row">
 									<div class="col-4 col-sm-4 col-md-4 col-lg-4">
-										@if($relateStory->image)
+										@if($relateStory->image and file_exists(public_path().'/upload'.$relateStory->image))
 											<a href="{{route('story', $relateStory->slug)}}">
 												<img src="upload/{{$relateStory->image}}" class="rounded relate-image" alt="" width="100%" height="128px">
 											</a>
@@ -198,7 +204,11 @@
 												Thể loại: <a href="{{route('category.story', $relateStory->category->slug)}}">{{$relateStory->category->name}}</a>
 											</div>
 											<div>
-												<a href="#">{{$relateStory->author->name}}</a>
+												@if($relateStory->author()->exists())
+													<a href="{{route('author.story', $relateStory->author->slug)}}">
+														{{$relateStory->author->name}}
+													</a>
+												@endif		
 											</div>
 											<div>
 												Số chương: {{$relateStory->chapter->count()}} (Full)

@@ -96,7 +96,7 @@
 									@foreach($hotStory as $hot)
 										<div class="item my-3 slide-image">										
 											<a href="{{route('story', $hot->slug)}}">
-												@if($hot->image)
+												@if($hot->image and file_exists(public_path('upload/').$hot->image))
 													<img src="upload/{{$hot->image}}" alt="{{$hot->name}}" width="100%" class="rounded full-story-item-image">
 													
 												@else
@@ -184,7 +184,7 @@
 							<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 								<div class="row py-1">
 									<div class="col-4 col-sm-4 col-md-4 col-lg-4">
-										@if($fullStory->image)
+										@if($fullStory->image and file_exists(public_path('upload/').$fullStory->image))
 											<a href="{{route('story', $fullStory->slug)}}">
 												<img src="upload/{{$fullStory->image}}" class="rounded full-story-item-image" alt="">
 											</a>
@@ -201,7 +201,9 @@
 												Thể loại: <a href="{{route('category.story', $fullStory->category->slug)}}">{{$fullStory->category->name}}</a>
 											</div>
 											<div>
-												<a href="#">{{$fullStory->author->name}}</a>
+												@if($fullStory->author()->exists())
+													<a href="">{{$fullStory->author->name}}</a>
+												@endif
 											</div>
 											<div>
 												Số chương: {{$fullStory->chapter->count()}} (Full)
@@ -222,7 +224,6 @@
 
 		</div>
 		{{-- end content --}}
-
 		{{-- side bar --}}
 		@include('layout.sidebar')
 		{{-- end side bar --}}

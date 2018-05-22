@@ -66,7 +66,7 @@
 							<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 								<div class="row py-1">
 									<div class="col-4 col-sm-4 col-md-4 col-lg-4 pr-0">
-										@if($story->image)
+										@if($story->image and file_exists(public_path('upload/').$story->image))
 											<a href="{{route('story',$story->slug)}}">
 												<img src="upload/{{$story->image}}" class="rounded item-image" alt="">
 											</a>
@@ -83,7 +83,9 @@
 												Thể loại: <a href="{{route('category.story',$story->category->slug)}}">{{$story->category->name}}</a>
 											</div>
 											<div>
-												<a href="{{route('author.story', $story->author->slug)}}">{{$story->author->name}}</a>
+												@if($story->author()->exists())
+													<a href="{{route('author.story', $story->author->slug)}}">{{$story->author->name}}</a>
+												@endif
 											</div>
 											<div>
 												Số chương: {{$story->chapter->count()}}

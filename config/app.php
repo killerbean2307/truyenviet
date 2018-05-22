@@ -179,6 +179,7 @@ return [
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Grimthorr\LaravelToast\ServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Toast' => Grimthorr\LaravelToast\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

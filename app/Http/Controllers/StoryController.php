@@ -15,6 +15,8 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class StoryController extends Controller
 {
@@ -120,7 +122,10 @@ class StoryController extends Controller
             while (file_exists("upload/".$tenhinh)) {
                 $tenhinh = str_random(4)."_".$name;
             }
-            $file->move("upload/",$tenhinh);
+            $hinh = Image::make($file->getRealPath());
+            $hinh->resize(200,300);
+            // $file->move("upload/",$tenhinh);
+            $hinh->save(public_path('upload/'.$tenhinh));
             $story->image = $tenhinh;
         }    
     	$story->status = 1;
@@ -174,7 +179,10 @@ class StoryController extends Controller
                 {
                     unlink("upload/".$story->image);
                 }
-                $file->move("upload/",$tenhinh);
+                $hinh = Image::make($file->getRealPath());
+                $hinh->resize(200,300);
+                $hinh->save(public_path('upload/'.$tenhinh));
+                // $file->move("upload/",$tenhinh);
                 $story->image = $tenhinh;
             }
             $story->updated_by = Auth::id();    
@@ -190,7 +198,8 @@ class StoryController extends Controller
             $story = Story::findOrFail($id);
             $story->delete();
             return response()->json(['success' => 'Delete success']);
-        }    }
+        }    
+    }
 
     public function deleteMulti(Request $request)
     {
