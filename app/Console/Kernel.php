@@ -4,7 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use App\ViewCount;
+use DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,8 +26,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function(){
+        	DB::table('view_count')->update(['day_view' => 0]);
+        })->daily();
+
+        $schedule->call(function(){
+        	DB::table('view_count')->update(['week_view' => 0]);
+        })->weekly();
+
+        $schedule->call(function(){
+        	DB::table('view_count')->update(['month_view' => 0]);
+        })->monthly();
     }
 
     /**
