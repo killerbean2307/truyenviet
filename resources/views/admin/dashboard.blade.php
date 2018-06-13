@@ -80,8 +80,8 @@
 							</div>
 							<div class="col-10 d-flex">
 								<div class="p-2" style="white-space:nowrap; text-overflow: ellipsis; overflow:hidden">
-									<div class="font-weight-bold">
-										{{$topDay->name}}
+									<div class="font-weight-bold" data-toggle="tooltip" title="{{$topDay->name}}">
+										<a href="{{route('admin.story.chapterView', $topDay->id)}}">{{$topDay->name}}</a>
 									</div>
 									
 									<div class="text-muted">
@@ -112,8 +112,8 @@
 							</div>
 							<div class="col-10 d-flex">
 								<div class="p-2" style="white-space:nowrap; text-overflow: ellipsis; overflow:hidden">
-									<div class="font-weight-bold">
-										{{$topWeek->name}}
+									<div class="font-weight-bold" data-toggle="tooltip" title="{{$topWeek->name}}">
+										<a href="{{route('admin.story.chapterView', $topWeek->id)}}">{{$topWeek->name}}</a>
 									</div>
 									
 									<div class="text-muted">
@@ -144,8 +144,8 @@
 							</div>
 							<div class="col-10 d-flex">
 								<div class="p-2" style="white-space:nowrap; text-overflow: ellipsis; overflow:hidden">
-									<div class="font-weight-bold">
-										{{$topMonth->name}}
+									<div class="font-weight-bold" data-toggle="tooltip" title="{{$topMonth->name}}">
+										<a href="{{route('admin.story.chapterView', $topMonth->id)}}">{{$topMonth->name}}</a>
 									</div>
 									
 									<div class="text-muted">

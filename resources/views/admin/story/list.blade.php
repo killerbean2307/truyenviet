@@ -625,7 +625,7 @@ $(document).ready(function(){
     $("#them").click(function(){
         var _token = $('input[name=_token]').val();
         var name = $('#name_add').val();
-        var description = $('#description_add').val();
+        var description = CKEDITOR.instances['description_add'].getData();
         var author = $('#author_add').val();
         var category = $('#category_add').val();
         var image = $('#image_add').prop('files')[0];

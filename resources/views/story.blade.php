@@ -61,10 +61,10 @@
 					<h3 class="font-weight-bold story-name">{{$story->name}}</h3>							
 					<div class="story-author font-weight-bold py-1">
 						<i class="far fa-user"></i>
-						@if($story->author->exists())
+						@if($story->author()->exists())
 							<a href="{{route('author.story', $story->author->slug)}}">{{$story->author->name}}</a>
 						@else
-							<a href="#">Chưa rõ</a>
+							<a>Chưa rõ</a>
 						@endif
 					</div>
 					<div class="story-category font-weight-bold py-1">
@@ -186,7 +186,7 @@
 							<div class="col-12 pt-1">
 								<div class="row">
 									<div class="col-4 col-sm-4 col-md-4 col-lg-4">
-										@if($relateStory->image and file_exists(public_path().'/upload'.$relateStory->image))
+										@if($relateStory->image and file_exists(public_path('upload/').$relateStory->image))
 											<a href="{{route('story', $relateStory->slug)}}">
 												<img src="upload/{{$relateStory->image}}" class="rounded relate-image" alt="" width="100%" height="128px">
 											</a>

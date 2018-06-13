@@ -28,7 +28,7 @@ class HomeController extends Controller
 {
 	function __construct()
 	{
-		$categories = Category::orderBy('name', 'asc')->get();
+		$categories = Category::orderBy('name', 'asc')->where('status',1)->get();
 		$chap = Chapter::whereYear('created_at', date('Y'))->get();
 		$uploadChapterchart = Charts::database($chap,'bar','morris')
 					->title(false)

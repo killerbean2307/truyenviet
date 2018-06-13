@@ -121,7 +121,7 @@ class Story extends Model
 
     public static function getHotStory($category_id = null)
     {
-        $story = Story::leftJoin('view_count', 'story.id', 'view_count.story_id')->has('chapter')
+        $story = Story::join('view_count', 'story.id', 'view_count.story_id')->has('chapter')
                     ->orderBy('view_count.week_view','desc');
         if($category_id)
             $story->where('category_id', $category_id);

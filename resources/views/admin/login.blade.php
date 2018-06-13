@@ -54,9 +54,6 @@
           </div>
           <button class="btn btn-primary btn-block" href="#" role="button" type="submit">Login</button>
         </form>
-        <div class="text-center">
-          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
-        </div>
       </div>
     </div>
   </div>
